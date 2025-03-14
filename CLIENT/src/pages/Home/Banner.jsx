@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import banner from "../../../assets/Banner.png";
+import banner from "../../assets/banner.png";
 
 // 🔹 Variants for Animations
 const textVariants = {

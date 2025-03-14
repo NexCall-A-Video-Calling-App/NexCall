@@ -1,12 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
-import aboutNexImg from '../../../assets/aboutNex.png'
+import aboutNexImg from '../../assets/aboutNex.png'
 
-const AboutSection = () => {
+const About = () => {
   return (
     <div className="container mx-auto px-6 py-16 flex flex-col md:flex-row items-center">
       {/* Left Text Section */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: -50 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
@@ -16,8 +16,8 @@ const AboutSection = () => {
           About <span className="text-purple-600">NexCall</span>
         </h2>
         <p className="text-gray-600 mt-4 leading-relaxed">
-          We're on a mission to make communication effortless. Since our 
-          founding in 2021, NexCall has quickly become the go-to platform 
+          We're on a mission to make communication effortless. Since our
+          founding in 2021, NexCall has quickly become the go-to platform
           for professional, reliable, and secure video conferencing solutions.
         </p>
 
@@ -35,14 +35,14 @@ const AboutSection = () => {
       </motion.div>
 
       {/* Right Image Section */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, x: 50 }}
         whileInView={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.6 }}
         className="md:w-1/2 mt-10 md:mt-0"
       >
-        <img 
-          src={aboutNexImg} 
+        <img
+          src={aboutNexImg}
           alt="About NexCall"
           className="rounded-lg shadow-lg"
         />
@@ -51,4 +51,4 @@ const AboutSection = () => {
   );
 };
 
-export default AboutSection;
+export default About;
