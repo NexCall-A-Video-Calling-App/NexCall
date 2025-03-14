@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import scheduleAnimation from "../../../assets/schedule_1.json";
+import scheduleAnimation from "../../assets/schedule_1.json";
 import Lottie from "lottie-react";
 
 // 🔹 Reusable Motion Wrapper Component

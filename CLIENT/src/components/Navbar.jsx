@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-// import logo from '../../assets/logo.png'
-import logo from '../../assets/nclogo.png'
+import logo from '../assets/nclogo.png';
 
 const Navbar = () => {
   const links = (
@@ -21,7 +20,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar bg-base-100 shadow-sm lg:pl-10 lg:pr-12 md:px-12 fixed top-0 z-30">
+    <div className="navbar bg-base-100 shadow-sm lg:pl-10 lg:pr-12 md:px-12 fixed top-0 z-50">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className=" lg:hidden">
@@ -48,20 +47,20 @@ const Navbar = () => {
             {links}
           </ul>
         </div>
-        
+
         <Link to={'/'} className="flex items-center hover:underline hover:text-blue-700 text-xl">
-        <img className="w-10 h-10 object-cover" src={logo} alt="NexCall Logo" />
-        <span>NexCall</span>
+          <img className="w-10 h-10 object-cover" src={logo} alt="NexCall Logo" />
+          <span>NexCall</span>
         </Link>
-        
+
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
+        <ul className="menu menu-horizontal px-1 text-base">
           {links}
         </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn btn-sm">join us</a>
+        <a className="btn">join us</a>
       </div>
     </div>
   );
