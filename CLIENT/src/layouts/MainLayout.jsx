@@ -1,16 +1,18 @@
 import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 
 const MainLayout = () => {
+  const location= useLocation();
   return (
     <div>
-      <Navbar />
+      {location.pathname !== '/dashboard' && <Navbar />}
+
       <main className='mt-16'>
         <Outlet />
       </main>
-      <Footer />
+      {location.pathname !== '/dashboard' && <Footer />}
     </div>
   );
 };
