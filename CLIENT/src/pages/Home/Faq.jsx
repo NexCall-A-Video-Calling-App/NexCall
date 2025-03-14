@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import faqIllustration from "../../../assets/Faq.json";
+import faqIllustration from "../../assets/Faq.json";
 import Lottie from "lottie-react";
 
 const faqs = [
