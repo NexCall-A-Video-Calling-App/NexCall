@@ -30,7 +30,7 @@ const ScheduleAnimation = () => (
 
 const Schedule = () => {
   return (
-    <div className="container mx-auto pb-12 pl-4">
+    <div className="container mx-auto pb-12 px-4 w-full">
       <div className="grid md:grid-cols-2 gap-10 items-center">
         {/* Left Section */}
         <AnimatedSection x={-50}>
