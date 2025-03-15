@@ -23,9 +23,9 @@ io.on("connection", (socket) => {
     console.log("Id", socket.id)
 
 
-    io.on('disconnect',(why)=>{
+    io.on('disconnect',(reason)=>{
         
-        console.log(`Disconnect user id ${socket.id} why ${why}`)
+        console.log(`Disconnect user id ${socket.id} reason ${why}`)
     })
 
     
