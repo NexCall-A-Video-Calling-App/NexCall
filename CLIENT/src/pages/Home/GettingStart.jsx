@@ -1,5 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { Link, useNavigate } from "react-router-dom";
 
 const GetStarted = () => {
   return (
@@ -32,9 +33,9 @@ const GetStarted = () => {
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
       >
-        <button className="bg-white btn text-purple-600 font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-gray-200 transition">
+        <Link to={'/sign-up'} className="bg-white btn text-purple-600 font-semibold py-2 px-6 rounded-lg shadow-lg hover:bg-gray-200 transition">
           Sign up
-        </button>
+        </Link>
       </motion.div>
 
       {/* Decorative Floating Avatars */}
