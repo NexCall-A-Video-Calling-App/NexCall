@@ -20,12 +20,26 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
     console.log("user connected")
-    console.log("Id", socket.id)
+    console.log("Id", socket.id);
+
+
+
+    // typeing animation 
+    socket.on('typeing',(type)=>{
+
+        // send to all this animation expect sernder
+        // who join same room
+        socket.broadcast.emit('typeingStatus',type);
+        // send to server
+        // server use onchangekey press call system
+
+    })
+
 
 
     io.on('disconnect',(reason)=>{
         
-        console.log(`Disconnect user id ${socket.id} reason ${why}`)
+        console.log(`Disconnect user id ${socket.id} reason ${reason}`)
     })
 
     
