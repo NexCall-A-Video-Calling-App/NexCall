@@ -83,7 +83,7 @@ const SignIn = () => {
                             Sign up with Google
                         </button>
                         <p className="text-center text-gray-600 mt-4">
-                            New to this website? Please <Link to="/signup" className="text-purple-600 font-semibold"><span className="text-purple-600 cursor-pointer font-semibold">Sign up</span></Link>
+                            New to this website? Please <Link to="/sign-up" className="text-purple-600 font-semibold"><span className="text-purple-600 cursor-pointer font-semibold">Sign up</span></Link>
                         </p>
                     </div>
 
