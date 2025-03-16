@@ -106,7 +106,7 @@ const SignUp = () => {
                             Sign up with Google
                         </button>
                         <p className="text-center text-gray-600 mt-4">
-                            Already have an account? <Link to="/signIn"><span className="text-purple-600 cursor-pointer font-semibold">Sign in</span></Link>
+                            Already have an account? <Link to="/sign-in"><span className="text-purple-600 cursor-pointer font-semibold">Sign in</span></Link>
                         </p>
                     </div>
                 </div>
