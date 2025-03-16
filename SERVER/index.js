@@ -24,14 +24,15 @@ io.on("connection", (socket) => {
 
 
 
-    // typeing animation 
-    socket.on('typeing',(type)=>{
+    // typing animation 
+    socket.on('typing',()=>{
 
-        // send to all this animation expect sernder
+        // send to all this animation expect sendnder
         // who join same room
-        socket.broadcast.emit('typeingStatus',type);
+        socket.broadcast.emit('typingStatus',socket.id);
         // send to server
         // server use onchangekey press call system
+        // pass socket id 
 
     })
 
