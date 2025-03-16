@@ -24,6 +24,10 @@ const faqs = [
     answer:
       "Absolutely! Most scheduling tools have end-to-end encryption and robust security measures to keep your data private.",
   },
+  {
+    "question": "How can I integrate the schedule tool into my website?",
+    "answer": "You can integrate the scheduling tool into your website using an embedded widget, API, or a third-party plugin that seamlessly syncs with your platform."
+  }
 ];
 
 const FAQ = () => {
