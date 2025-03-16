@@ -22,6 +22,12 @@ io.on("connection", (socket) => {
     console.log("user connected")
     console.log("Id", socket.id)
 
+
+    io.on('disconnect',(reason)=>{
+        
+        console.log(`Disconnect user id ${socket.id} reason ${why}`)
+    })
+
     
 })
 
