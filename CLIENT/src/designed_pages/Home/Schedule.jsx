@@ -122,22 +122,6 @@ const Schedule = () => {
           </div>
         </div>
 
-        {/* Left Section */}
-        <AnimatedSection x={50}>
-          <h2 className="text-4xl font-bold text-gray-900">
-            <span className="text-primary">Share</span> your Schedule<br /> with everyone
-          </h2>
-          <p className="text-xl font-light text-[#9095A0] mt-3">
-            Smarter scheduling for work involves employing<br /> effective strategies.
-          </p>
-          <motion.button
-            className="mt-4 bg-[#f6f3fc] btn text-primary py-2 px-5 rounded-md hover:bg-primary hover:text-white transition"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Learn more
-          </motion.button>
-        </AnimatedSection>
       </div>
     </div>
   );
