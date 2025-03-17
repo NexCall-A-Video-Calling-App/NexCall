@@ -44,7 +44,7 @@ const About = () => {
         <img
           src={aboutNexImg}
           alt="About NexCall"
-          className="rounded-lg shadow-lg"
+          className="rounded-lg "
         />
       </motion.div>
     </div>

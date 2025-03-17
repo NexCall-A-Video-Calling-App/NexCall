@@ -34,16 +34,16 @@ const Schedule = () => {
       <div className="grid md:grid-cols-2 gap-10 items-center">
         {/* Left Section */}
         <AnimatedSection x={-50}>
-          <h2 className="text-3xl font-bold text-gray-900">
-            <span className="text-purple-600">Smarter</span> scheduling for your work
+          <h2 className="text-4xl font-bold text-gray-900">
+            <span className="text-primary">Smarter</span> scheduling for<br /> your work
           </h2>
-          <p className="text-gray-600 mt-3">
-            Smarter scheduling for work involves employing effective strategies.
+          <p className="text-xl font-light text-[#9095A0] mt-3">
+            Smarter scheduling for work involves employing<br /> effective strategies.
           </p>
           <motion.button
-            className="mt-4 bg-purple-600 text-white py-2 px-5 rounded-lg shadow-md hover:bg-purple-700 transition"
+            className="mt-4 bg-[#f6f3fc] btn text-primary py-2 px-5 rounded-md hover:bg-primary hover:text-white transition"
             whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileTap={{ scale: 0.95 }}
           >
             Learn more
           </motion.button>
