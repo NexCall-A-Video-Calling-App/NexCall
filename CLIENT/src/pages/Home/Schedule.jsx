@@ -105,25 +105,34 @@ const Schedule = () => {
       </div>
 
       <div className="grid md:grid-cols-2 gap-10 items-center mt-16">
-        {/* Left Section - Lottie Animation */}
-        <ScheduleAnimation />
+        <div className="relative flex items-center justify-center p-8 bg-white">
+          <div className="w-4/12 ">
+            <motion.img
+              src="https://i.ibb.co.com/nNtKkJNL/Image-73.png"
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+            />
+          </div>
+          <div className="w-8/12 relative bg_dot h-60">
 
-        {/* Right Section */}
-        <AnimatedSection x={-30}>
-          <h2 className="text-3xl font-bold text-gray-900">
-            <span className="text-purple-600">Share</span> your schedule with everyone
-          </h2>
-          <p className="text-gray-600 mt-3">
-            Sharing the event schedule allows attendees to be well-informed about the event's agenda, timing.
-          </p>
-          <motion.button
-            className="mt-4 bg-purple-600 text-white py-2 px-5 rounded-lg shadow-md hover:bg-purple-700 transition"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            Learn more
-          </motion.button>
-        </AnimatedSection>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.7 }}
+              className="bg-white shadow-2xl -ml-16 p-2 py-4 w-8/12 rounded-md absolute bottom-9">
+              <h1 className="font-bold mb-2">Share with everyone</h1>
+              <div className="flex gap-2">
+                <div className="p-2 rounded-md flex justify-between text-sm bg-purple-200 items-center w-40">
+                  <p className="underline">Link.com</p>
+                  <p >Copy Link</p>
+                </div>
+                <button className="btn">Share</button>
+              </div>
+            </motion.div>
+
+          </div>
+        </div>
       </div>
     </div>
   );
