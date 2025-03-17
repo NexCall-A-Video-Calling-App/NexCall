@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import scheduleAnimation from "../../assets/schedule_1.json";
 import Lottie from "lottie-react";
+import { CiCircleCheck } from "react-icons/ci";
 
 // 🔹 Reusable Motion Wrapper Component
 const AnimatedSection = ({ children, x }) => (
@@ -50,7 +51,57 @@ const Schedule = () => {
         </AnimatedSection>
 
         {/* Right Section - Lottie Animation */}
-        <ScheduleAnimation />
+        <div className="relative flex items-center justify-center p-8 bg-white">
+          {/* Background Dots */}
+          <img
+            src="https://i.ibb.co.com/kYHR46Y/Image-72-1.png"
+            alt="Background Dots"
+            className="absolute w-64 left-16"
+          />
+
+          {/* Schedule Card */}
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+            className="relative border border-blue-500 -top-28 left-16 z-10 bg-white rounded-2xl shadow-xl p-3 flex flex-col gap-4 w-72"
+          >
+            <div className="flex justify-center items-center">
+              <h1 className="badge border-primary p-3 text-center">Schedule</h1>
+            </div>
+            <div className="space-y-4">
+              {/* Meeting Item */}
+              <div className="flex items-center justify-between bg-purple-600 rounded-lg p-3">
+                <span className="text-sm font-semibold text-white">11:00 AM</span>
+                <span className="text-sm font-medium text-white">Weekly Meeting</span>
+              </div>
+
+              {/* Review Item */}
+              <div className="flex items-center justify-between bg-[#ff7f00] rounded-lg p-3">
+                <span className="text-sm font-semibold text-white">03:00 PM</span>
+                <span className="text-sm font-medium text-white">Monthly Review</span>
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Boy Illustration */}
+          <motion.div
+            initial={{ opacity: 1, x: 100 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7 }}
+          >
+            <img
+              src="https://i.ibb.co.com/6cpJTNTJ/Image-72.png"
+              alt="Boy Illustration"
+              className="relative z-20 ml-6"
+            />
+          </motion.div>
+
+          {/* Check Icon */}
+          <div className="absolute right-8 top-12 ">
+            <CiCircleCheck className="text-5xl text-primary" />
+          </div>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 gap-10 items-center mt-16">
