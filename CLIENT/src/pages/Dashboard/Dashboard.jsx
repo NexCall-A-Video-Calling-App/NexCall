@@ -13,6 +13,12 @@ const Dashboard = () => {
     const toggleSidebar = () => setShowSidebar(!showSidebar);
     const navigate = useNavigate();
 
+
+    // bell icon 
+    const hadnelBellicon = ()=>{
+        alert("done")
+    }
+
     return (
         <div className="flex h-screen bg-gray-100 relative -mt-16">
 
@@ -21,9 +27,9 @@ const Dashboard = () => {
                 {/* Sidebar Content */}
                 <div className="flex-1 overflow-y-auto">
                    
-                   <div className="flex">
+                   <div className="flex justify-between">
                    <h2 className="text-lg font-semibold">Messages</h2>
-                   <button className="btn"><GoBell/></button>
+                   <button className=""  onClick={hadnelBellicon}><GoBell/></button>
                    {/* bell icon */}
                    </div>
 
