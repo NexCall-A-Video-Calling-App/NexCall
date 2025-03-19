@@ -59,6 +59,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
+        // COLLECTIONS
         const usersCollections = client.db("NexCall").collection('users');
 
         // JWT AUTH ENDPOINTS
