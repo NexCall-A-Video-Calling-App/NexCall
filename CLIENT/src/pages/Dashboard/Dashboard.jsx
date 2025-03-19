@@ -2,21 +2,31 @@ import { useState } from "react";
 import { FaVideo, FaPhoneAlt, FaEllipsisV } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 import { GoBell } from "react-icons/go";
+
+import UseUserinBellicon from "../../../hooks/UseUserinBellicon";
 
 
 const Dashboard = () => {
+
     const [showSidebar, setShowSidebar] = useState(false);
     const toggleSidebar = () => setShowSidebar(!showSidebar);
     const navigate = useNavigate();
 
 
     // bel icon function 
+    const {isLoading,error,refetch,belIconUserData} = UseUserinBellicon();
+    console.log(belIconUserData , " bel user data ");
+
 
 
     const handelBelIcon = ()=>{
-        alert("done")
+
+        
+
+
+    
 
     }
 
