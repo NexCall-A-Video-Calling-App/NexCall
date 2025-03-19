@@ -3,9 +3,12 @@ import { FaVideo, FaPhoneAlt, FaEllipsisV } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import { GoBell } from "react-icons/go";
+// bell icon
 
 
 const Dashboard = () => {
+    
     const [showSidebar, setShowSidebar] = useState(false);
     const toggleSidebar = () => setShowSidebar(!showSidebar);
     const navigate = useNavigate();
@@ -17,7 +20,14 @@ const Dashboard = () => {
             <div className={`fixed md:static top-0 left-0 h-full w-64 bg-white p-4 border-r shadow-lg z-20 transition-transform transform ${showSidebar ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 flex flex-col`}>
                 {/* Sidebar Content */}
                 <div className="flex-1 overflow-y-auto">
-                    <h2 className="text-lg font-semibold">Messages</h2>
+                   
+                   <div className="flex">
+                   <h2 className="text-lg font-semibold">Messages</h2>
+                   <button className="btn"><GoBell/></button>
+                   {/* bell icon */}
+                   </div>
+
+
                     <input
                         type="text"
                         placeholder="Search messages"
