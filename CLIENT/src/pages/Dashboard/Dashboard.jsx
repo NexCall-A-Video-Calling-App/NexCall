@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FaVideo, FaPhoneAlt, FaEllipsisV } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
@@ -17,11 +17,20 @@ const Dashboard = () => {
 
     // bel icon function 
     const {isLoading,error,refetch,belIconUserData} = UseUserinBellicon();
-    console.log(belIconUserData , " bel user data ");
+    const [ userdata , setuserdata ] = useState([]);
+
+    useEffect(()=>{
+
+    },[])
+
 
 
 
     const handelBelIcon = ()=>{
+        alert("bel icon click");
+
+
+        console.log(belIconUserData);
 
         
 

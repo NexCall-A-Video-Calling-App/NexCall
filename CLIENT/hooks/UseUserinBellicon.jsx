@@ -9,10 +9,10 @@ import axios from 'axios'
 function UseUserinBellicon() {
 
     const [data , setdata] =useState("");
-    
-    fetch('http://localhost:5000/users')
-    .then((res)=> res.json())
-    .then((data)=> console.log(data));
+
+    // fetch('http://localhost:5000/users')
+    // .then((res)=> res.json())
+    // .then((data)=> console.log(data));
 
     const {isLoading,error,refetch,data:belIconUserData=[] }= useQuery({
 
@@ -28,7 +28,7 @@ function UseUserinBellicon() {
         }
 
     })
-    console.log(belIconUserData,"bel user")
+
 
 
 
