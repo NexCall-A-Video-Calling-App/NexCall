@@ -1,8 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
-import scheduleAnimation from "../../assets/schedule_1.json";
-import Lottie from "lottie-react";
 import { CiCircleCheck } from "react-icons/ci";
+import { FaRegShareSquare } from "react-icons/fa";
 
 // 🔹 Reusable Motion Wrapper Component
 const AnimatedSection = ({ children, x }) => (
@@ -17,21 +16,10 @@ const AnimatedSection = ({ children, x }) => (
   </motion.div>
 );
 
-// 🔹 Lottie Animation Component
-const ScheduleAnimation = () => (
-  <motion.div
-    initial={{ opacity: 0, x: 50 }}
-    whileInView={{ opacity: 1, x: 0, y: 0 }}
-    viewport={{ once: false, amount: 0.2 }}
-    transition={{ duration: 0.7 }}
-  >
-    <Lottie animationData={scheduleAnimation} loop className="w-full h-auto" />
-  </motion.div>
-);
-
 const Schedule = () => {
   return (
     <div className="container mx-auto pb-12 px-4 w-full overflow-hidden">
+      {/* Right Section - Lottie Animation */}
       <div className="grid md:grid-cols-2 gap-10 items-center">
         {/* Left Section */}
         <AnimatedSection x={-50}>
@@ -50,7 +38,6 @@ const Schedule = () => {
           </motion.button>
         </AnimatedSection>
 
-        {/* Right Section - Lottie Animation */}
         <div className="relative flex items-center justify-center p-8 bg-white">
           {/* Background Dots */}
           <img
@@ -104,7 +91,8 @@ const Schedule = () => {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-10 items-center mt-16">
+      {/* Share Section */}
+      <div className="grid md:grid-cols-2 gap-10 items-center mt-12">
         <div className="relative flex items-center justify-center p-8 bg-white">
           <div className="w-4/12 ">
             <motion.img
@@ -134,23 +122,6 @@ const Schedule = () => {
           </div>
         </div>
 
-
-        {/* Left Section */}
-        <AnimatedSection x={50}>
-          <h2 className="text-4xl font-bold text-gray-900">
-            <span className="text-primary">Share</span> your Schedule<br /> with everyone
-          </h2>
-          <p className="text-xl font-light text-[#9095A0] mt-3">
-            Smarter scheduling for work involves employing<br /> effective strategies.
-          </p>
-          <motion.button
-            className="mt-4 bg-[#f6f3fc] btn text-primary py-2 px-5 rounded-md hover:bg-primary hover:text-white transition"
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Learn more
-          </motion.button>
-        </AnimatedSection>
       </div>
     </div>
   );
