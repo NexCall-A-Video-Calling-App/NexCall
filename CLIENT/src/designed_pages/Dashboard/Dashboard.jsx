@@ -4,7 +4,6 @@ import { IoHome } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-
 const Dashboard = () => {
     const [showSidebar, setShowSidebar] = useState(false);
     const toggleSidebar = () => setShowSidebar(!showSidebar);

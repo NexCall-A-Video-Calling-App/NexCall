@@ -107,7 +107,7 @@ async function run() {
             })
         }
 
-        // User Api:
+        // User API:
         app.post('/users', async (req, res) => {
             const user = req.body;
             const result = await usersCollections.insertOne(user);
