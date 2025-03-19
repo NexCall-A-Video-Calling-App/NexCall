@@ -24,6 +24,7 @@ io.on("connection", (socket) => {
 
 
 
+
     // typing animation 
     socket.on('typing',()=>{
 
@@ -45,6 +46,9 @@ io.on("connection", (socket) => {
 
     
 })
+
+
+// join user show on bell icon 
 
 app.get('/', (req, res) => {
     res.send("CHAT SERVER RUNNING")
