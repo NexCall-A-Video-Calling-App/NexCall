@@ -13,7 +13,7 @@ const About = () => {
         className="md:w-1/2 text-center md:text-left"
       >
         <h2 className="text-3xl font-bold text-gray-900">
-          About <span className="text-purple-600">NexCall</span>
+          About <span className="text-primary">NexCall</span>
         </h2>
         <p className="text-gray-600 mt-4 leading-relaxed">
           We're on a mission to make communication effortless. Since our
@@ -43,8 +43,7 @@ const About = () => {
       >
         <img
           src={aboutNexImg}
-          alt="About NexCall"
-          className="rounded-lg "
+          alt="About NexCall" 
         />
       </motion.div>
     </div>

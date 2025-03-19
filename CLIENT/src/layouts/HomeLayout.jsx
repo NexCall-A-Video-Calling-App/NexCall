@@ -10,9 +10,9 @@ const HomeLayout = () => {
     return (
         <div className='container mx-auto'>
             <Banner />
+            <About />
             <Schedule />
             <Features />
-            <About />
             <GetStarted />
             <FAQ />
         </div>
