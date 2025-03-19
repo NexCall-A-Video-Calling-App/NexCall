@@ -40,7 +40,7 @@ const Dashboard = () => {
           <div className="flex justify-between">
             <h2 className="text-lg font-semibold">Messages</h2>
             {/* Open the modal using document.getElementById('ID').showModal() method */}
-            <button className="btn" onClick={handelBelIcon}>
+            <button className="" onClick={handelBelIcon}>
               <GoBell />
             </button>
 
