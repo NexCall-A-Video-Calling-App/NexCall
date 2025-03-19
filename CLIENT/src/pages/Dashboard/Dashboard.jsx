@@ -21,7 +21,6 @@ const Dashboard = () => {
   }, []);
 
   const handelBelIcon = () => {
-    alert("bel icon click");
     document.getElementById("my_modal_1").showModal();
 
     console.log(userdata);
@@ -46,18 +45,25 @@ const Dashboard = () => {
 
             <dialog id="my_modal_1" className="modal">
               <div className="modal-box">
-
-                <div className=" border-black/30 flex flex-col gap-2">
-
-                  {belIconUserData.map((users, key) => (
-
-                    <div className={`border p-3 `} key={key}>
-
-                      <p className=""> <span>{users.name}</span> <span className="text-red-500 ">joined</span> </p>
-
+                {isLoading ? (
+                  <div>
+                    <span className="loading loading-ring loading-lg"></span>
+                  </div>
+                ) : (
+                  <div>
+                    <div className=" border-black/30 flex flex-col gap-2">
+                      {belIconUserData.map((users, key) => (
+                        <div className={`border p-3 `} key={key}>
+                          <p className="">
+                            {" "}
+                            <span>{users.name}</span>{" "}
+                            <span className="text-red-500 ">joined</span>{" "}
+                          </p>
+                        </div>
+                      ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
 
                 <div className="modal-action">
                   <form method="dialog">
