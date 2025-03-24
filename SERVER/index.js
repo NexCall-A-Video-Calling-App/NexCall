@@ -29,17 +29,35 @@ const io = new Server(server, {
 
 io.on("connection", (socket) => {
     console.log("user connected")
-    console.log("Id", socket.id)
+    console.log("Id", socket.id);
 
 
-    io.on('disconnect', (reason) => {
 
-        console.log(`Disconnect user id ${socket.id} reason ${why}`)
+
+    // typing animation 
+    socket.on('typing',()=>{
+
+        // send to all this animation expect sendnder
+        // who join same room
+        socket.broadcast.emit('typingStatus',socket.id);
+        // send to server
+        // server use onchangekey press call system
+        // pass socket id 
+
+    })
+
+
+
+    io.on('disconnect',(reason)=>{
+        
+        console.log(`Disconnect user id ${socket.id} reason ${reason}`)
     })
 
 
 })
 
+
+// join user show on bell icon 
 
 app.get('/', (req, res) => {
     res.send("ASSIGNMENT-10 SERVER RUNNING")
@@ -107,7 +125,7 @@ async function run() {
             })
         }
 
-        // User Api:
+        // User API:
         app.post('/users', async (req, res) => {
             const user = req.body;
             const result = await usersCollections.insertOne(user);

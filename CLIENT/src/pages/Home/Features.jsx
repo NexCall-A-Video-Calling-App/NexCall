@@ -11,32 +11,32 @@ import { motion } from "framer-motion";
 
 const features = [
   {
-    icon: <FaVideo/>,
+    icon: <FaVideo />,
     title: "High-quality Video & Audio",
     desc: "Crystal-clear HD video and pristine audio quality for the best communication experience.",
   },
   {
-    icon: <FaLock/>,
+    icon: <FaLock />,
     title: "End-to-End Encryption",
     desc: "Your conversations are protected with military-grade encryption technology.",
   },
   {
-    icon: <FaDesktop/>,
+    icon: <FaDesktop />,
     title: "Screen Sharing",
     desc: "Share your screen instantly for better collaboration and presentations.",
   },
   {
-    icon: <FaCommentDots/>,
+    icon: <FaCommentDots />,
     title: "Real-time Chat",
     desc: "Send messages, share files, and collaborate while on your video call.",
   },
   {
-    icon: <FaGlobe/>,
+    icon: <FaGlobe />,
     title: "Browser-Based",
     desc: "No downloads required. Start your call directly from your browser.",
   },
   {
-    icon: <FaUsers/>,
+    icon: <FaUsers />,
     title: "Group Calls",
     desc: "Host meetings with up to 100 participants with no quality compromise.",
   },
@@ -77,14 +77,14 @@ const FeaturesSection = () => {
         {features.map((feature, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 20 }} 
+            initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2}}
+            transition={{ duration: 0.1 }}
             whileHover={{ scale: 1.05 }}
-            className="p-6 border rounded-lg text-center shadow-md hover:shadow-lg transition"
+            className="p-6 border rounded-lg shadow-md hover:shadow-lg transition"
           >
             <div className="text-3xl text-primary mb-4 ">{feature.icon}</div>
-            <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+            <h3 className="text-xl mb-2 font-bold">{feature.title}</h3>
             <p className="text-gray-600">{feature.desc}</p>
           </motion.div>
         ))}
@@ -98,7 +98,7 @@ const FeaturesSection = () => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="text-3xl font-bold text-center mt-16 mb-8"
       >
-        How It Works
+        How It <span className="text-primary">Works</span>
       </motion.h2>
       <div className="grid md:grid-cols-3 gap-6 text-center">
         {steps.map((step, index) => (
@@ -107,12 +107,12 @@ const FeaturesSection = () => {
             initial={{ opacity: 0, y: 20 }}
             // animate={{ opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            transition={{ duration: 0.1, }}
             whileHover={{ scale: 1.05 }}
             className="p-6 border rounded-lg shadow-md hover:shadow-lg transition"
           >
             <div className="flex items-center justify-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2 bg-black rounded-full w-10 h-10">
+              <div className="text-2xl font-bold mb-2 border-primary border-2 rounded-full w-10 h-10">
                 {step.number}
               </div>
             </div>
