@@ -18,10 +18,10 @@ const scaleVariants = {
 
 const Banner = () => {
   return (
-    <div className="container mx-auto flex flex-col items-center text-center py-12 px-4">
+    <div className="container mx-auto flex flex-col items-center text-center pt-12 px-4">
       {/* Animated Heading */}
       <motion.h1
-        className="text-5xl font-bold text-gray-900 font-lexend leading-[1.4]"
+        className="text-xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-lexend leading-[1.4]"
         variants={textVariants}
         initial="hidden"
         animate="visible"
@@ -62,7 +62,7 @@ const Banner = () => {
         {/* Background dot image - lower z-index */}
         <motion.img
           src={dot}
-          className="absolute right-0 top-[45%] z-10 w-5/12 h-80"
+          className="absolute right-0 top-[45%] z-10 w-5/12 h-6/12"
           alt=""
           aria-hidden="true"
         />
