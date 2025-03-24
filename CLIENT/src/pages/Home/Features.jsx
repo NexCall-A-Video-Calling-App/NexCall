@@ -79,12 +79,12 @@ const FeaturesSection = () => {
             key={index}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.1 }}
             whileHover={{ scale: 1.05 }}
-            className="p-6 border rounded-lg text-center shadow-md hover:shadow-lg transition"
+            className="p-6 border rounded-lg shadow-md hover:shadow-lg transition"
           >
             <div className="text-3xl text-primary mb-4 ">{feature.icon}</div>
-            <h3 className="text-xl font-semibold mb-2">{feature.title}</h3>
+            <h3 className="text-xl mb-2 font-bold">{feature.title}</h3>
             <p className="text-gray-600">{feature.desc}</p>
           </motion.div>
         ))}
@@ -112,7 +112,7 @@ const FeaturesSection = () => {
             className="p-6 border rounded-lg shadow-md hover:shadow-lg transition"
           >
             <div className="flex items-center justify-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2 border border-gray-600 rounded-full w-10 h-10">
+              <div className="text-3xl font-bold text-purple-600 mb-2 bg-black rounded-full w-10 h-10">
                 {step.number}
               </div>
             </div>
