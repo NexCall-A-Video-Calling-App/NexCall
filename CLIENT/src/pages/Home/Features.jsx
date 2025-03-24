@@ -98,7 +98,7 @@ const FeaturesSection = () => {
         transition={{ duration: 0.5, delay: 0.2 }}
         className="text-3xl font-bold text-center mt-16 mb-8"
       >
-        How It Works
+        How It <span className="text-primary">Works</span>
       </motion.h2>
       <div className="grid md:grid-cols-3 gap-6 text-center">
         {steps.map((step, index) => (
@@ -107,12 +107,12 @@ const FeaturesSection = () => {
             initial={{ opacity: 0, y: 20 }}
             // animate={{ opacity: 1, y: 0 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            transition={{ duration: 0.1, }}
             whileHover={{ scale: 1.05 }}
             className="p-6 border rounded-lg shadow-md hover:shadow-lg transition"
           >
             <div className="flex items-center justify-center">
-              <div className="text-3xl font-bold text-purple-600 mb-2 bg-black rounded-full w-10 h-10">
+              <div className="text-2xl font-bold mb-2 border-primary border-2 rounded-full w-10 h-10">
                 {step.number}
               </div>
             </div>
