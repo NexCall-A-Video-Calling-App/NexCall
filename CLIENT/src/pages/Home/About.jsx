@@ -4,7 +4,7 @@ import aboutNexImg from '../../assets/aboutNex.png'
 
 const About = () => {
   return (
-    <div className="container mx-auto px-4 py-16 flex flex-col md:flex-row items-center overflow-hidden">
+    <div className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center overflow-hidden">
       {/* Left Text Section */}
       <motion.div
         initial={{ opacity: 0, x: -50 }}
