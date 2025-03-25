@@ -12,8 +12,7 @@ const jwt = require('jsonwebtoken');
 
 app.use(express.json());
 app.use(cookieParser());
-// Middleware
-
+// Middleware 
 app.use(cors({
     origin: ['http://localhost:5173'],
     credentials: true

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FaVideo, FaPhoneAlt, FaEllipsisV } from "react-icons/fa";
+import { FaVideo, FaPhoneAlt, FaEllipsisV, FaBars } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
@@ -80,8 +80,9 @@ const Dashboard = () => {
                 <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
                     <div className="flex items-center">
                         {/* Sidebar Toggle Button for Small Screens */}
-                        <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
-                            <FaEllipsisV />
+                        <button className="md:hidden text-xl md:p-2 mr-2" onClick={toggleSidebar}>
+                            {/* <FaEllipsisV /> */}
+                            <FaBars />
                         </button>
                         <img src="https://i.ibb.co/mFvskD5/icons8-avatars-48.png" alt="avatar" className="w-10 h-10 rounded-full" />
                         <div className="ml-1 md:ml-2">
@@ -90,11 +91,11 @@ const Dashboard = () => {
                         </div>
                     </div>
                     <div className="flex gap-1 md:space-x-2 ">
-                        <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
-                            <FaVideo /> Video Call
+                        <button className="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
+                            <span ><FaVideo /></span> <span className="hidden md:block">Video Call</span>
                         </button>
-                        <button className="flex items-center gap-1 md:gap-2  px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
-                            <FaPhoneAlt /> Voice Call
+                        <button className="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
+                            <span ><FaPhoneAlt /> </span><span className="hidden md:block">Voice Call</span>
                         </button>
                     </div>
                 </div>
