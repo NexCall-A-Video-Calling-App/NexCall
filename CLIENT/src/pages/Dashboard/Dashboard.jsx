@@ -13,51 +13,24 @@ const Dashboard = () => {
     return (
         <div className="flex h-screen bg-gray-100 relative -mt-16">
 
-  useEffect(() => {
-    setuserdata(belIconUserData);
-  }, []);
-
-  const handelBelIcon = () => {
-    
-    document.getElementById("my_modal_1").showModal();
-    // modal close 
-
-    console.log(userdata);
-  };
-
-  return (
-    <div className="flex h-screen bg-gray-100 relative -mt-16">
-      {/* Sidebar */}
-      <div
-        className={`fixed md:static top-0 left-0 h-full w-64 bg-white p-4 border-r shadow-lg z-20 transition-transform transform ${
-          showSidebar ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 flex flex-col`}
-      >
-        {/* Sidebar Content */}
-        <div className="flex-1 overflow-y-auto">
-          <div className="flex justify-between">
-            <h2 className="text-lg font-semibold">Messages</h2>
-            {/* Open the modal using document.getElementById('ID').showModal() method */}
-            <button className="" onClick={handelBelIcon}>
-              <GoBell />
-            </button>
-
-            <dialog id="my_modal_1" className="modal">
-              <div className="modal-box">
-                {isLoading ? (
-                  <div>
-                    <span className="loading loading-ring loading-lg"></span>
-                  </div>
-                ) : (
-                  <div>
-                    <div className=" border-black/30 flex flex-col gap-2">
-                      {belIconUserData.map((users, key) => (
-                        <div className={`border p-3 `} key={key}>
-                          <p className="">
-                            {" "}
-                            <span>{users.name}</span>{" "}
-                            <span className="text-red-500 ">joined</span>{" "}
-                          </p>
+            {/* Sidebar */}
+            <div className={`fixed md:static top-0 left-0 h-full w-64 bg-white p-4 border-r shadow-lg z-20 transition-transform transform ${showSidebar ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 flex flex-col`}>
+                {/* Sidebar Content */}
+                <div className="flex-1 overflow-y-auto">
+                    <h2 className="text-lg font-semibold">Messages</h2>
+                    <input
+                        type="text"
+                        placeholder="Search messages"
+                        className="w-full p-2 mt-2 border rounded-lg"
+                    />
+                    <div className="mt-4">
+                        <div className="flex items-center p-2 border rounded-lg">
+                            <img src="https://i.ibb.co/mFvskD5/icons8-avatars-48.png" alt="avatar" className="w-10 h-10 rounded-full" />
+                            <div className="ml-2">
+                                <p className="font-semibold">Sarah Johnson</p>
+                                <p className="text-sm text-gray-500">Hey, when is the next meeting?</p>
+                            </div>
+                            <span className="ml-auto text-xs text-gray-400">2m ago</span>
                         </div>
                     </div>
                 </div>
