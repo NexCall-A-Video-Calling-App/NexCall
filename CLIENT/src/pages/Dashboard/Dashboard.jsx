@@ -21,7 +21,9 @@ const Dashboard = () => {
   }, []);
 
   const handelBelIcon = () => {
+    
     document.getElementById("my_modal_1").showModal();
+    // modal close 
 
     console.log(userdata);
   };
