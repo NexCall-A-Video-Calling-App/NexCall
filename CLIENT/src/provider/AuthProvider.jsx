@@ -47,7 +47,7 @@ const AuthProvider = ({ children }) => {
                 setLoading(false);
             }
             else {
-                window.location.href = '/login'
+
                 setLoading(false);
             }
         });

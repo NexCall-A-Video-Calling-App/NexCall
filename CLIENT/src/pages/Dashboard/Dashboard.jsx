@@ -4,12 +4,26 @@ import { IoHome } from "react-icons/io5";
 import { IoIosSend } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Dashboard = () => {
     const {user, userLogOut} = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
   const navigate = useNavigate();
+
+  const handleLogOut = () => {
+    userLogOut()
+    .then(() => {
+      // Sign-out successful.
+      toast.success("Log out successfully")
+      // Redirect to sign-in page
+      navigate('/sign-in')
+    }   )
+    .catch((error) => {
+      // An error happened.
+      console.error(error);
+    });  }
 
   return (
     <div className="flex h-screen bg-gray-100 relative -mt-16">
@@ -87,7 +101,7 @@ const Dashboard = () => {
                   </li>
                   <li className="mt-auto">
                     <button className="btn btn-sm w-full mb-2"><Link to={'/userProfile'}>Profile</Link></button>
-                    <button className="btn btn-sm w-full">Log out</button>
+                    <button onClick={handleLogOut} className="btn btn-sm w-full">Log out</button>
                   </li>
                 </ul>
               </div>
