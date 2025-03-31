@@ -8,6 +8,7 @@ import SignIn from "../pages/SignIn/SignIn";
 import Dashboard from "../pages/Dashboard/Dashboard";
 import ProfileDetails from "../pages/Profile/Profile";
 import PrivateRoute from "./PrivateRoute";
+import EditProfile from "../pages/Profile/EditProfile";
 
 const Routes = createBrowserRouter([
   {
@@ -31,6 +32,12 @@ const Routes = createBrowserRouter([
         path: "/userProfile",
         element: <PrivateRoute>
           <ProfileDetails />
+        </PrivateRoute>
+      },
+      {
+        path: "/editProfile",
+        element: <PrivateRoute>
+          <EditProfile />
         </PrivateRoute>
       },
       {

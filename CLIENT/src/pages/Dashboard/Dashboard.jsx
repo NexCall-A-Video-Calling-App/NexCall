@@ -76,13 +76,13 @@ const Dashboard = () => {
               <input id="my-drawer" type="checkbox" className="drawer-toggle" />
               <div className="drawer-content">
                 {/* Page content here */}
-                <label htmlFor="my-drawer" className="drawer-button w-full flex justify-center items-center gap-2 mt-2 p-2 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                <label htmlFor="my-drawer" className="drawer-button border w-full flex justify-center items-center gap-2 mt-2 p-2 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
                   <img
                     src="https://i.ibb.co/mFvskD5/icons8-avatars-48.png"
                     alt="avatar"
-                    className="w-8 h-8 rounded-full"
+                    className="w-6 h-6 rounded-full"
                   />
-                  <span>{user?.displayName || "Sarah Johnson"}</span>
+                  <span>{user?.displayName || "Anonymous user"}</span>
                 </label>
               </div>
               <div className="drawer-side">
@@ -100,7 +100,7 @@ const Dashboard = () => {
                     <a>Sidebar Item 2</a>
                   </li>
                   <li className="mt-auto">
-                    <button className="btn btn-sm w-full mb-2"><Link to={'/userProfile'}>Profile</Link></button>
+                    <button className="btn btn-sm w-full mb-2"><Link to={'/userProfile'} className="w-full">Profile</Link></button>
                     <button onClick={handleLogOut} className="btn btn-sm w-full">Log out</button>
                   </li>
                 </ul>
