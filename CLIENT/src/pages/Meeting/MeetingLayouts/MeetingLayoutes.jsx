@@ -6,7 +6,11 @@ import React from 'react'
 
 function MeetingLayoutes() {
   return (
-    <div>MeetingLayoutes</div>
+    <div>
+        {/* all components herer */}
+
+
+    </div>
   )
 }
 
