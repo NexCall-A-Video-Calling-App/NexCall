@@ -74,6 +74,7 @@ function MeetingNavbar() {
         </div>
         <div className="navbar-end ">
           {/* implents search */}
+          {/* need color change */}
 
           <div className="flex border border-black/40 items-center ml-2 shadow-xl p-1">
             <IoSearchOutline className="text-gray-500 ml-3" />
