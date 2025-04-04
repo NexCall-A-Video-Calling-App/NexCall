@@ -10,6 +10,7 @@ import ProfileDetails from "../pages/Profile/Profile";
 import PrivateRoute from "./PrivateRoute";
 import EditProfile from "../pages/Profile/EditProfile";
 import MeetingLayoutes from "../pages/Meeting/MeetingLayouts/MeetingLayoutes";
+import MeetingNavbar from "../pages/Meeting/MeetingNavbar/MeetingNavbar";
 
 const Routes = createBrowserRouter([
   {
@@ -59,6 +60,11 @@ const Routes = createBrowserRouter([
     element:<MeetingLayoutes></MeetingLayoutes>,
     children:[
      
+      {
+        path:'/meeting-page/meeting-navbar',
+        elementL:<MeetingNavbar/>
+      }
+
     ]
   }
 ]);
