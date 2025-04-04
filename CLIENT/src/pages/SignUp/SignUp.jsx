@@ -17,7 +17,7 @@ const SignUp = () => {
         createUser(data.email, data.password)
             .then((result) => {
                 console.log(result.user);
-                navigate('/dashboard')
+                // navigate('/dashboard')
                 reset();
             })
             .catch((error) => {
