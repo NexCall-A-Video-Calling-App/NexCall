@@ -28,7 +28,9 @@ const MeetingFunctionpage = () => {
 
   return (
     <div>
-      <section className="w-full   border border-white/20 grid md:grid-cols-2  ">
+      <section className="w-full   border border-white/20 grid md:grid-cols-2  py-40 bg-slate-900 min-h-screen">
+
+
         <div className=" grid grid-cols-2  place-content-center place-items-center gap-2 ">
           <div
             className="  flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md w-1/2 ml-10
@@ -70,9 +72,13 @@ const MeetingFunctionpage = () => {
             <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
 
-          <div className="border h-48 rounded mt-4">
+          <div className="border h-56  rounded mt-4 border-red-100 opacity-30">
+
+
             <div className="flex justify-center items-center h-full">
-              <p className="text-black opacity-35">No Uncomming meeting today</p>
+
+
+              <p className="text-stone-300 opacity-45">No Uncomming meeting today</p>
               
             </div>
           </div>
