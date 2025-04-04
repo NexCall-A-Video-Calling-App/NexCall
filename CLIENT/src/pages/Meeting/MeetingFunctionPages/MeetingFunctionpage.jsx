@@ -39,6 +39,13 @@ const MeetingFunctionpage = () => {
 
           </div>
 
+          <div className=' flex flex-col items-center justify-center bg-blue-600 md:h-24 h-20  rounded-md w-1/2 -ml-10 '>
+            {/* Join */}
+            <IoPersonAddSharp className='size-8 text-white'/>
+            <span className='font-semibold text-white'>Join</span>
+            
+          </div>
+
 
       </div>
       
