@@ -32,7 +32,10 @@ const SignUp = () => {
         loginWithGoogle()
             .then((result) => {
                 console.log(result.user);
-                navigate('/dashboard')
+                // navigate('/dashboard')
+                navigate(
+                    '/meeting-page'
+                )
             })
             .catch((error) => {
                 console.log(error.message);
