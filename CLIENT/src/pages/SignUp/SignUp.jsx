@@ -18,6 +18,7 @@ const SignUp = () => {
             .then((result) => {
                 console.log(result.user);
                 // navigate('/dashboard')
+                navigate('/meeting-page')
                 reset();
             })
             .catch((error) => {
