@@ -13,6 +13,7 @@ const HomeLayout = () => {
             <About />
             <Schedule />
             <Features />
+            
             <GetStarted />
             <FAQ />
         </div>

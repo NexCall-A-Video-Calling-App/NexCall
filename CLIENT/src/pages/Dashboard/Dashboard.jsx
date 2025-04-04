@@ -78,7 +78,8 @@ const Dashboard = () => {
                 {/* Page content here */}
                 <label htmlFor="my-drawer" className="drawer-button border w-full flex justify-center items-center gap-2 mt-2 p-2 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
                   <img
-                    src="https://i.ibb.co/mFvskD5/icons8-avatars-48.png"
+                    src={user?.photoURL}
+                    referrerPolicy="no-referrer"
                     alt="avatar"
                     className="w-6 h-6 rounded-full"
                   />
