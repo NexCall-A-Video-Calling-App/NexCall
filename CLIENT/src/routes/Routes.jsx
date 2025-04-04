@@ -9,6 +9,9 @@ import Dashboard from "../pages/Dashboard/Dashboard";
 import ProfileDetails from "../pages/Profile/Profile";
 import PrivateRoute from "./PrivateRoute";
 import EditProfile from "../pages/Profile/EditProfile";
+import MeetingLayoutes from "../pages/Meeting/MeetingLayouts/MeetingLayoutes";
+import MeetingNavbar from "../pages/Meeting/MeetingNavbar/MeetingNavbar";
+import MeetingFunctionpage from "../pages/Meeting/MeetingFunctionPages/MeetingFunctionpage";
 
 const Routes = createBrowserRouter([
   {
@@ -49,7 +52,26 @@ const Routes = createBrowserRouter([
         ),
       },
     ],
+
+
+   
   },
+  {
+    path:'/meeting-page',
+    element:<MeetingLayoutes></MeetingLayoutes>,
+    children:[
+     
+      {
+        path:'/meeting-page/meeting-navbar',
+        elementL:<MeetingNavbar/>
+      },
+      {
+        path:'/meeting-page/meeting-function',
+        element: <MeetingFunctionpage/>
+      }
+
+    ]
+  }
 ]);
 
 export default Routes;
