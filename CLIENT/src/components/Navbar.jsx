@@ -1,21 +1,25 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from '../assets/nclogo.png';
+import logo from "../assets/nclogo.png";
+import useAuth from "../hooks/useAuth";
+import { MdOutlineVoiceChat } from "react-icons/md";
 
 const Navbar = () => {
+  const { user } = useAuth();
+
   const links = (
     <>
       <li>
-        <Link to={'/product'}>Product</Link>
+        <Link to={"/product"}>Product</Link>
       </li>
       <li>
-        <Link to={'/resource'}>Resouce</Link>
+        <Link to={"/resource"}>Resouce</Link>
       </li>
       <li>
-        <Link to={'/company'}>Company</Link>
+        <Link to={"/company"}>Company</Link>
       </li>
       <li>
-        <Link to={'/pricing'}>Pricing</Link>
+        <Link to={"/pricing"}>Pricing</Link>
       </li>
     </>
   );
@@ -48,19 +52,34 @@ const Navbar = () => {
           </ul>
         </div>
 
-        <Link to={'/'} className="flex items-center hover:underline hover:text-blue-700 text-xl">
-          <img className="w-10 h-10 object-cover" src={logo} alt="NexCall Logo" />
+        <Link
+          to={"/"}
+          className="flex items-center hover:underline hover:text-blue-700 text-xl"
+        >
+          <img
+            className="w-10 h-10 object-cover"
+            src={logo}
+            alt="NexCall Logo"
+          />
           <span>NexCall</span>
         </Link>
-
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1 text-base">
-          {links}
-        </ul>
+        <ul className="menu menu-horizontal px-1 text-base">{links}</ul>
       </div>
       <div className="navbar-end">
-        <Link to="/sign-up" className="btn">join us</Link>
+        {user ? (
+          <div className="indicator">
+            <Link to={"/dashboard"}>
+              <MdOutlineVoiceChat className="text-3xl" />
+            </Link>
+            <span className="badge badge-xs badge-primary indicator-item"></span>
+          </div>
+        ) : (
+          <Link to="/sign-up" className="btn">
+            join us
+          </Link>
+        )}
       </div>
     </div>
   );
