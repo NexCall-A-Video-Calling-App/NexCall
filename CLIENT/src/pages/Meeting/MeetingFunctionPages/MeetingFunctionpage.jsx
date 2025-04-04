@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
+
+import moment from "moment";
+
 import { GoDeviceCameraVideo } from "react-icons/go";
 import { Gi3dGlasses, GiTimeTrap } from "react-icons/gi";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { BsFillCameraReelsFill } from "react-icons/bs";
+
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -20,74 +24,65 @@ const MeetingFunctionpage = () => {
     return () => {
       clearInterval(callTime);
     };
-  });
+  },[]);
 
   return (
     <div>
       <section className="w-full   border border-white/20 grid md:grid-cols-2  ">
-      <div className=' grid grid-cols-2  place-content-center place-items-center gap-2 '>
-
-      <div className='  flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md w-1/2 ml-10
-         hover:cursor-pointer hover:bg-violet-400 transition delay-200 duration-100'>
-
+        <div className=" grid grid-cols-2  place-content-center place-items-center gap-2 ">
+          <div
+            className="  flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md w-1/2 ml-10
+         hover:cursor-pointer hover:bg-violet-400 transition delay-200 duration-100"
+          >
             {/* meeting */}
-            <BsFillCameraReelsFill className='text-4xl text-white font-bold  '/>
-            <span className='font-semibold text-white'>New Meeting</span>
-
-
-
-
+            <BsFillCameraReelsFill className="text-4xl text-white font-bold  " />
+            <span className="font-semibold text-white">New Meeting</span>
           </div>
 
-          <div className=' flex flex-col items-center justify-center bg-blue-600 md:h-24 h-20  rounded-md w-1/2 -ml-10 '>
+          <div className=" flex flex-col items-center justify-center bg-blue-600 md:h-24 h-20  rounded-md w-1/2 -ml-10 ">
             {/* Join */}
-            <IoPersonAddSharp className='size-8 text-white'/>
-            <span className='font-semibold text-white'>Join</span>
-            
+            <IoPersonAddSharp className="size-8 text-white" />
+            <span className="font-semibold text-white">Join</span>
           </div>
 
-          <div className=' flex flex-col items-center justify-center bg-blue-400 md:h-24 h-20 rounded-md w-1/2 ml-10'>
+          <div className=" flex flex-col items-center justify-center bg-blue-400 md:h-24 h-20 rounded-md w-1/2 ml-10">
             {/* sehedule */}
             {/* span inline element take neassy width how prove */}
-            <GiTimeTrap className='size-8 text-white'/>
-            <span className='font-semibold text-white'>Schedule</span>
-
+            <GiTimeTrap className="size-8 text-white" />
+            <span className="font-semibold text-white">Schedule</span>
           </div>
-          <div className='flex flex-col items-center justify-center bg-blue-600 md:h-24 h-20  rounded-md w-1/2 -ml-10'>
+          <div className="flex flex-col items-center justify-center bg-blue-600 md:h-24 h-20  rounded-md w-1/2 -ml-10">
             {/* help */}
-            <h2 className='text-xl font-semibold text-white'>help</h2>
+            <h2 className="text-xl font-semibold text-white">help</h2>
           </div>
+        </div>
 
 
-      </div>
-      
-      <div className=' p-2 '>
+        <div className=" p-2 ">
           {/* show time */}
           {/* moments .js  */}
-       
-
-          <div className='text-center border'>
-            {/* moment().format('LTS') */}
-            <p className='text-xl font-semibold text-white'>{time}</p>
-            <p className='font-semibold text-white'>{fullTime}</p>
-
-
-
-          </div>
           
-          <div className='border h-48'>
-            
-            <div className='flex justify-center items-center h-full'>
-            <p className='text-white'>No Uncomming meeting today</p>
-            </div>
 
+      
 
+          <div className="text-center">
+            <p className="text-sm font-semibold"> {time}</p>
+            <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
+
+          <div className="border h-48 rounded mt-4">
+            <div className="flex justify-center items-center h-full">
+              <p className="text-black opacity-35">No Uncomming meeting today</p>
+              
+            </div>
+          </div>
+
+
+        
+
 
 
         </div>
-      
-      
       </section>
     </div>
   );
