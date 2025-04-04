@@ -13,6 +13,17 @@ const MeetingFunctionpage = () => {
 
     const [ time , settime ] = useState("");
     const [ fullTime , setfullTime ] = useState("");
+
+    useEffect(()=>{
+        // use effect work when side effect like api calling 
+        const callTime = setInterval(()=>{
+          settime(moment().format('LTS'));
+          setfullTime(moment().format('MMMM Do YYYY'))
+        },1000);
+    
+        return ()=> {clearInterval(callTime)}
+    
+      })
   return (
     <div>
       
