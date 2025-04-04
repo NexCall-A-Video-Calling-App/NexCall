@@ -3,10 +3,12 @@
 import React from 'react'
 
 const MeetingFunctionpage = () => {
+    // main function go under navbar 
   return (
     <div>
       
-      <h1>Meeting page</h1>
+      
+
     </div>
   )
 }
