@@ -5,7 +5,11 @@ import React from 'react'
 
 function MeetingNavbar() {
   return (
-    <div>MeetingNavbar</div>
+    <div>
+        
+
+
+    </div>
   )
 }
 
