@@ -53,6 +53,10 @@ const MeetingFunctionpage = () => {
             <span className='font-semibold text-white'>Schedule</span>
 
           </div>
+          <div className='flex flex-col items-center justify-center bg-blue-600 md:h-24 h-20  rounded-md w-1/2 -ml-10'>
+            {/* help */}
+            <h2 className='text-xl font-semibold text-white'>help</h2>
+          </div>
 
 
       </div>
