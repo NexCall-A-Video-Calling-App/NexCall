@@ -61,6 +61,31 @@ const MeetingFunctionpage = () => {
 
       </div>
       
+      <div className=' p-2 '>
+          {/* show time */}
+          {/* moments .js  */}
+       
+
+          <div className='text-center border'>
+            {/* moment().format('LTS') */}
+            <p className='text-xl font-semibold text-white'>{time}</p>
+            <p className='font-semibold text-white'>{fullTime}</p>
+
+
+
+          </div>
+          
+          <div className='border h-48'>
+            
+            <div className='flex justify-center items-center h-full'>
+            <p className='text-white'>No Uncomming meeting today</p>
+            </div>
+
+
+          </div>
+
+
+        </div>
       
       
       </section>
