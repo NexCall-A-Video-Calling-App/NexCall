@@ -18,7 +18,8 @@ const SignIn = () => {
         loginUser(data.email, data.password)
             .then((result) => {
                 console.log(result.user);
-                navigate('/dashboard')
+                // navigate('/dashboard')
+
                 reset();
             })
             .catch((error) => {
