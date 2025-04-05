@@ -42,6 +42,17 @@ const Dashboard = () => {
       console.log("My ID: ", socket.id);
     });
 
+    socket.on("RoomCreated", (roomId) => {
+      setCurrentRoom(roomId);
+      setMessages([]);
+      setLoading(false);
+    });
+
+    socket.on("RoomJoined", (roomId) => {
+      setCurrentRoom(roomId);
+      setMessages([]);
+      setLoading(false);
+    });
 
     return () => {
       socket.disconnect();
