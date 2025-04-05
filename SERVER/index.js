@@ -14,17 +14,18 @@ app.use(cookieParser());
 // Middleware
 
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app'],
     credentials: true
 }));
 
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:5173',
-        methods: ["GET", "POST"],
+        origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app'],
+        methods: ['GET', 'POST'],
         credentials: true
     }
-})
+});
+
 
 const roomUsers = {}
 
