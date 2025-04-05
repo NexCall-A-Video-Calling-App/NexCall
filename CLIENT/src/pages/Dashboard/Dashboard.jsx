@@ -80,6 +80,7 @@ const Dashboard = () => {
         room: CurrentRoom,
         message,
         senderName: user?.displayName,
+        photo: user?.photoURL,
         receiverName: otherUser?.name
       });
       setMessage("");
@@ -286,7 +287,10 @@ const Dashboard = () => {
                           : "bg-black text-white mb-1"
                           }`}
                       >
-                        {msg.message}
+                        <div className="flex items-center gap-2">
+                          <img className="w-8 h-8 rounded-full" src={msg.photo} alt="" />
+                          {msg.message}
+                        </div>
                       </div>
                     </div>
                   ))
