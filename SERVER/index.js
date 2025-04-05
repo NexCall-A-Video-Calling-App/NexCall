@@ -1,4 +1,3 @@
-// check any mistakes ?
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -27,28 +26,17 @@ const io = new Server(server, {
 })
 
 io.on("connection", (socket) => {
-    console.log("user connected")
-    console.log("Id", socket.id);
+    console.log("Connected ID:", socket.id);
 
+    // Create Room
+    socket.on("createRoom", (userData) => {
+        const roomId = Math.random().toString(36).substr(2, 6);
+        socket.join(roomId);
+        roomUsers[roomId] = [{ socketId: socket.id, ...userData }]
+        socket.emit("RoomCreated", roomId);
+    });
 
-
-
-    // typing animation 
-    socket.on('typing',()=>{
-
-        // send to all this animation expect sendnder
-        // who join same room
-        socket.broadcast.emit('typingStatus',socket.id);
-        // send to server
-        // server use onchangekey press call system
-        // pass socket id 
-
-    })
-
-
-
-    io.on('disconnect',(reason)=>{
-        
+    io.on('disconnect', (reason) => {
         console.log(`Disconnect user id ${socket.id} reason ${reason}`)
     })
 
