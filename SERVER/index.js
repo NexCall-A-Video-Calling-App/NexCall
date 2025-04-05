@@ -1,4 +1,3 @@
-// check any mistakes ?
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
@@ -12,58 +11,82 @@ const jwt = require('jsonwebtoken');
 
 app.use(express.json());
 app.use(cookieParser());
-// Middleware 
+// Middleware
+
 app.use(cors({
-    origin: ['http://localhost:5173'],
+    origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app'],
     credentials: true
 }));
 
 const io = new Server(server, {
     cors: {
-        origin: 'http://localhost:5173',
-        methods: ["GET", "POST"],
+        origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app'],
+        methods: ['GET', 'POST'],
         credentials: true
     }
-})
+});
+
+
+const roomUsers = {}
 
 io.on("connection", (socket) => {
-    console.log("user connected")
-    console.log("Id", socket.id);
+    console.log("Connected ID:", socket.id);
 
+    // Create Room
+    socket.on("createRoom", (userData) => {
+        const roomId = Math.random().toString(36).substr(2, 6);
+        socket.join(roomId);
+        roomUsers[roomId] = [{ socketId: socket.id, ...userData }]
+        socket.emit("RoomCreated", roomId);
+        console.log("Room Created: ", roomId)
+    });
 
+    // Join Room
+    socket.on("JoinRoom", ({ roomId, userData }) => {
+        socket.join(roomId);
+        if (!roomUsers[roomId]) {
+            roomUsers[roomId] = []
+        }
+        socket.emit("RoomJoined", roomId);
+        roomUsers[roomId].push({ socketId: socket.id, ...userData })
+        io.to(roomId).emit("updatedRoomUser", roomUsers[roomId])
+    });
 
+    // Send Message
+    socket.on("sentMessage", async ({ room, message, senderName, receiverName }) => {
+        const messageData = {
+            room,
+            message,
+            senderName,
+            receiverName,
+            timestamp: new Date()
+        };
+        // Save the message to the messages collection
+        const messagesCollection = client.db("NexCall").collection('messages');
+        await messagesCollection.insertOne(messageData);
 
-    // typing animation 
-    socket.on('typing',()=>{
+        io.to(room).emit("receiveMessage", { sender: socket.id, message });
+    });
 
-        // send to all this animation expect sendnder
-        // who join same room
-        socket.broadcast.emit('typingStatus',socket.id);
-        // send to server
-        // server use onchangekey press call system
-        // pass socket id 
+    // Handle Disconnect
+    socket.on("disconnect", () => {
+        for (roomId in roomUsers) {
+            roomUsers[roomId] = roomUsers[roomId].filter(user => user.socketId !== socket.id)
+            io.to(roomId).emit("updatedRoomUser", roomUsers[roomId])
+        }
+        console.log(`Disconnected user ID: ${socket.id}`);
+    });
+});
 
-    })
-
-
-
-    io.on('disconnect',(reason)=>{
-        
-        console.log(`Disconnect user id ${socket.id} reason ${reason}`)
-    })
-
-
-})
-
-
-// join user show on bell icon 
 
 app.get('/', (req, res) => {
-    res.send("ASSIGNMENT-10 SERVER RUNNING")
+    res.send("NEXCALL SERVER RUNNING")
 })
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const uri = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.x6oak.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const { profile } = require('console');
+const uri = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.mvhtan2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+// const uri = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.x6oak.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -76,13 +99,14 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
-        // COLLECTIONS
+        // COLLECTIONS 
         const usersCollections = client.db("NexCall").collection('users');
+        const messagesCollection = client.db("NexCall").collection('messages');
 
         // JWT AUTH ENDPOINTS
         app.post('/jwt', async (req, res) => {
             const user = req.body
-            const token = jwt.sign(user, process.env.jwt_Secret, {
+            const token = jwt.sign(user, process.env.JWT_SECRET, {
                 expiresIn: '1h'
             })
             res
@@ -112,6 +136,7 @@ async function run() {
         // TOKEN VERIFIER
         const verifyToken = (req, res, next) => {
             const token = req?.cookies?.token
+            console.log("token: ", token)
             if (!token) {
                 return res.status(401).send({ message: 'Token not found to verify' })
             }
@@ -123,6 +148,20 @@ async function run() {
                 next()
             })
         }
+
+
+        // API to get messages between two users
+        app.get('/messages/:otherUser', verifyToken, async (req, res) => {
+            const userName = req.user.displayName;
+            const otherUser = req.params.otherUser;
+            const messages = await messagesCollection.find({
+                $or: [
+                    { senderName: userName, receiverName: otherUser },
+                    { senderName: otherUser, receiverName: userName }
+                ]
+            }).sort({ timestamp: 1 }).toArray();
+            res.send(messages);
+        });
 
         // User API:
         app.post('/users', async (req, res) => {

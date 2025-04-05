@@ -19,19 +19,12 @@ const queryClient = new QueryClient();
 console.log(queryClient);
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-
+  <>
     <AuthProvider>
-
       <QueryClientProvider client={queryClient}>
-
-      <RouterProvider router={Routes} />
-
-      <Toaster />
-
+        <RouterProvider router={Routes} />
+        <Toaster />
       </QueryClientProvider>
-   
     </AuthProvider>
-
-  </StrictMode>,
+  </>,
 )
