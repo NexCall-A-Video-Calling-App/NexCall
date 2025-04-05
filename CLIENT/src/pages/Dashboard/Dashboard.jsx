@@ -8,6 +8,7 @@ import { IoHome } from "react-icons/io5";
 import { IoIosSend, IoMdInformationCircleOutline } from "react-icons/io";
 import { ImMakeGroup } from "react-icons/im";
 import { HiUserAdd } from "react-icons/hi";
+import { RiChatDownloadLine } from "react-icons/ri";
 
 const Dashboard = () => {
   const socket = useMemo(() => io.connect("http://localhost:5000"), []);
@@ -99,6 +100,11 @@ const Dashboard = () => {
       roomId,
       userData: { name: user.displayName, profilePic: user.photoURL }
     });
+  };
+
+  // Download messages as PDF 
+  const handleDownloadMessagesAsPDF = () => {
+
   };
 
   const JoinInit = (e) => {
@@ -226,8 +232,14 @@ const Dashboard = () => {
                 </button>
                 <button
                   onClick={() => document.getElementById('my_modal_3').showModal()}
-                  className="flex items-center gap-1 md:gap-2  px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
+                  className="flex items-center gap-1 md:gap-2  px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg">
                   <IoMdInformationCircleOutline />
+                </button>
+                <button
+                  onClick={handleDownloadMessagesAsPDF}
+                  className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg"
+                >
+                  <RiChatDownloadLine />
                 </button>
               </div>
             </div>
