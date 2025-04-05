@@ -12,7 +12,8 @@ import { RiChatDownloadLine } from "react-icons/ri";
 import jsPDF from "jspdf";
 
 const Dashboard = () => {
-  const socket = useMemo(() => io.connect("http://localhost:5000"), []);
+  // const socket = useMemo(() => io.connect("http://localhost:5000"), []); // for local server
+  const socket = useMemo(() => io.connect("https://nexcall.up.railway.app"), []); // for live server
   const { user, userLogOut, loading, setLoading } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
@@ -30,7 +31,6 @@ const Dashboard = () => {
         console.error(error);
       });
   }
-
   // CHAT STATES
   const [JoinRoomId, setJoinRoomId] = useState(""); // RoomID from front-end input 
   const [CurrentRoom, setCurrentRoom] = useState(null); // ROOMID comes from back-end 
@@ -64,6 +64,7 @@ const Dashboard = () => {
     });
 
     socket.on("receiveMessage", (msg) => {
+      console.log("MESSAGES:", msg);
       setMessages((prevMsg) => [...prevMsg, msg]);
     });
 
@@ -281,17 +282,22 @@ const Dashboard = () => {
                       className={`flex ${msg.sender === UserId ? "justify-end" : "justify-start"
                         }`}
                     >
-                      <div
-                        className={`p-2 rounded-lg ${msg.sender === UserId
-                          ? "bg-blue-500 text-white mb-1"
-                          : "bg-black text-white mb-1"
-                          }`}
-                      >
-                        <div className="flex items-center gap-2">
-                          <img className="w-8 h-8 rounded-full" src={msg.photo} alt="" />
+                      <div className="flex gap-1">
+                        <div className="h-full flex justify-center items-end">
+                          <img
+                            referrerPolicy="no-referrer"
+                            className="w-4 h-4 rounded-full mb-1" src={msg.photo} alt="" />
+                        </div>
+                        <div
+                          className={`p-2 rounded-lg ${msg.sender === UserId
+                            ? "bg-blue-500 text-white mb-1"
+                            : "bg-black text-white mb-1"
+                            }`}
+                        >
                           {msg.message}
                         </div>
                       </div>
+
                     </div>
                   ))
                 }
