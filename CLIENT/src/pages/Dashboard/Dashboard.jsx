@@ -125,10 +125,10 @@ const Dashboard = () => {
       const text = `${msg.senderName || "Unknown"}: ${msg.message}`;
       if (y > 280) {
         doc.addPage();
-        y = 10;
+        y = 8;
       }
-      doc.text(text, 10, y);
-      y += 10;
+      doc.text(text, 8, y);
+      y += 8;
     });
 
     doc.save(`room-${CurrentRoom}-messages.pdf`);
