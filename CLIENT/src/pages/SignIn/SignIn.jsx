@@ -18,8 +18,8 @@ const SignIn = () => {
         loginUser(data.email, data.password)
             .then((result) => {
                 console.log(result.user);
-                // navigate('/dashboard')
-                navigate('/meeting-page')
+                navigate('/dashboard')
+                // navigate('/meeting-page')
 
                 reset();
             })
@@ -34,8 +34,8 @@ const SignIn = () => {
         loginWithGoogle()
             .then((result) => {
                 console.log(result.user);
-                // navigate('/dashboard')
-                navigate('/meeting-page')
+                navigate('/dashboard')
+                // navigate('/meeting-page')
             })
             .catch((error) => {
                 console.log(error.message);

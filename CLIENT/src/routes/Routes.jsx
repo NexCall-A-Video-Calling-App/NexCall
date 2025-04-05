@@ -45,29 +45,22 @@ const Routes = createBrowserRouter([
       },
       {
         path: "/dashboard",
-        element: (
-          <PrivateRoute>
-            <Dashboard />
-          </PrivateRoute>
-        ),
+        element: <Dashboard />
       },
     ],
-
-
-   
   },
   {
-    path:'/meeting-page',
-    element:<MeetingLayoutes></MeetingLayoutes>,
-    children:[
-     
+    path: '/meeting-page',
+    element: <MeetingLayoutes></MeetingLayoutes>,
+    children: [
+
       {
-        path:'/meeting-page/meeting-navbar',
-        elementL:<MeetingNavbar/>
+        path: '/meeting-page/meeting-navbar',
+        elementL: <MeetingNavbar />
       },
       {
-        path:'/meeting-page/meeting-function',
-        element: <MeetingFunctionpage/>
+        path: '/meeting-page/meeting-function',
+        element: <MeetingFunctionpage />
       }
 
     ]
