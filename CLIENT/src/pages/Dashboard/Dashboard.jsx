@@ -9,6 +9,7 @@ import { IoIosSend, IoMdInformationCircleOutline } from "react-icons/io";
 import { ImMakeGroup } from "react-icons/im";
 import { HiUserAdd } from "react-icons/hi";
 import { RiChatDownloadLine } from "react-icons/ri";
+import jsPDF from "jspdf";
 
 const Dashboard = () => {
   const socket = useMemo(() => io.connect("http://localhost:5000"), []);
@@ -102,9 +103,25 @@ const Dashboard = () => {
     });
   };
 
-  // Download messages as PDF 
+  // Download messages as PDF
   const handleDownloadMessagesAsPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(12);
+    doc.text(`Room ID: ${CurrentRoom}`, 10, 10);
+    doc.text(`Downloaded At: ${new Date().toLocaleString()}`, 10, 20);
 
+    let y = 30;
+    messages.forEach((msg, index) => {
+      const text = `${msg.senderName || "Unknown"}: ${msg.message}`;
+      if (y > 280) {
+        doc.addPage();
+        y = 10;
+      }
+      doc.text(text, 10, y);
+      y += 10;
+    });
+
+    doc.save(`room-${CurrentRoom}-messages.pdf`);
   };
 
   const JoinInit = (e) => {
