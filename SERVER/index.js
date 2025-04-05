@@ -46,7 +46,7 @@ io.on("connection", (socket) => {
         roomUsers[roomId].push({ socketId: socket.id, ...userData })
         io.to(roomId).emit("updatedRoomUser", roomUsers[roomId])
     });
- 
+
     // Send Message
     socket.on("sentMessage", async ({ room, message, senderName, receiverName }) => {
         const messageData = {
@@ -62,14 +62,16 @@ io.on("connection", (socket) => {
 
         io.to(room).emit("receiveMessage", { sender: socket.id, message });
     });
- 
 
-    io.on('disconnect', (reason) => {
-        console.log(`Disconnect user id ${socket.id} reason ${reason}`)
-    })
-
-
-})
+    // Handle Disconnect
+    socket.on("disconnect", () => {
+        for (roomId in roomUsers) {
+            roomUsers[roomId] = roomUsers[roomId].filter(user => user.socketId !== socket.id)
+            io.to(roomId).emit("updatedRoomUser", roomUsers[roomId])
+        }
+        console.log(`Disconnected user ID: ${socket.id}`);
+    });
+});
 
 
 // join user show on bell icon 
