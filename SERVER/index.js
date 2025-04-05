@@ -11,7 +11,8 @@ const jwt = require('jsonwebtoken');
 
 app.use(express.json());
 app.use(cookieParser());
-// Middleware 
+// Middleware
+
 app.use(cors({
     origin: ['http://localhost:5173'],
     credentials: true
@@ -25,6 +26,8 @@ const io = new Server(server, {
     }
 })
 
+const roomUsers = {}
+
 io.on("connection", (socket) => {
     console.log("Connected ID:", socket.id);
 
@@ -34,6 +37,7 @@ io.on("connection", (socket) => {
         socket.join(roomId);
         roomUsers[roomId] = [{ socketId: socket.id, ...userData }]
         socket.emit("RoomCreated", roomId);
+        console.log("Room Created: ", roomId)
     });
 
     // Join Room
@@ -74,14 +78,14 @@ io.on("connection", (socket) => {
 });
 
 
-// join user show on bell icon 
-
 app.get('/', (req, res) => {
-    res.send("ASSIGNMENT-10 SERVER RUNNING")
+    res.send("NEXCALL SERVER RUNNING")
 })
 
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
-const uri = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.x6oak.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+const { profile } = require('console');
+const uri = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.mvhtan2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+// const uri = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.x6oak.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
@@ -94,13 +98,14 @@ const client = new MongoClient(uri, {
 
 async function run() {
     try {
-        // COLLECTIONS
+        // COLLECTIONS 
         const usersCollections = client.db("NexCall").collection('users');
+        const messagesCollection = client.db("NexCall").collection('messages');
 
         // JWT AUTH ENDPOINTS
         app.post('/jwt', async (req, res) => {
             const user = req.body
-            const token = jwt.sign(user, process.env.jwt_Secret, {
+            const token = jwt.sign(user, process.env.JWT_SECRET, {
                 expiresIn: '1h'
             })
             res
@@ -130,6 +135,7 @@ async function run() {
         // TOKEN VERIFIER
         const verifyToken = (req, res, next) => {
             const token = req?.cookies?.token
+            console.log("token: ", token)
             if (!token) {
                 return res.status(401).send({ message: 'Token not found to verify' })
             }
@@ -141,6 +147,20 @@ async function run() {
                 next()
             })
         }
+
+
+        // API to get messages between two users
+        app.get('/messages/:otherUser', verifyToken, async (req, res) => {
+            const userName = req.user.displayName;
+            const otherUser = req.params.otherUser;
+            const messages = await messagesCollection.find({
+                $or: [
+                    { senderName: userName, receiverName: otherUser },
+                    { senderName: otherUser, receiverName: userName }
+                ]
+            }).sort({ timestamp: 1 }).toArray();
+            res.send(messages);
+        });
 
         // User API:
         app.post('/users', async (req, res) => {
