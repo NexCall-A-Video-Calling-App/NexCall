@@ -7,7 +7,6 @@ import { Gi3dGlasses, GiTimeTrap } from "react-icons/gi";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { BsFillCameraReelsFill } from "react-icons/bs";
 
-
 const MeetingFunctionpage = () => {
   // main function go under navbar
 
@@ -24,17 +23,15 @@ const MeetingFunctionpage = () => {
     return () => {
       clearInterval(callTime);
     };
-  },[]);
+  }, []);
 
   return (
     <div>
       <section className="w-full   border border-white/20 grid md:grid-cols-2  py-40 bg-slate-900 min-h-screen">
-
-
         <div className=" grid grid-cols-2  place-content-center place-items-center gap-2 ">
           <div
             className="  flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md w-1/2 ml-10
-         hover:cursor-pointer hover:bg-violet-400 transition delay-200 duration-100"
+         hover:cursor-pointer hover:bg-violet-700 transition delay-200 duration-100"
           >
             {/* meeting */}
             <BsFillCameraReelsFill className="text-4xl text-white font-bold  " />
@@ -60,35 +57,25 @@ const MeetingFunctionpage = () => {
           </div>
         </div>
 
-
         <div className=" p-2 ">
           {/* show time */}
           {/* moments .js  */}
-          
-
-      
 
           <div className="text-center">
             <p className="text-sm font-semibold text-white"> {time}</p>
-            <p className="text-xl font-semibold text-white opacity-60"> {fullTime}</p>
+            <p className="text-xl font-semibold text-white opacity-60">
+              {" "}
+              {fullTime}
+            </p>
           </div>
 
           <div className="border h-56  rounded mt-4 border-red-100 opacity-30">
-
-
             <div className="flex justify-center items-center h-full">
-
-
-              <p className="text-stone-300 opacity-45">No Uncomming meeting today</p>
-              
+              <p className="text-stone-300 opacity-45">
+                No Uncomming meeting today
+              </p>
             </div>
           </div>
-
-
-        
-
-
-
         </div>
       </section>
     </div>
