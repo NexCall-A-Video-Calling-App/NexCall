@@ -44,7 +44,7 @@ const MeetingFunctionpage = () => {
             <span className="font-semibold text-white">Join</span>
           </div>
 
-          <div className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md w-1/2 ml-10">
+          <div className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md w-1/2 ml-10 hover:bg-blue-600">
             {/* sehedule */}
             {/* span inline element take neassy width how prove */}
             <GiTimeTrap className="size-8 text-white" />
