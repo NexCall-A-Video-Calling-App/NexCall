@@ -37,6 +37,16 @@ const MeetingFunctionpage = () => {
     }); 
   };
 
+  // JOIN ROOM FUNCTIONS
+  const handleJoinRoom = (roomId) => {
+    if (!JoinRoomId) return;
+    setLoading(true);
+    socket.emit("JoinRoom", {
+      roomId,
+      userData: { name: user.displayName, profilePic: user.photoURL }
+    });
+  };
+
   return (
     <div>
       <section className="w-full   border border-white/20 grid md:grid-cols-2  py-40 bg-slate-900 min-h-screen">
