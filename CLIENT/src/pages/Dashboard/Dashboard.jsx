@@ -8,7 +8,7 @@ import toast from "react-hot-toast";
 
 const Dashboard = () => {
   const socket = useMemo(() => io.connect("http://localhost:5000"), []);
-  
+
   const { user, userLogOut } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
@@ -35,7 +35,18 @@ const Dashboard = () => {
   const [message, setMessage] = useState(""); // single message from sender 
   const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.  
 
+  // CHAT SIDE EFFECT
+  useEffect(() => {
+    socket.on("connect", () => {
+      setUserId(socket.id);
+      console.log("My ID: ", socket.id);
+    });
 
+
+    return () => {
+      socket.disconnect();
+    };
+  }, [socket]);
 
   return (
     <div className="flex h-screen bg-gray-100 relative -mt-16">
