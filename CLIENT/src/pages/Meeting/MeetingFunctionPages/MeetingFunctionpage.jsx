@@ -70,7 +70,7 @@ const MeetingFunctionpage = () => {
 
           <div className="text-center">
             <p className="text-sm font-semibold text-white"> {time}</p>
-            <p className="text-xl font-semibold"> {fullTime}</p>
+            <p className="text-xl font-semibold text-white"> {fullTime}</p>
           </div>
 
           <div className="border h-56  rounded mt-4 border-red-100 opacity-30">
