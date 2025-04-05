@@ -7,6 +7,8 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 
 const Dashboard = () => {
+  const socket = useMemo(() => io.connect("http://localhost:5000"), []);
+  
   const { user, userLogOut } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
@@ -25,14 +27,13 @@ const Dashboard = () => {
       });
   }
 
-  
-    // CHAT STATES
-    const [JoinRoomId, setJoinRoomId] = useState(""); // RoomID from front-end input 
-    const [CurrentRoom, setCurrentRoom] = useState(null); // ROOMID comes from back-end 
-    const [UserId, setUserId] = useState(null);  // Client Socket ID 
-    const [messages, setMessages] = useState([]); // all messages(both sender & receiver) 
-    const [message, setMessage] = useState(""); // single message from sender 
-    const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.  
+  // CHAT STATES
+  const [JoinRoomId, setJoinRoomId] = useState(""); // RoomID from front-end input 
+  const [CurrentRoom, setCurrentRoom] = useState(null); // ROOMID comes from back-end 
+  const [UserId, setUserId] = useState(null);  // Client Socket ID 
+  const [messages, setMessages] = useState([]); // all messages(both sender & receiver) 
+  const [message, setMessage] = useState(""); // single message from sender 
+  const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.  
 
 
 
@@ -47,7 +48,7 @@ const Dashboard = () => {
         <div className="flex-1 overflow-y-auto">
           <h2 className="text-lg font-semibold">Messages</h2>
           <input
-            type="text"     
+            type="text"
             placeholder="Search messages"
             className="w-full p-2 mt-2 border rounded-lg"
           />
