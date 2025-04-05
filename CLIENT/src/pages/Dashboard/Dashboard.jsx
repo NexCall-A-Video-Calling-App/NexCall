@@ -25,6 +25,16 @@ const Dashboard = () => {
       });
   }
 
+  
+    // CHAT STATES
+    const [JoinRoomId, setJoinRoomId] = useState(""); // RoomID from front-end input 
+    const [CurrentRoom, setCurrentRoom] = useState(null); // ROOMID comes from back-end 
+    const [UserId, setUserId] = useState(null);  // Client Socket ID 
+    const [messages, setMessages] = useState([]); // all messages(both sender & receiver) 
+    const [message, setMessage] = useState(""); // single message from sender 
+    const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.  
+
+
 
   return (
     <div className="flex h-screen bg-gray-100 relative -mt-16">
