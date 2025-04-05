@@ -36,6 +36,18 @@ io.on("connection", (socket) => {
         socket.emit("RoomCreated", roomId);
     });
 
+    // Join Room
+    socket.on("JoinRoom", ({ roomId, userData }) => {
+        socket.join(roomId);
+        if (!roomUsers[roomId]) {
+            roomUsers[roomId] = []
+        }
+        socket.emit("RoomJoined", roomId);
+        roomUsers[roomId].push({ socketId: socket.id, ...userData })
+        io.to(roomId).emit("updatedRoomUser", roomUsers[roomId])
+    });
+
+
     io.on('disconnect', (reason) => {
         console.log(`Disconnect user id ${socket.id} reason ${reason}`)
     })
