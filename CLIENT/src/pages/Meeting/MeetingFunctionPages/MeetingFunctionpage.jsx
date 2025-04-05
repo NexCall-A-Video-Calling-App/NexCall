@@ -38,7 +38,7 @@ const MeetingFunctionpage = () => {
             <span className="font-semibold text-white">New Meeting</span>
           </div>
 
-          <div className=" flex flex-col items-center justify-center bg-indigo-700 md:h-24 h-20  rounded-md w-1/2 -ml-10 ">
+          <div className=" flex flex-col items-center justify-center bg-indigo-700 md:h-24 h-20  rounded-md w-1/2 -ml-10 hover:bg-indigo-600 hover:shadow-lg ">
             {/* Join */}
             <IoPersonAddSharp className="size-8 text-white" />
             <span className="font-semibold text-white">Join</span>
