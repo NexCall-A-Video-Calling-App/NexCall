@@ -46,7 +46,23 @@ io.on("connection", (socket) => {
         roomUsers[roomId].push({ socketId: socket.id, ...userData })
         io.to(roomId).emit("updatedRoomUser", roomUsers[roomId])
     });
+ 
+    // Send Message
+    socket.on("sentMessage", async ({ room, message, senderName, receiverName }) => {
+        const messageData = {
+            room,
+            message,
+            senderName,
+            receiverName,
+            timestamp: new Date()
+        };
+        // Save the message to the messages collection
+        const messagesCollection = client.db("NexCall").collection('messages');
+        await messagesCollection.insertOne(messageData);
 
+        io.to(room).emit("receiveMessage", { sender: socket.id, message });
+    });
+ 
 
     io.on('disconnect', (reason) => {
         console.log(`Disconnect user id ${socket.id} reason ${reason}`)
