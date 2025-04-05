@@ -7,37 +7,37 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 
 const Dashboard = () => {
-    const {user, userLogOut} = useAuth();
+  const { user, userLogOut } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
   const navigate = useNavigate();
-
   const handleLogOut = () => {
     userLogOut()
-    .then(() => {
-      // Sign-out successful.
-      toast.success("Log out successfully")
-      // Redirect to sign-in page
-      navigate('/sign-in')
-    }   )
-    .catch((error) => {
-      // An error happened.
-      console.error(error);
-    });  }
+      .then(() => {
+        // Sign-out successful.
+        toast.success("Log out successfully")
+        // Redirect to sign-in page
+        navigate('/sign-in')
+      })
+      .catch((error) => {
+        // An error happened.
+        console.error(error);
+      });
+  }
+
 
   return (
     <div className="flex h-screen bg-gray-100 relative -mt-16">
       {/* Sidebar */}
       <div
-        className={`fixed md:static top-0 left-0 h-full w-64 bg-white p-4 border-r shadow-lg z-20 transition-transform duration-700 transform ${
-          showSidebar ? "translate-x-0" : "-translate-x-full"
-        } md:translate-x-0 flex flex-col`}
+        className={`fixed md:static top-0 left-0 h-full w-64 bg-white p-4 border-r shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
+          } md:translate-x-0 flex flex-col`}
       >
         {/* Sidebar Content */}
         <div className="flex-1 overflow-y-auto">
           <h2 className="text-lg font-semibold">Messages</h2>
           <input
-            type="text"
+            type="text"     
             placeholder="Search messages"
             className="w-full p-2 mt-2 border rounded-lg"
           />
@@ -70,43 +70,43 @@ const Dashboard = () => {
             <IoHome /> Back to Home
           </button>
 
-          {/* Profile */} 
-            <div className="drawer">
-              <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-              <div className="drawer-content">
-                {/* Page content here */}
-                <label htmlFor="my-drawer" className="drawer-button border w-full flex justify-center items-center gap-2 mt-2 p-2 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
-                  <img
-                    src={user?.photoURL}
-                    referrerPolicy="no-referrer"
-                    alt="avatar"
-                    className="w-6 h-6 rounded-full"
-                  />
-                  <span>{user?.displayName || "Anonymous user"}</span>
-                </label>
-              </div>
-              <div className="drawer-side">
-                <label
-                  htmlFor="my-drawer"
-                  aria-label="close sidebar"
-                  className="drawer-overlay"
-                ></label>
-                <ul className="menu bg-base-200 text-base-content min-h-full w-50 p-4">
-                  {/* Sidebar content here */}
-                  <li>
-                    <a>Sidebar Item 1</a>
-                  </li>
-                  <li>
-                    <a>Sidebar Item 2</a>
-                  </li>
-                  <li className="mt-auto">
-                    <button className="btn btn-sm w-full mb-2"><Link to={'/userProfile'} className="w-full">Profile</Link></button>
-                    <button onClick={handleLogOut} className="btn btn-sm w-full">Log out</button>
-                  </li>
-                </ul>
-              </div>
+          {/* Profile */}
+          <div className="drawer">
+            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              {/* Page content here */}
+              <label htmlFor="my-drawer" className="drawer-button border w-full flex justify-center items-center gap-2 mt-2 p-2 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
+                <img
+                  src={user?.photoURL}
+                  referrerPolicy="no-referrer"
+                  alt="avatar"
+                  className="w-6 h-6 rounded-full"
+                />
+                <span>{user?.displayName || "Anonymous user"}</span>
+              </label>
             </div>
-          
+            <div className="drawer-side">
+              <label
+                htmlFor="my-drawer"
+                aria-label="close sidebar"
+                className="drawer-overlay"
+              ></label>
+              <ul className="menu bg-base-200 text-base-content min-h-full w-50 p-4">
+                {/* Sidebar content here */}
+                <li>
+                  <a>Sidebar Item 1</a>
+                </li>
+                <li>
+                  <a>Sidebar Item 2</a>
+                </li>
+                <li className="mt-auto">
+                  <button className="btn btn-sm w-full mb-2"><Link to={'/userProfile'} className="w-full">Profile</Link></button>
+                  <button onClick={handleLogOut} className="btn btn-sm w-full">Log out</button>
+                </li>
+              </ul>
+            </div>
+          </div>
+
         </div>
       </div>
 
