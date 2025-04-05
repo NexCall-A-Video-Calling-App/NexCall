@@ -8,6 +8,8 @@ import { IoHome } from "react-icons/io5";
 import { IoIosSend, IoMdInformationCircleOutline } from "react-icons/io";
 import { ImMakeGroup } from "react-icons/im";
 import { HiUserAdd } from "react-icons/hi";
+import { RiChatDownloadLine } from "react-icons/ri";
+import jsPDF from "jspdf";
 
 const Dashboard = () => {
   const socket = useMemo(() => io.connect("http://localhost:5000"), []);
@@ -99,6 +101,37 @@ const Dashboard = () => {
       roomId,
       userData: { name: user.displayName, profilePic: user.photoURL }
     });
+  };
+
+  // Download messages as PDF
+  const handleDownloadMessagesAsPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(12);
+
+    // Set background color for Room ID and Downloaded At
+    const headerHeight = 20;
+    doc.setFillColor(200, 200, 255);
+    doc.rect(0, 0, doc.internal.pageSize.width, headerHeight, 'F');
+
+    // Add the text on the left (Room ID)
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Room ID: ${CurrentRoom}`, 10, 15);
+
+    // Add the text on the right (Downloaded At)
+    doc.text(`Downloaded At: ${new Date().toLocaleString()}`, doc.internal.pageSize.width - 10 - doc.getTextWidth(`Downloaded At: ${new Date().toLocaleString()}`), 15);
+
+    let y = 30;
+    messages.forEach((msg, index) => {
+      const text = `${msg.senderName || "Unknown"}: ${msg.message}`;
+      if (y > 280) {
+        doc.addPage();
+        y = 8;
+      }
+      doc.text(text, 8, y);
+      y += 8;
+    });
+
+    doc.save(`room-${CurrentRoom}-messages.pdf`);
   };
 
   const JoinInit = (e) => {
@@ -226,8 +259,14 @@ const Dashboard = () => {
                 </button>
                 <button
                   onClick={() => document.getElementById('my_modal_3').showModal()}
-                  className="flex items-center gap-1 md:gap-2  px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
+                  className="flex items-center gap-1 md:gap-2  px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg">
                   <IoMdInformationCircleOutline />
+                </button>
+                <button
+                  onClick={handleDownloadMessagesAsPDF}
+                  className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg"
+                >
+                  <RiChatDownloadLine />
                 </button>
               </div>
             </div>

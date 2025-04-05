@@ -61,11 +61,11 @@ io.on("connection", (socket) => {
             receiverName,
             timestamp: new Date()
         };
+        io.to(room).emit("receiveMessage", { sender: socket.id, senderName, message });
+
         // Save the message to the messages collection
         const messagesCollection = client.db("NexCall").collection('messages');
         await messagesCollection.insertOne(messageData);
-
-        io.to(room).emit("receiveMessage", { sender: socket.id, message });
     });
 
     // Handle Disconnect
@@ -149,17 +149,10 @@ async function run() {
             })
         }
 
-
-        // API to get messages between two users
-        app.get('/messages/:otherUser', verifyToken, async (req, res) => {
-            const userName = req.user.displayName;
-            const otherUser = req.params.otherUser;
-            const messages = await messagesCollection.find({
-                $or: [
-                    { senderName: userName, receiverName: otherUser },
-                    { senderName: otherUser, receiverName: userName }
-                ]
-            }).sort({ timestamp: 1 }).toArray();
+        // API to get all messages for a specific room
+        app.get('/messages/:roomId', async (req, res) => {
+            const roomId = req.params.roomId;
+            const messages = await messagesCollection.find({ room: roomId }).toArray();
             res.send(messages);
         });
 
