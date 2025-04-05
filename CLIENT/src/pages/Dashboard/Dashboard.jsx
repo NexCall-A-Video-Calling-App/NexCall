@@ -107,8 +107,18 @@ const Dashboard = () => {
   const handleDownloadMessagesAsPDF = () => {
     const doc = new jsPDF();
     doc.setFontSize(12);
-    doc.text(`Room ID: ${CurrentRoom}`, 10, 10);
-    doc.text(`Downloaded At: ${new Date().toLocaleString()}`, 10, 20);
+
+    // Set background color for Room ID and Downloaded At
+    const headerHeight = 20;
+    doc.setFillColor(200, 200, 255);
+    doc.rect(0, 0, doc.internal.pageSize.width, headerHeight, 'F');
+
+    // Add the text on the left (Room ID)
+    doc.setTextColor(0, 0, 0);
+    doc.text(`Room ID: ${CurrentRoom}`, 10, 15);
+
+    // Add the text on the right (Downloaded At)
+    doc.text(`Downloaded At: ${new Date().toLocaleString()}`, doc.internal.pageSize.width - 10 - doc.getTextWidth(`Downloaded At: ${new Date().toLocaleString()}`), 15);
 
     let y = 30;
     messages.forEach((msg, index) => {
