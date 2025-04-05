@@ -69,7 +69,7 @@ const MeetingFunctionpage = () => {
       
 
           <div className="text-center">
-            <p className="text-sm font-semibold"> {time}</p>
+            <p className="text-sm font-semibold text-white"> {time}</p>
             <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
 
