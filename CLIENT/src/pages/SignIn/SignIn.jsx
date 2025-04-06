@@ -19,6 +19,8 @@ const SignIn = () => {
             .then((result) => {
                 console.log(result.user);
                 navigate('/dashboard')
+                // navigate('/meeting-page')
+
                 reset();
             })
             .catch((error) => {
@@ -33,6 +35,7 @@ const SignIn = () => {
             .then((result) => {
                 console.log(result.user);
                 navigate('/dashboard')
+                // navigate('/meeting-page')
             })
             .catch((error) => {
                 console.log(error.message);
