@@ -63,7 +63,7 @@ io.on("connection", (socket) => {
             receiverName,
             timestamp: new Date()
         };
-        io.to(room).emit("receiveMessage", { sender: socket.id, photo, message });
+        io.to(room).emit("receiveMessage", { sender: socket.id, senderName, photo, message });
 
         // Save the message to the messages collection
         const messagesCollection = client.db("NexCall").collection('messages');
