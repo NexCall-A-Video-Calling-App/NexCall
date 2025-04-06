@@ -12,8 +12,8 @@ import { RiChatDownloadLine } from "react-icons/ri";
 import jsPDF from "jspdf";
 
 const Dashboard = () => {
-  // const socket = useMemo(() => io.connect("http://localhost:5000"), []); // for local server
-  const socket = useMemo(() => io.connect("https://nexcall.up.railway.app"), []); // for live server
+  // const socket = useMemo(() => io.connect("http://localhost:5000"), []); // [server link] for local server
+  const socket = useMemo(() => io.connect("https://nexcall.up.railway.app"), []); // [server link]  for live server
   const { user, userLogOut, loading, setLoading } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
