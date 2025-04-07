@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import React from 'react';
+import React, { useState } from 'react';
 import { RiChatDownloadLine } from 'react-icons/ri';
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import { decryptMessage } from "../../utilities/encryptDecrypt";
+import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
 
 const ChatHistory = () => {
     const axios = useAxiosSecure();
@@ -20,8 +21,8 @@ const ChatHistory = () => {
     });
 
     return (
-        <div className="p-4 bg-white rounded-lg shadow-md mt-4 w-full overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Your Chat Rooms</h2>
+        <div className="container mx-auto p-4 bg-white rounded-lg mt-4 w-full overflow-y-auto">
+            <h2 className="text-xl font-bold mb-4">Your Chat History</h2>
 
             {userConversations.length === 0 && <p>History is empty.</p>}
 
@@ -32,6 +33,14 @@ const ChatHistory = () => {
                             Room ID: {room.room}
                         </h3>
                         <button
+                            onClick={() => {
+                                const decryptedMessages = room.messages.map((msg) => ({
+                                    ...msg,
+                                    message: decryptMessage(msg.message)
+                                }));
+
+                                downloadMessagesAsPDF(room.room, decryptedMessages);
+                            }}
                             className="flex items-center text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200 transition"
                         >
                             <RiChatDownloadLine className="mr-1" />
