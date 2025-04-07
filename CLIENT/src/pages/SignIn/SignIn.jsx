@@ -19,7 +19,7 @@ const SignIn = () => {
             .then((result) => {
                 console.log(result.user);
                 navigate('/dashboard')
-                // navigate('/meeting-page')
+                // navigate('/meeting')
 
                 reset();
             })
@@ -35,7 +35,7 @@ const SignIn = () => {
             .then((result) => {
                 console.log(result.user);
                 navigate('/dashboard')
-                // navigate('/meeting-page')
+                // navigate('/meeting')
             })
             .catch((error) => {
                 console.log(error.message);
