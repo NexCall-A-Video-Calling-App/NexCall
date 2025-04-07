@@ -89,6 +89,7 @@ const Dashboard = () => {
         room: CurrentRoom,
         message: encrypted,
         senderName: user?.displayName,
+        senderEmail: user?.email,
         photo: user?.photoURL,
         receiverName: otherUser?.name
       });
