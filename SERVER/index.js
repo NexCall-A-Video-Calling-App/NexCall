@@ -11,16 +11,16 @@ const jwt = require('jsonwebtoken');
 
 app.use(express.json());
 app.use(cookieParser());
-// Middleware
 
+// Middleware 
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app'],
+    origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app', 'https://nexcall.up.railway.app'],
     credentials: true
 }));
 
 const io = new Server(server, {
     cors: {
-        origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app'],
+        origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app', 'https://nexcall.up.railway.app'],
         methods: ['GET', 'POST'],
         credentials: true
     }
@@ -54,7 +54,6 @@ io.on("connection", (socket) => {
 
     // Send Message
     socket.on("sentMessage", async ({ room, message, senderName, photo, receiverName }) => {
-        console.log(photo)
         const messageData = {
             room,
             message,

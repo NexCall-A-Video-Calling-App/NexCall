@@ -15,6 +15,7 @@ import { encryptMessage, decryptMessage } from "../../utilities/encryptDecrypt";
 const Dashboard = () => {
   const socket = useMemo(() => io.connect("http://localhost:5000"), []); // for local server
   // const socket = useMemo(() => io.connect("https://nexcall.up.railway.app"), []); // for live server
+
   const { user, userLogOut, loading, setLoading } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
@@ -77,6 +78,7 @@ const Dashboard = () => {
       socket.disconnect();
     };
   }, [socket]);
+
   const otherUser = roomUsers.find(u => u.socketId !== UserId);
 
   const handleSend = (e) => {
@@ -91,14 +93,16 @@ const Dashboard = () => {
         receiverName: otherUser?.name
       });
       setMessage("");
+      // axios.patch('/chatSummery/:CurrentRoom')
+      // otherUser.name, otherUser.photoURL, message, currentRoom
     }
   };
 
   const handleCreateRoom = () => {
     setLoading(true);
     socket.emit("createRoom", {
-      name: user.displayName,
-      profilePic: user.photoURL
+      name: user?.displayName,
+      profilePic: user?.photoURL
     });
   };
 
