@@ -10,7 +10,7 @@ import { ImMakeGroup } from "react-icons/im";
 import { HiUserAdd } from "react-icons/hi";
 import { RiChatDownloadLine } from "react-icons/ri";
 import jsPDF from "jspdf";
-import {encryptMessage, decryptMessage} from "../../utilities/encryptDecrypt";
+import { encryptMessage, decryptMessage } from "../../utilities/encryptDecrypt";
 
 const Dashboard = () => {
   const socket = useMemo(() => io.connect("http://localhost:5000"), []); // for local server
@@ -66,7 +66,11 @@ const Dashboard = () => {
 
     socket.on("receiveMessage", (msg) => {
       console.log("MESSAGES:", msg);
-      setMessages((prevMsg) => [...prevMsg, msg]);
+      const decryptedMessage = {
+        ...msg,
+        message: decryptMessage(msg.message),
+      };
+      setMessages((prevMsg) => [...prevMsg, decryptedMessage]);
     });
 
     return () => {
