@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useMemo, useState } from "react";
 import moment from "moment";
 import { GoDeviceCameraVideo } from "react-icons/go";
@@ -9,22 +7,19 @@ import { BsFillCameraReelsFill } from "react-icons/bs";
 import useAuth from "../../../hooks/useAuth";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
-import socket from '../../../utilities/socket'
-
-
+import socket from "../../../utilities/socket";
 
 // react icons
-import {RxCross1} from "react-icons/rx";
-
+import { RxCross1 } from "react-icons/rx";
 
 const MeetingFunctionpage = () => {
-  // main function go under navbar 
+  // main function go under navbar
   const [time, settime] = useState("");
   const [fullTime, setfullTime] = useState("");
   const { user, loading, setLoading } = useAuth();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const [JoinRoomId, setJoinRoomId] = useState(""); // RoomID from front-end input 
+  const [JoinRoomId, setJoinRoomId] = useState(""); // RoomID from front-end input
 
   // LIVE TIME
   useEffect(() => {
@@ -40,22 +35,20 @@ const MeetingFunctionpage = () => {
   }, []);
 
   // Schedule button
-  
-    const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-
-  const scheduleButtonHandel = ()=>{
-    // store data from user 
-  }
-
+  const scheduleButtonHandel = () => {
+    // store data from user
+    alert("done");
+  };
 
   return (
     <div>
       <section className="w-full   border border-white/20 grid md:grid-cols-2  py-40 bg-slate-900 min-h-screen">
         <div className=" grid grid-cols-2 place-content-center place-items-center gap-2 ">
           <button
-            id="create" 
+            id="create"
             className="flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md w-1/2 ml-10 hover:cursor-pointer hover:bg-violet-400 transition delay-200 duration-100"
           >
             {/* meeting */}
@@ -71,55 +64,63 @@ const MeetingFunctionpage = () => {
 
           {/* add schedule button  */}
 
-          <button className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md w-1/2 ml-10">
+          <button onClick={()=>setIsModalOpen(true)} className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md w-1/2 ml-10">
             {/* sehedule */}
-         
+
             <GiTimeTrap className="size-8 text-white" />
-            <div
-            className={`${
+   
+           <span className="font-semibold text-white">Schedule</span>
+
+           
+          </button>
+          {/* modal added here  */}
+          <div
+              className={`${
                 isModalOpen ? " visible" : " invisible"
-            } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300`}
-        >
-            <div
-                className={`${
-                    isModalOpen
-                        ? " translate-y-[0px] opacity-100"
-                        : " translate-y-[-200px] opacity-0"
-                } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
+              } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300`}
             >
-                <div
-                    className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
-                    <h1 className="text-[1.5rem] font-bold">Modal Header</h1>
-                    <RxCross1
-                        className="p-2 text-[2.5rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
-                        onClick={() => setIsModalOpen(false)}
-                    />
+              <div
+                className={`${
+                  isModalOpen
+                    ? " translate-y-[0px] opacity-100"
+                    : " translate-y-[-200px] opacity-0"
+                } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
+              >
+                <div className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
+                  <h1 className="text-[1.5rem] font-bold">Modal Header</h1>
+                  <RxCross1
+                    className="p-2 text-[2.5rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
+                    onClick={() => setIsModalOpen(false)}
+                  />
                 </div>
 
                 <div className="p-4 border-b border-[#d1d1d1]">
-                    <p className="text-[1rem] text-[#424242]">
-                        Woohoo, you are reading this text in a modal!
-                    </p>
+             
+
+
+                  <p className="text-[1rem] text-[#424242]">
+                    Woohoo, you are reading this text in a modal!
+                  </p>
+
+
                 </div>
 
                 <div className="flex items-end justify-end gap-4 p-4 ">
-                    <button
-                        className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
-                        onClick={() => setIsModalOpen(false)}
-                    >
-                        Cancel
-                    </button>
-                    <button
-                        className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
-                        onClick={() => setIsModalOpen(false)}
-                    >
-                        Confirm
-                    </button>
+                  <button
+                    className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
+                    onClick={() => setIsModalOpen(false)}
+                  >
+                    Confirm
+                  </button>
                 </div>
+              </div>
             </div>
-        </div>
-
-          </button>
 
           <div className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20  rounded-md w-1/2 -ml-10">
             {/* help */}
@@ -136,7 +137,9 @@ const MeetingFunctionpage = () => {
           </div>
           <div className="border h-56  rounded mt-4 border-red-100 opacity-30">
             <div className="flex justify-center items-center h-full">
-              <p className="text-white opacity-45">No Uncomming meeting today</p>
+              <p className="text-white opacity-45">
+                No Uncomming meeting today
+              </p>
             </div>
           </div>
         </div>
