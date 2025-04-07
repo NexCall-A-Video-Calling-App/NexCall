@@ -178,12 +178,12 @@ async function run() {
            try{
             const scheduleResult = req.body;
             const result = await scheduleCollection.insertOne(scheduleResult);
-            // res.send(result);
+            res.send(result);
 
            }catch(error)
            {
-            // console.log(err.message)
-            // res.send({message:"This error from Schedule api"})
+            console.log(err.message)
+            res.send({message:"This error from Schedule api"})
            }
 
         })
