@@ -12,6 +12,7 @@
   "dependencies": {
     "@tanstack/react-query": "^5.71.1",
     "axios": "^1.8.3",
+    "crypto-js": "^4.2.0",
     "firebase": "^11.5.0",
     "framer-motion": "^12.5.0",
     "jspdf": "^3.0.1",

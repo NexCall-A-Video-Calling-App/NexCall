@@ -10,10 +10,11 @@ import { ImMakeGroup } from "react-icons/im";
 import { HiUserAdd } from "react-icons/hi";
 import { RiChatDownloadLine } from "react-icons/ri";
 import jsPDF from "jspdf";
+import { encryptMessage, decryptMessage } from "../../utilities/encryptDecrypt";
 
 const Dashboard = () => {
-  // const socket = useMemo(() => io.connect("http://localhost:5000"), []); // for local server
-  const socket = useMemo(() => io.connect("https://nexcall.up.railway.app"), []); // for live server
+  const socket = useMemo(() => io.connect("http://localhost:5000"), []); // for local server
+  // const socket = useMemo(() => io.connect("https://nexcall.up.railway.app"), []); // for live server
   const { user, userLogOut, loading, setLoading } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
@@ -65,7 +66,11 @@ const Dashboard = () => {
 
     socket.on("receiveMessage", (msg) => {
       console.log("MESSAGES:", msg);
-      setMessages((prevMsg) => [...prevMsg, msg]);
+      const decryptedMessage = {
+        ...msg,
+        message: decryptMessage(msg.message),
+      };
+      setMessages((prevMsg) => [...prevMsg, decryptedMessage]);
     });
 
     return () => {
@@ -77,9 +82,10 @@ const Dashboard = () => {
   const handleSend = (e) => {
     e.preventDefault();
     if (message.trim() && CurrentRoom) {
+      const encrypted = encryptMessage(message);
       socket.emit("sentMessage", {
         room: CurrentRoom,
-        message,
+        message: encrypted,
         senderName: user?.displayName,
         photo: user?.photoURL,
         receiverName: otherUser?.name
