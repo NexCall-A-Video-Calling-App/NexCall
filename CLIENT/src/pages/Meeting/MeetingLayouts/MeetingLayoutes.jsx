@@ -1,13 +1,15 @@
 import React from 'react'
 import MeetingNavbar from '../MeetingNavbar/MeetingNavbar'
 import MeetingFunctionpage from '../MeetingFunctionPages/MeetingFunctionpage'
+import { Outlet } from 'react-router-dom'
 
 function MeetingLayoutes() {
   return (
     <div>
-        {/* all components herer */}
-        <MeetingNavbar/>
-        <MeetingFunctionpage/>
+      <MeetingNavbar />
+      <div className='mt-20'>
+        <Outlet />
+      </div>
     </div>
   )
 }
