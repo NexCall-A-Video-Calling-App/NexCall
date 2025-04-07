@@ -158,7 +158,66 @@ async function run() {
             res.send(messages);
         });
 
+        // Get All Conversations for a User APIs
+        app.get("/conversations/user/:email", async (req, res) => {
+            const { email } = req.params;
 
+            // Find all rooms where user is sender or receiver
+            const userRooms = await messagesCollection.aggregate([
+                {
+                    $match: {
+                        $or: [
+                            { senderEmail: email },
+                            { receiverEmail: email }
+                        ]
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$room"
+                    }
+                }
+            ]).toArray();
+
+            const roomIds = userRooms.map(r => r._id);
+
+            // Now get all messages from those rooms
+            const result = await messagesCollection.aggregate([
+                {
+                    $match: {
+                        room: { $in: roomIds }
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$room",
+                        messages: {
+                            $push: {
+                                message: "$message",
+                                senderName: "$senderName",
+                                receiverName: "$receiverName",
+                                senderEmail: "$senderEmail",
+                                receiverEmail: "$receiverEmail",
+                                photo: "$photo",
+                                timestamp: "$timestamp"
+                            }
+                        }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        room: "$_id",
+                        messages: 1
+                    }
+                },
+                {
+                    $sort: { room: 1 }
+                }
+            ]).toArray();
+
+            res.json(result);
+        });
 
         // User API:
         app.post('/users', async (req, res) => {
