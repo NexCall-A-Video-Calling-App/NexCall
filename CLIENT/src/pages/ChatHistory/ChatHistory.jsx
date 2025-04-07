@@ -1,13 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from 'react';
+import React from 'react';
 import { RiChatDownloadLine } from 'react-icons/ri';
-import useAxiosSecure from '../../hooks/useAxiosSecure';
 import useAuth from "../../hooks/useAuth";
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { decryptMessage } from "../../utilities/encryptDecrypt";
 
 const ChatHistory = () => {
     const axios = useAxiosSecure();
     const { user } = useAuth();
-    const [messages, setMessages] = useState([]);
 
     // Fetch all chat rooms (conversations) that the user has participated in
     const { data: userConversations = [], refetch } = useQuery({
@@ -23,7 +23,7 @@ const ChatHistory = () => {
         <div className="p-4 bg-white rounded-lg shadow-md mt-4 w-full overflow-y-auto">
             <h2 className="text-xl font-bold mb-4">Your Chat Rooms</h2>
 
-            {userConversations.length === 0 && <p>No messages found.</p>}
+            {userConversations.length === 0 && <p>History is empty.</p>}
 
             {userConversations.map((room, idx) => (
                 <div key={idx} className="mb-8 border border-gray-200 p-4 rounded-xl shadow-sm bg-gray-50">
@@ -42,6 +42,7 @@ const ChatHistory = () => {
                     <div className="space-y-3">
                         {room.messages.map((msg, i) => {
                             const isSender = msg.senderEmail === user?.email;
+                            const decryptedMessage = decryptMessage(msg.message);
 
                             return (
                                 <div
@@ -61,7 +62,7 @@ const ChatHistory = () => {
                                         />
                                         <div>
                                             <p className="font-semibold">{msg.senderName}</p>
-                                            <p className="text-sm break-words">{msg.message}</p>
+                                            <p className="text-sm break-words">{decryptedMessage}</p>
                                             <p className="text-xs opacity-70">
                                                 {new Date(msg.timestamp).toLocaleString()}
                                             </p>
