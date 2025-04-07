@@ -41,7 +41,6 @@ const Dashboard = () => {
   const [message, setMessage] = useState(""); // single message from sender 
   const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.  
   const [searchUser, setSearchUser] = useState("")
-  console.log(searchUser);
 
   // CHAT SIDE EFFECT
   useEffect(() => {
@@ -68,7 +67,6 @@ const Dashboard = () => {
     });
 
     socket.on("receiveMessage", (msg) => {
-      console.log("MESSAGES:", msg);
       const decryptedMessage = {
         ...msg,
         message: decryptMessage(msg.message),
@@ -82,6 +80,9 @@ const Dashboard = () => {
   }, [socket]);
 
   const otherUser = roomUsers.find(u => u.socketId !== UserId);
+
+  console.log("Others: ", otherUser);
+  console.log("All ROOM: ", roomUsers);
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -171,12 +172,10 @@ const Dashboard = () => {
           <div className="mt-4">
             {
               roomUsers
-                .filter((user) =>
-                  user.name.toLowerCase().includes(searchUser.toLowerCase())
-                )
-                .map((user, idx) => (
+                .filter((userFilter) => userFilter?.name?.toLowerCase().includes(searchUser?.toLowerCase()))
+                .map((userinRoom, idx) => (
                   <div key={idx}>
-                    <h1>{idx + 1}: {user.name}</h1>
+                    <h1>{idx + 1}: {userinRoom.name}</h1>
                   </div>
                 ))
             }
@@ -245,6 +244,7 @@ const Dashboard = () => {
           {/* Chat Window */}
           <div className="flex-1 flex flex-col min-h-screen">
             <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
+              {/* CHAT HEADING */}
               <div className="flex items-center">
                 <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
                   <FaEllipsisV />
@@ -256,7 +256,13 @@ const Dashboard = () => {
                 />
                 <div className="ml-1 md:ml-2">
                   <p className="font-semibold text-sm md:text-base">
-                    {otherUser?.name || "Unknown User"}
+                    {
+                      roomUsers.length === 2
+                        ? roomUsers.find(u => u.socketId !== UserId)?.name || "Unknown User"
+                        : roomUsers.length > 2
+                          ? `${roomUsers.find(u => u.socketId !== UserId)?.name} +${roomUsers.length - 1}`
+                          : "Waiting for others"
+                    }
                   </p>
                   <p className="text-sm text-green-500">Online</p>
                 </div>
@@ -306,7 +312,6 @@ const Dashboard = () => {
                           {msg.message}
                         </div>
                       </div>
-
                     </div>
                   ))
                 }
