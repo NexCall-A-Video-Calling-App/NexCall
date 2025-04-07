@@ -175,16 +175,16 @@ async function run() {
         // Schedule 
         app.post("/schedule-collections",async(req,res)=>{
 
-        //    try{
-        //     // const scheduleResult = req.body;
-        //     // const result = await scheduleCollection.insertOne(scheduleResult);
-        //     // res.send(result);
+           try{
+            // const scheduleResult = req.body;
+            // const result = await scheduleCollection.insertOne(scheduleResult);
+            // res.send(result);
 
-        //    }catch(error)
-        //    {
-        //     // console.log(err.message)
-        //     // res.send({message:"This error from Schedule api"})
-        //    }
+           }catch(error)
+           {
+            // console.log(err.message)
+            // res.send({message:"This error from Schedule api"})
+           }
 
         })
 
