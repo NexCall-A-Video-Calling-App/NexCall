@@ -10,7 +10,7 @@ import { ImMakeGroup } from "react-icons/im";
 import { HiUserAdd } from "react-icons/hi";
 import { RiChatDownloadLine } from "react-icons/ri";
 import jsPDF from "jspdf";
-
+import {encryptMessage, decryptMessage} from "../../utilities/encryptDecrypt";
 
 const Dashboard = () => {
   const socket = useMemo(() => io.connect("http://localhost:5000"), []); // for local server
@@ -78,9 +78,10 @@ const Dashboard = () => {
   const handleSend = (e) => {
     e.preventDefault();
     if (message.trim() && CurrentRoom) {
+      const encrypted = encryptMessage(message);
       socket.emit("sentMessage", {
         room: CurrentRoom,
-        message,
+        message: encrypted,
         senderName: user?.displayName,
         photo: user?.photoURL,
         receiverName: otherUser?.name
