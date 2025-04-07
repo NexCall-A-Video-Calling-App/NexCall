@@ -201,7 +201,7 @@ async function run() {
                                 timestamp: "$timestamp"
                             }
                         },
-                        lastMessageTime: { $max: "$timestamp" } // Get latest message time in the room
+                        lastMessageTime: { $max: "$timestamp" }
                     }
                 },
                 {
@@ -214,7 +214,7 @@ async function run() {
                 },
                 {
                     $sort: {
-                        lastMessageTime: -1 // Sort rooms by latest activity
+                        lastMessageTime: -1
                     }
                 }
             ]).toArray();
