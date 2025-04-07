@@ -39,7 +39,9 @@ const Dashboard = () => {
   const [UserId, setUserId] = useState(null);  // Client Socket ID 
   const [messages, setMessages] = useState([]); // all messages(both sender & receiver) 
   const [message, setMessage] = useState(""); // single message from sender 
-  const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.   
+  const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.  
+  const [searchUser, setSearchUser] = useState("")
+  console.log(searchUser);
 
   // CHAT SIDE EFFECT
   useEffect(() => {
@@ -93,8 +95,6 @@ const Dashboard = () => {
         receiverName: otherUser?.name
       });
       setMessage("");
-      // axios.patch('/chatSummery/:CurrentRoom')
-      // otherUser.name, otherUser.photoURL, message, currentRoom
     }
   };
 
@@ -111,7 +111,7 @@ const Dashboard = () => {
     setLoading(true);
     socket.emit("JoinRoom", {
       roomId,
-      userData: { name: user.displayName, profilePic: user.photoURL }
+      userData: { name: user?.displayName, profilePic: user?.photoURL, email: user?.email }
     });
   };
 
@@ -160,27 +160,26 @@ const Dashboard = () => {
       >
         {/* Sidebar Content */}
         <div className="flex-1 overflow-y-auto">
-          <h2 className="text-lg font-semibold">Messages</h2>
+          <h2 className="text-lg font-semibold">Users</h2>
           <input
+            id="searchUser"
+            onChange={(e) => setSearchUser(e.target.value)}
             type="text"
-            placeholder="Search messages"
+            placeholder="Search users"
             className="w-full p-2 mt-2 border rounded-lg"
           />
           <div className="mt-4">
-            <div className="flex items-center p-2 border rounded-lg">
-              <img
-                src="https://i.ibb.co.com/5gDBVLDV/images.png"
-                alt="avatar"
-                className="w-10 h-10 rounded-full"
-              />
-              <div className="ml-2">
-                <p className="font-semibold">Sarah Johnson</p>
-                <p className="text-sm text-gray-500">
-                  Hey, when is the next meeting?
-                </p>
-              </div>
-              <span className="ml-auto text-xs text-gray-400">2m ago</span>
-            </div>
+            {
+              roomUsers
+                .filter((user) =>
+                  user.name.toLowerCase().includes(searchUser.toLowerCase())
+                )
+                .map((user, idx) => (
+                  <div key={idx}>
+                    <h1>{idx + 1}: {user.name}</h1>
+                  </div>
+                ))
+            }
           </div>
         </div>
 
