@@ -41,7 +41,7 @@ const Dashboard = () => {
   const [message, setMessage] = useState(""); // single message from sender 
   const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.  
   const [searchUser, setSearchUser] = useState("")
-
+  
   // CHAT SIDE EFFECT
   useEffect(() => {
     socket.on("connect", () => {
