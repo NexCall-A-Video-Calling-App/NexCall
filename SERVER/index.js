@@ -103,6 +103,9 @@ async function run() {
         // COLLECTIONS 
         const usersCollections = client.db("NexCall").collection('users');
         const messagesCollection = client.db("NexCall").collection('messages');
+        // Schedule COLLECTION
+        const scheduleCollection = client.db("NextCall").collection("schedule");
+
 
         // JWT AUTH ENDPOINTS
         app.post('/jwt', async (req, res) => {
@@ -167,6 +170,22 @@ async function run() {
         app.get('/users', async (req, res) => {
             const results = await usersCollections.find().toArray()
             res.send(results)
+        })
+
+        // Schedule 
+        app.post("/schedule-collections",async(req,res)=>{
+
+        //    try{
+        //     // const scheduleResult = req.body;
+        //     // const result = await scheduleCollection.insertOne(scheduleResult);
+        //     // res.send(result);
+
+        //    }catch(error)
+        //    {
+        //     // console.log(err.message)
+        //     // res.send({message:"This error from Schedule api"})
+        //    }
+
         })
 
 

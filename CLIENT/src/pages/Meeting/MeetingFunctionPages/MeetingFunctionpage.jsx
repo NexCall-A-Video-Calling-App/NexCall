@@ -64,65 +64,62 @@ const MeetingFunctionpage = () => {
 
           {/* add schedule button  */}
 
-          <button onClick={()=>setIsModalOpen(true)} className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md w-1/2 ml-10">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md w-1/2 ml-10"
+          >
             {/* sehedule */}
 
             <GiTimeTrap className="size-8 text-white" />
-   
-           <span className="font-semibold text-white">Schedule</span>
 
-           
+            <span className="font-semibold text-white">Schedule</span>
           </button>
           {/* modal added here  */}
           <div
+            className={`${
+              isModalOpen ? " visible" : " invisible"
+            } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300`}
+          >
+            <div
               className={`${
-                isModalOpen ? " visible" : " invisible"
-              } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300`}
+                isModalOpen
+                  ? " translate-y-[0px] opacity-100"
+                  : " translate-y-[-200px] opacity-0"
+              } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
             >
-              <div
-                className={`${
-                  isModalOpen
-                    ? " translate-y-[0px] opacity-100"
-                    : " translate-y-[-200px] opacity-0"
-                } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
-              >
-                <div className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
-                  <h1 className="text-[1.5rem] font-bold">Modal Header</h1>
-                  <RxCross1
-                    className="p-2 text-[2.5rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
-                    onClick={() => setIsModalOpen(false)}
-                  />
-                </div>
+              <div className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
+                <h1 className="text-[1.5rem] font-bold">Modal Header</h1>
+                <RxCross1
+                  className="p-2 text-[2.5rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
+                  onClick={() => setIsModalOpen(false)}
+                />
+              </div>
 
-                <div className="p-4 border-b border-[#d1d1d1]">
-                  {/* inside this have info input box  */}
-                  {/* use react hook form */}
-             
+              <div className="p-4 border-b border-[#d1d1d1]">
+                {/* inside this have info input box  */}
+                {/* use react hook form */}
 
+                <p className="text-[1rem] text-[#424242]">
+                  Woohoo, you are reading this text in a modal!
+                </p>
+              </div>
 
-                  <p className="text-[1rem] text-[#424242]">
-                    Woohoo, you are reading this text in a modal!
-                  </p>
-
-
-                </div>
-
-                <div className="flex items-end justify-end gap-4 p-4 ">
-                  <button
-                    className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
-                    onClick={() => setIsModalOpen(false)}
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
-                    onClick={() => setIsModalOpen(false)}
-                  >
-                    Confirm
-                  </button>
-                </div>
+              <div className="flex items-end justify-end gap-4 p-4 ">
+                <button
+                  className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Cancel
+                </button>
+                <button
+                  className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
+                  onClick={() => setIsModalOpen(false)}
+                >
+                  Confirm
+                </button>
               </div>
             </div>
+          </div>
 
           <div className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20  rounded-md w-1/2 -ml-10">
             {/* help */}
