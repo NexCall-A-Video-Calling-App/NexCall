@@ -78,6 +78,7 @@ const Dashboard = () => {
       socket.disconnect();
     };
   }, [socket]);
+
   const otherUser = roomUsers.find(u => u.socketId !== UserId);
 
   const handleSend = (e) => {
@@ -92,6 +93,8 @@ const Dashboard = () => {
         receiverName: otherUser?.name
       });
       setMessage("");
+      // axios.patch('/chatSummery/:CurrentRoom')
+      // otherUser.name, otherUser.photoURL, message, currentRoom
     }
   };
 
