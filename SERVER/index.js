@@ -158,7 +158,6 @@ async function run() {
             res.send(messages);
         });
 
-        // Get All Conversations for a User APIs
         app.get("/conversations/user/:email", async (req, res) => {
             const { email } = req.params;
 
@@ -181,7 +180,7 @@ async function run() {
 
             const roomIds = userRooms.map(r => r._id);
 
-            // Now get all messages from those rooms
+            // Fetch messages from those rooms without sorting inside each room
             const result = await messagesCollection.aggregate([
                 {
                     $match: {
@@ -201,23 +200,29 @@ async function run() {
                                 photo: "$photo",
                                 timestamp: "$timestamp"
                             }
-                        }
+                        },
+                        lastMessageTime: { $max: "$timestamp" } // Get latest message time in the room
                     }
                 },
                 {
                     $project: {
                         _id: 0,
                         room: "$_id",
-                        messages: 1
+                        messages: 1,
+                        lastMessageTime: 1
                     }
                 },
                 {
-                    $sort: { room: 1 }
+                    $sort: {
+                        lastMessageTime: -1 // Sort rooms by latest activity
+                    }
                 }
             ]).toArray();
 
             res.json(result);
         });
+
+
 
         // User API:
         app.post('/users', async (req, res) => {
