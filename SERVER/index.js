@@ -53,12 +53,13 @@ io.on("connection", (socket) => {
     });
 
     // Send Message
-    socket.on("sentMessage", async ({ room, message, senderName, photo, receiverName }) => {
+    socket.on("sentMessage", async ({ room, message, senderName, senderEmail, photo, receiverName }) => {
         const messageData = {
             room,
             message,
             photo,
             senderName,
+            senderEmail,
             receiverName,
             timestamp: new Date()
         };
@@ -150,12 +151,14 @@ async function run() {
             })
         }
 
-        // API to get all messages for a specific room
+        // Get all messages for a specific room APIs
         app.get('/messages/:roomId', async (req, res) => {
             const roomId = req.params.roomId;
             const messages = await messagesCollection.find({ room: roomId }).toArray();
             res.send(messages);
         });
+
+
 
         // User API:
         app.post('/users', async (req, res) => {
