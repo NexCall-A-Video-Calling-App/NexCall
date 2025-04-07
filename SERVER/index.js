@@ -176,8 +176,8 @@ async function run() {
         app.post("/schedule-collections",async(req,res)=>{
 
            try{
-            // const scheduleResult = req.body;
-            // const result = await scheduleCollection.insertOne(scheduleResult);
+            const scheduleResult = req.body;
+            const result = await scheduleCollection.insertOne(scheduleResult);
             // res.send(result);
 
            }catch(error)
