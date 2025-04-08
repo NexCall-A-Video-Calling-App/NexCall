@@ -110,13 +110,14 @@ const MeetingFunctionpage = () => {
                 {/* inside this have info input box  */}
                 {/* use react hook form */}
                 <form onSubmit={handleSubmit(onSubmit)}>
-                  {/* register your input into the hook by invoking the "register" function */}
+         
 
 
-                  <input defaultValue="test" {...register("Title")} placeholder="Enter your Title"/>
+                  <input defaultValue="Meeting" {...register("Topic")} placeholder="Topic"/>
 
-                  {/* include validation with required or other standard HTML validation rules */}
-                  <input type="date"  {...register("Date", { required: true })} placeholder="Enter your date "/>
+              
+                  <input type="date"  {...register("Date", { required: true })} placeholder="Date"/>
+                  <input type="time" {...register("Time", {required:true} )} placeholder="Time"/>
 
 
 
