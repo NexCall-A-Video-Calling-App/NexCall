@@ -54,7 +54,7 @@ const MeetingFunctionpage = () => {
     console.log(Date,Time,Topic);
    
   }
-  console.log(watch("example"))
+
 
  
 
@@ -103,7 +103,7 @@ const MeetingFunctionpage = () => {
               } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
             >
               <div className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
-                <h1 className="text-[1.5rem] font-bold">Modal Header</h1>
+                <h1 className="text-[1.5rem] font-bold">schedule</h1>
                 <RxCross1
                   className="p-2 text-[2.5rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
                   onClick={() => setIsModalOpen(false)}
