@@ -64,11 +64,14 @@ const MeetingFunctionpage = () => {
     console.log(Date, Time, Topic);
     // gave condition 
     // set all their state
+
     if(!Date || !Time ||  !Topic)
     {
+      console.log("true")
       setIsModalOpen(true);
     }
     else{
+      console.log("false");
       setIsModalOpen(false);
     }
    
@@ -147,7 +150,7 @@ const MeetingFunctionpage = () => {
                   />
                   {
                     errors.Topic && <span className="text-red-500">
-                      {errors.Topic.message}
+                      <span className="text-red-500">This field is required</span>
                     </span>
                   }
 
@@ -162,7 +165,7 @@ const MeetingFunctionpage = () => {
                     placeholder="Date"
                   />
                   {errors.Date && <span className="text-red-500">
-                    {errors.Date.message}</span>}
+                    <span className="text-red-500">This field is required</span></span>}
                   <input
                     type="time"
                     {...register("Time", { required: "Time is requirred" })}
@@ -170,7 +173,7 @@ const MeetingFunctionpage = () => {
                      className="border px-6 py-2 rounded focus:outline-blue-400"
                     placeholder="Time"
                   />
-                  {errors.Time && <span className="text-red-500"> {errors.time.message}</span>}
+                  {errors.Time && <span className="text-red-500"> <span className="text-red-500">This field is required</span></span>}
 
                   {/* errors will return when field validation fails  */}
                   {errors.exampleRequired && (
@@ -196,7 +199,7 @@ const MeetingFunctionpage = () => {
                       
 
 
-                      onClick={() => setIsModalOpen(false)}
+                      // onClick={() => setIsModalOpen(false)}
                     >
                       Submit
                     </button>
