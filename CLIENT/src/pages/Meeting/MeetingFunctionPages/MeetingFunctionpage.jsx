@@ -109,7 +109,7 @@ const MeetingFunctionpage = () => {
               <div className="p-4 border-b border-[#d1d1d1]">
                 {/* inside this have info input box  */}
                 {/* use react hook form */}
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col"> 
+                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:gap-3 gap-2"> 
 
                   <input
                     defaultValue="Meeting"
