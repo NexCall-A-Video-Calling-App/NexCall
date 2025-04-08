@@ -110,11 +110,18 @@ const MeetingFunctionpage = () => {
                 {/* inside this have info input box  */}
                 {/* use react hook form */}
                 <form onSubmit={handleSubmit(onSubmit)}>
+
                   <input
                     defaultValue="Meeting"
                     {...register("Topic")}
+
+                    className="border px-6 py-2 rounded focus:outline-blue-400"
+
+
+
                     placeholder="Topic"
                   />
+
 
                   <input
                     type="date"
@@ -132,7 +139,7 @@ const MeetingFunctionpage = () => {
                     <span className="text-red-500">This field is required</span>
                   )}
 
-                  <button className="btn btn-secondary">Submit</button>
+          
                   <div className="flex items-end justify-end gap-4 p-4 ">
                     <button
                       className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
@@ -141,10 +148,11 @@ const MeetingFunctionpage = () => {
                       Cancel
                     </button>
                     <button
+                    type="submit"
                       className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
                       onClick={() => setIsModalOpen(false)}
                     >
-                      Confirm
+                      Submit
                     </button>
                   </div>
                 </form>
