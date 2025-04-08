@@ -63,8 +63,18 @@ const MeetingFunctionpage = () => {
     const { Date, Time, Topic } = data;
     console.log(Date, Time, Topic);
     // gave condition 
+    // set all their state
+    if(!Date || !Time ||  !Topic)
+    {
+      setIsModalOpen(true);
+    }
+    else{
+      setIsModalOpen(false);
+    }
+   
     
   };
+  
 
   return (
     <div>
@@ -124,8 +134,10 @@ const MeetingFunctionpage = () => {
                 <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:gap-3 gap-2"> 
 
                   <input
-                    defaultValue="Meeting"
-                    {...register("Topic")}
+                   
+                   {...register("Topic", { required: "Topic is requirerd" })}
+                  
+        
 
                     className="border px-6 py-2 rounded focus:outline-blue-400"
 
@@ -133,25 +145,40 @@ const MeetingFunctionpage = () => {
 
                     placeholder="Topic"
                   />
+                  {
+                    errors.Topic && <span className="text-red-500">
+                      {errors.Topic.message}
+                    </span>
+                  }
 
 
                   <input
                     type="date"
-                    {...register("Date", { required: true })}
+                    {...register("Date", { required: "Date is required"})}
+
+                  
+               
                      className="border px-6 py-2 rounded focus:outline-blue-400"
                     placeholder="Date"
                   />
+                  {errors.Date && <span className="text-red-500">
+                    {errors.Date.message}</span>}
                   <input
                     type="time"
-                    {...register("Time", { required: true })}
+                    {...register("Time", { required: "Time is requirred" })}
+               
                      className="border px-6 py-2 rounded focus:outline-blue-400"
                     placeholder="Time"
                   />
+                  {errors.Time && <span className="text-red-500"> {errors.time.message}</span>}
 
                   {/* errors will return when field validation fails  */}
                   {errors.exampleRequired && (
                     <span className="text-red-500">This field is required</span>
-                  )}
+                  )
+
+                  
+                  }
 
           
                   <div className="flex items-end justify-end gap-4 p-4 ">
@@ -164,7 +191,7 @@ const MeetingFunctionpage = () => {
                     <button
                     type="submit"
                       className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
-                     disabled={status}
+                     
                     //  work on false
                       
 
