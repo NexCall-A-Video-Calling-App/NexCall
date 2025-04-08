@@ -8,16 +8,22 @@ import useAuth from "../../../hooks/useAuth";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../utilities/socket";
-import { useForm, SubmitHandler } from "react-hook-form"
-
+import { useForm} from "react-hook-form";
 
 // react icons
 import { RxCross1 } from "react-icons/rx";
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
-  // /schedule-collections -> this is api end-point 
-  // to store schedule data 
+  // /schedule-collections -> this is api end-point
+  // to store schedule data
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+
   const [time, settime] = useState("");
   const [fullTime, setfullTime] = useState("");
   const { user, loading, setLoading } = useAuth();
@@ -41,11 +47,12 @@ const MeetingFunctionpage = () => {
   // Schedule button
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const onSubmit= (data) => {
+    console.log("data "+data);
+  }
+  console.log(watch("example"))
 
-  const scheduleButtonHandel = () => {
-    // store data from user
-    alert("done");
-  };
+ 
 
   return (
     <div>
@@ -103,20 +110,28 @@ const MeetingFunctionpage = () => {
                 {/* inside this have info input box  */}
                 {/* use react hook form */}
                 <form onSubmit={handleSubmit(onSubmit)}>
-      {/* register your input into the hook by invoking the "register" function */}
-      <input defaultValue="test" {...register("example")} />
-
-      {/* include validation with required or other standard HTML validation rules */}
-      <input {...register("exampleRequired", { required: true })} />
-      {/* errors will return when field validation fails  */}
-      {errors.exampleRequired && <span>This field is required</span>}
-
-      <input type="submit" />
-    </form>
-
-               
+                  {/* register your input into the hook by invoking the "register" function */}
 
 
+                  <input defaultValue="test" {...register("Title")} placeholder="Enter your Title"/>
+
+                  {/* include validation with required or other standard HTML validation rules */}
+                  <input type="date"  {...register("Date", { required: true })} placeholder="Enter your date "/>
+
+
+
+
+
+
+
+                  {/* errors will return when field validation fails  */}
+                  {errors.exampleRequired && (
+                    <span className="text-red-500">This field is required</span>
+                  )}
+
+                  <button className="btn btn-secondary">Submit</button>
+
+                </form>
               </div>
 
               <div className="flex items-end justify-end gap-4 p-4 ">
