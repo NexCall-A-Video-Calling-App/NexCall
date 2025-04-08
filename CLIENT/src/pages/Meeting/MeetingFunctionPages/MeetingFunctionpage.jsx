@@ -63,9 +63,9 @@ const MeetingFunctionpage = () => {
     const { Date, Time, Topic } = data;
     console.log(Date, Time, Topic);
     // gave condition 
-    // set all their state
+   
 
-    if(!Date || !Time ||  !Topic)
+    if(!Date && !Time &&  !Topic)
     {
       console.log("true")
       setIsModalOpen(true);
