@@ -189,8 +189,11 @@ async function run() {
 
         })
         // send schedule to front-end 
-        app.get('/schedule-collections',async(req,res)=>{
-            const result = await scheduleCollection.find().toArray();
+        app.get('/schedule-collections/:email',async(req,res)=>{
+
+            const email = req.params.email
+
+            const result = await scheduleCollection.find({email:email}).toArray();
             res.send(result);
            
         })
