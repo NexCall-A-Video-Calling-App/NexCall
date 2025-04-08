@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import  axios, {}  from "axios"
 // react icons
 import { RxCross1 } from "react-icons/rx";
+import {toast} from "react-hot-toast";
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -21,6 +22,7 @@ const MeetingFunctionpage = () => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -49,11 +51,6 @@ const MeetingFunctionpage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [ status , setstatus ] = useState(true);
-  // this state work on submit button
-  const [ datestatus , setdatestatus ] = useState(null);
-  const [ timestatus , settimestatus ] = useState(null);
-  const [ topicstatus , settopicstatus ] = useState(null);
 
 
 
@@ -66,7 +63,7 @@ const MeetingFunctionpage = () => {
     // gave condition 
    
 
-    if(!Date && !Time &&  !Topic)
+    if(Date && Time &&  Topic)
     {
       console.log("true");
 
@@ -77,11 +74,17 @@ const MeetingFunctionpage = () => {
         Date,Time,Topic,email:user?.email,
       }
 
-      axios.post('/schedule-collections',scheduleHandler)
+      
+      axios.post("http://localhost:5000/schedule-collections", scheduleHandler)
+
       .then((res)=>{
-        if(res.status===200)
+        if(res.data.insertedId)
         {
-          alert("date inserted")
+          alert("date inserted");
+          toast.success("done")
+         reset();
+          setIsModalOpen(false);
+
 
         }else{
           alert("falied")
