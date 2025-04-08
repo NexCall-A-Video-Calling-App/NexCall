@@ -9,8 +9,7 @@ import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../utilities/socket";
 import { useForm } from "react-hook-form";
-import {axios} from 'axios'
-
+import  axios, {}  from "axios"
 // react icons
 import { RxCross1 } from "react-icons/rx";
 
@@ -77,6 +76,20 @@ const MeetingFunctionpage = () => {
       const scheduleHandler ={
         Date,Time,Topic,email:user?.email,
       }
+
+      axios.post('/schedule-collections',scheduleHandler)
+      .then((res)=>{
+        if(res.status===200)
+        {
+          alert("date inserted")
+
+        }else{
+          alert("falied")
+        }
+      }).catch(error=>alert(error,"/schedule-collections"))
+      
+      
+    
 
       
 
