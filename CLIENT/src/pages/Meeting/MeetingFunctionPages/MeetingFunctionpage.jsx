@@ -9,6 +9,7 @@ import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../utilities/socket";
 import { useForm } from "react-hook-form";
+import {axios} from 'axios'
 
 // react icons
 import { RxCross1 } from "react-icons/rx";
@@ -23,6 +24,7 @@ const MeetingFunctionpage = () => {
     watch,
     formState: { errors },
   } = useForm();
+
 
   const [time, settime] = useState("");
   const [fullTime, setfullTime] = useState("");
@@ -67,8 +69,26 @@ const MeetingFunctionpage = () => {
 
     if(!Date && !Time &&  !Topic)
     {
-      console.log("true")
+      console.log("true");
+
+      // send data to backend 
+      // also store user email 
+
+      const scheduleHandler ={
+        Date,Time,Topic,email:user?.email,
+      }
+
+      
+
+      
+
+
+
+
       setIsModalOpen(true);
+
+
+
     }
     else{
       console.log("false");
