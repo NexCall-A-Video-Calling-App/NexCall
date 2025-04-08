@@ -8,12 +8,16 @@ import useAuth from "../../../hooks/useAuth";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../utilities/socket";
+import { useForm, SubmitHandler } from "react-hook-form"
+
 
 // react icons
 import { RxCross1 } from "react-icons/rx";
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
+  // /schedule-collections -> this is api end-point 
+  // to store schedule data 
   const [time, settime] = useState("");
   const [fullTime, setfullTime] = useState("");
   const { user, loading, setLoading } = useAuth();
@@ -102,6 +106,9 @@ const MeetingFunctionpage = () => {
                 <p className="text-[1rem] text-[#424242]">
                   Woohoo, you are reading this text in a modal!
                 </p>
+
+
+
               </div>
 
               <div className="flex items-end justify-end gap-4 p-4 ">
