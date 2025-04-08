@@ -47,8 +47,12 @@ const MeetingFunctionpage = () => {
   // Schedule button
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const onSubmit= (data) => {
-    console.log("data "+data);
+    console.log("data ",data);
+    const {Date , Time ,Topic } =data;
+    console.log(Date,Time,Topic);
+   
   }
   console.log(watch("example"))
 
