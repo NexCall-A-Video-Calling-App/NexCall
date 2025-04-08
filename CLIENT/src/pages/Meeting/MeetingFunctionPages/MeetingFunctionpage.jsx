@@ -48,10 +48,18 @@ const MeetingFunctionpage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [ status , setstatus ] = useState(false);
+  // this state work on submit button
+
+
   const onSubmit = (data) => {
     console.log("data ", data);
     const { Date, Time, Topic } = data;
     console.log(Date, Time, Topic);
+    // gave condition 
+    if(!Date && !Time && !Topic){
+      setstatus(true);
+    }
   };
 
   return (
@@ -152,6 +160,7 @@ const MeetingFunctionpage = () => {
                     <button
                     type="submit"
                       className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
+                      disabled={}
                       onClick={() => setIsModalOpen(false)}
                     >
                       Submit
