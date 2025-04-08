@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useTransition } from "react";
 import moment from "moment";
 import { GoDeviceCameraVideo } from "react-icons/go";
 import { Gi3dGlasses, GiTimeTrap } from "react-icons/gi";
@@ -50,6 +50,12 @@ const MeetingFunctionpage = () => {
 
   const [ status , setstatus ] = useState(true);
   // this state work on submit button
+  const [ datestatus , setdatestatus ] = useState(null);
+  const [ timestatus , settimestatus ] = useState(null);
+  const [ topicstatus , settopicstatus ] = useState(null);
+
+
+
 
 
   const onSubmit = (data) => {
@@ -57,9 +63,7 @@ const MeetingFunctionpage = () => {
     const { Date, Time, Topic } = data;
     console.log(Date, Time, Topic);
     // gave condition 
-    if(!Date && !Time && !Topic){
-      setstatus(false);
-    }
+    
   };
 
   return (
