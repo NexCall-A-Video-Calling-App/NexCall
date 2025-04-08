@@ -102,11 +102,19 @@ const MeetingFunctionpage = () => {
               <div className="p-4 border-b border-[#d1d1d1]">
                 {/* inside this have info input box  */}
                 {/* use react hook form */}
+                <form onSubmit={handleSubmit(onSubmit)}>
+      {/* register your input into the hook by invoking the "register" function */}
+      <input defaultValue="test" {...register("example")} />
 
-                <p className="text-[1rem] text-[#424242]">
-                  Woohoo, you are reading this text in a modal!
-                </p>
+      {/* include validation with required or other standard HTML validation rules */}
+      <input {...register("exampleRequired", { required: true })} />
+      {/* errors will return when field validation fails  */}
+      {errors.exampleRequired && <span>This field is required</span>}
 
+      <input type="submit" />
+    </form>
+
+               
 
 
               </div>
