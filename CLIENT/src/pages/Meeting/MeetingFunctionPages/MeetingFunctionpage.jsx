@@ -8,7 +8,7 @@ import useAuth from "../../../hooks/useAuth";
 import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../utilities/socket";
-import { useForm} from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 // react icons
 import { RxCross1 } from "react-icons/rx";
@@ -48,15 +48,11 @@ const MeetingFunctionpage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const onSubmit= (data) => {
-    console.log("data ",data);
-    const {Date , Time ,Topic } =data;
-    console.log(Date,Time,Topic);
-   
-  }
-
-
- 
+  const onSubmit = (data) => {
+    console.log("data ", data);
+    const { Date, Time, Topic } = data;
+    console.log(Date, Time, Topic);
+  };
 
   return (
     <div>
@@ -114,20 +110,22 @@ const MeetingFunctionpage = () => {
                 {/* inside this have info input box  */}
                 {/* use react hook form */}
                 <form onSubmit={handleSubmit(onSubmit)}>
-         
+                  <input
+                    defaultValue="Meeting"
+                    {...register("Topic")}
+                    placeholder="Topic"
+                  />
 
-
-                  <input defaultValue="Meeting" {...register("Topic")} placeholder="Topic"/>
-
-              
-                  <input type="date"  {...register("Date", { required: true })} placeholder="Date"/>
-                  <input type="time" {...register("Time", {required:true} )} placeholder="Time"/>
-
-
-
-
-
-
+                  <input
+                    type="date"
+                    {...register("Date", { required: true })}
+                    placeholder="Date"
+                  />
+                  <input
+                    type="time"
+                    {...register("Time", { required: true })}
+                    placeholder="Time"
+                  />
 
                   {/* errors will return when field validation fails  */}
                   {errors.exampleRequired && (
@@ -135,23 +133,21 @@ const MeetingFunctionpage = () => {
                   )}
 
                   <button className="btn btn-secondary">Submit</button>
-
+                  <div className="flex items-end justify-end gap-4 p-4 ">
+                    <button
+                      className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      Confirm
+                    </button>
+                  </div>
                 </form>
-              </div>
-
-              <div className="flex items-end justify-end gap-4 p-4 ">
-                <button
-                  className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  Cancel
-                </button>
-                <button
-                  className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
-                  onClick={() => setIsModalOpen(false)}
-                >
-                  Confirm
-                </button>
               </div>
             </div>
           </div>
