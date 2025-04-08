@@ -126,11 +126,13 @@ const MeetingFunctionpage = () => {
                   <input
                     type="date"
                     {...register("Date", { required: true })}
+                     className="border px-6 py-2 rounded focus:outline-blue-400"
                     placeholder="Date"
                   />
                   <input
                     type="time"
                     {...register("Time", { required: true })}
+                     className="border px-6 py-2 rounded focus:outline-blue-400"
                     placeholder="Time"
                   />
 
