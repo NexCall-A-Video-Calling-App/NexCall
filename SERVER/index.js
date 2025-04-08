@@ -178,6 +178,7 @@ async function run() {
            try{
             const scheduleResult = req.body;
             const result = await scheduleCollection.insertOne(scheduleResult);
+          
             res.send(result);
 
            }catch(error)
@@ -186,6 +187,10 @@ async function run() {
             res.send({message:"This error from Schedule api"})
            }
 
+        })
+        // send schedule to front-end 
+        app.get('/schedule-collections',async(req,res)=>{
+           
         })
 
 
