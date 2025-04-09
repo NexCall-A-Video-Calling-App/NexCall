@@ -1,7 +1,8 @@
 
 import { useForm } from "react-hook-form";
 import { useContext } from "react";
-import { AuthContext } from "../../provider/AuthProvider";  
+import { AuthContext } from "../../provider/AuthProvider"; 
+import { toast } from "react-toastify"; 
 const ForgotPassword = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { resetPassword } = useContext(AuthContext); 
