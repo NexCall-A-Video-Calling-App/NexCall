@@ -1,75 +1,45 @@
-import { useEffect, useMemo, useState } from "react";
-import { io } from "socket.io-client";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useContext, useEffect, useMemo, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { FaEllipsisV, FaVideo, FaPhoneAlt } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
 import { IoIosSend, IoMdInformationCircleOutline } from "react-icons/io";
-import { ImMakeGroup } from "react-icons/im";
-import { HiUserAdd } from "react-icons/hi";
 import { RiChatDownloadLine } from "react-icons/ri";
-import jsPDF from "jspdf";
 import { encryptMessage, decryptMessage } from "../../utilities/encryptDecrypt";
-// import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
+import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
 import Spinner from "../../components/Spinner";
+import { SocketContext } from './../../provider/SocketProvider';
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-  const socket = useMemo(() => io.connect("http://localhost:5000"), []); // for local server
-  // const socket = useMemo(() => io.connect("https://nexcall.up.railway.app"), []); // for live server
 
+  const { socket, currentRoom, UserId, creator, createdAt } = useContext(SocketContext);
   const { user, userLogOut, loading, setLoading } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
-  const toggleSidebar = () => setShowSidebar(!showSidebar);
   const [spin, setSpin] = useState(false);
-  const navigate = useNavigate();
-  const handleLogOut = () => {
-    userLogOut()
-      .then(() => {
-        // Sign-out successful.
-        toast.success("Log out successfully")
-        // Redirect to sign-in page
-        navigate('/sign-in')
-      })
-      .catch((error) => {
-        // An error happened.
-        console.error(error);
-      });
-  }
-  // CHAT STATES
-  const [JoinRoomId, setJoinRoomId] = useState(""); // RoomID from front-end input 
-  const [CurrentRoom, setCurrentRoom] = useState(null); // ROOMID comes from back-end 
-  const [UserId, setUserId] = useState(null);  // Client Socket ID 
   const [messages, setMessages] = useState([]); // all messages(both sender & receiver) 
   const [message, setMessage] = useState(""); // single message from sender 
   const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.   
+  const [searchUser, setSearchUser] = useState("")
 
-  // CHAT SIDE EFFECT
+  const navigate = useNavigate();
+  const toggleSidebar = () => setShowSidebar(!showSidebar);
+
   useEffect(() => {
-    socket.on("connect", () => {
-      setUserId(socket.id);
-      console.log("My ID: ", socket.id);
-    });
+    if (!currentRoom) return; // Prevent running if no room is set
 
-    socket.on("RoomCreated", (roomId) => {
-      setCurrentRoom(roomId);
-      console.log("from DB", roomId)
-      setMessages([]);
-      setLoading(false);
-    });
-
-    socket.on("RoomJoined", (roomId) => {
-      setCurrentRoom(roomId);
-      setMessages([]);
-      setLoading(false);
-    });
-
-    socket.on("updatedRoomUser", (users) => {
+    const handleUpdatedRoomUser = (users) => {
+      console.log("Received updatedRoomUser:", users);
       setRoomUsers(users);
-    });
+    };
 
+    socket.on("updatedRoomUser", handleUpdatedRoomUser);
+
+    // Request initial room users when joining or loading the dashboard
+    socket.emit("getRoomUsers", currentRoom);
+
+    // Handle incoming messages
     socket.on("receiveMessage", (msg) => {
-      console.log("MESSAGES:", msg);
       const decryptedMessage = {
         ...msg,
         message: decryptMessage(msg.message),
@@ -78,18 +48,34 @@ const Dashboard = () => {
     });
 
     return () => {
-      socket.disconnect();
+      socket.off("updatedRoomUser", handleUpdatedRoomUser);
+      socket.off("receiveMessage");
     };
-  }, [socket]);
+  }, [currentRoom, socket]);
+
+  const handleLogOut = () => {
+    userLogOut()
+      .then(() => {
+        // Sign-out successful.
+        toast.success("Log out successfully")
+        socket.disconnect();
+        // Redirect to sign-in page
+        navigate('/sign-in')
+      })
+      .catch((error) => {
+        // An error happened.
+        console.error(error);
+      });
+  }
 
   const otherUser = roomUsers.find(u => u.socketId !== UserId);
 
   const handleSend = (e) => {
     e.preventDefault();
-    if (message.trim() && CurrentRoom) {
+    if (message.trim() && currentRoom) {
       const encrypted = encryptMessage(message);
       socket.emit("sentMessage", {
-        room: CurrentRoom,
+        room: currentRoom,
         message: encrypted,
         senderName: user?.displayName,
         senderEmail: user?.email,
@@ -100,66 +86,32 @@ const Dashboard = () => {
     }
   };
 
-  const handleCreateRoom = () => {
-    setLoading(true);
-    socket.emit("createRoom", {
-      name: user?.displayName,
-      profilePic: user?.photoURL
-    });
-  };
-
-  const handleJoinRoom = (roomId) => {
-    if (!JoinRoomId) return;
-    setLoading(true);
-    socket.emit("JoinRoom", {
-      roomId,
-      userData: { name: user.displayName, profilePic: user.photoURL }
-    });
-  };
-
-  // Download messages as PDF
+  // Download messages as PDF 
   const handleDownloadMessagesAsPDF = () => {
-    downloadMessagesAsPDF(CurrentRoom, messages)
-    // const doc = new jsPDF();
-    // doc.setFontSize(12);
-
-    // // Set background color for Room ID and Downloaded At
-    // const headerHeight = 20;
-    // doc.setFillColor(200, 200, 255);
-    // doc.rect(0, 0, doc.internal.pageSize.width, headerHeight, 'F');
-
-    // // Add the text on the left (Room ID)
-    // doc.setTextColor(0, 0, 0);
-    // doc.text(`Room ID: ${CurrentRoom}`, 10, 15);
-
-    // // Add the text on the right (Downloaded At)
-    // doc.text(`Downloaded At: ${new Date().toLocaleString()}`, doc.internal.pageSize.width - 10 - doc.getTextWidth(`Downloaded At: ${new Date().toLocaleString()}`), 15);
-
-    // let y = 30;
-    // messages.forEach((msg, index) => {
-    //   const text = `${msg.senderName || "Unknown"}: ${msg.message}`;
-    //   if (y > 280) {
-    //     doc.addPage();
-    //     y = 8;
-    //   }
-    //   doc.text(text, 8, y);
-    //   y += 8;
-    // });
-
-    // doc.save(`room-${CurrentRoom}-messages.pdf`);
+    downloadMessagesAsPDF(currentRoom, messages)
   };
-
-  const JoinInit = (e) => {
-    e.preventDefault()
-    handleJoinRoom(JoinRoomId)
-  }
 
   const handleProfileClick = () => {
     setSpin(true);
     setTimeout(() => {
       navigate('/userProfile');
-    }, 1500); 
+    }, 1500);
   };
+
+  if (!currentRoom) {
+    return (
+      <div className="flex-1 flex flex-col justify-center items-center min-h-screen bg-gray-100">
+        <p>Please create or join a room first.</p>
+        <button
+          onClick={() => navigate('/meeting')}
+          className="mt-4 p-2 bg-purple-500 text-white rounded-lg"
+        >
+          Go to Meeting Page
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen bg-gray-100 relative -mt-16">
       {/* Sidebar */}
@@ -169,27 +121,24 @@ const Dashboard = () => {
       >
         {/* Sidebar Content */}
         <div className="flex-1 overflow-y-auto">
-          <h2 className="text-lg font-semibold">Messages</h2>
+          <h2 className="text-lg font-semibold">Users</h2>
           <input
+            id="searchUser"
+            onChange={(e) => setSearchUser(e.target.value)}
             type="text"
-            placeholder="Search messages"
+            placeholder="Search users"
             className="w-full p-2 mt-2 border rounded-lg"
           />
           <div className="mt-4">
-            <div className="flex items-center p-2 border rounded-lg">
-              <img
-                src="https://i.ibb.co.com/5gDBVLDV/images.png"
-                alt="avatar"
-                className="w-10 h-10 rounded-full"
-              />
-              <div className="ml-2">
-                <p className="font-semibold">Sarah Johnson</p>
-                <p className="text-sm text-gray-500">
-                  Hey, when is the next meeting?
-                </p>
-              </div>
-              <span className="ml-auto text-xs text-gray-400">2m ago</span>
-            </div>
+            {
+              roomUsers
+                .filter((userFilter) => userFilter?.name?.toLowerCase().includes(searchUser?.toLowerCase()))
+                .map((userinRoom, idx) => (
+                  <div key={idx}>
+                    <h1>{idx + 1}: {userinRoom.name}</h1>
+                  </div>
+                ))
+            }
           </div>
         </div>
 
@@ -255,129 +204,130 @@ const Dashboard = () => {
 
       {/* Join or Create Window */}
 
-      {CurrentRoom ? (
-        <>
-          {/* Chat Window */}
-          <div className="flex-1 flex flex-col min-h-screen">
-            <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
-              <div className="flex items-center">
-                <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
-                  <FaEllipsisV />
-                </button>
-                <img
-                  src={otherUser?.profilePic || "https://i.ibb.co.com/5gDBVLDV/images.png"}
-                  alt="avatar"
-                  className="w-10 h-10 rounded-full"
-                />
-                <div className="ml-1 md:ml-2">
-                  <p className="font-semibold text-sm md:text-base">
-                    {otherUser?.name || "Unknown User"}
-                  </p>
-                  <p className="text-sm text-green-500">Online</p>
-                </div>
-              </div>
-              <div className="flex gap-1 md:space-x-2 ">
-                <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
-                  <FaVideo />
-                </button>
-                <button className="flex items-center gap-1 md:gap-2  px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
-                  <FaPhoneAlt />
-                </button>
-                <button
-                  onClick={() => document.getElementById('my_modal_3').showModal()}
-                  className="flex items-center gap-1 md:gap-2  px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg">
-                  <IoMdInformationCircleOutline />
-                </button>
-                <button
-                  onClick={handleDownloadMessagesAsPDF}
-                  className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg"
-                >
-                  <RiChatDownloadLine />
-                </button>
-              </div>
-            </div>
-            <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
-              {/* Chat Messages */}
-              <div className="mb-4">
-                {
-                  messages.map((msg, index) => (
-                    <div
-                      key={index}
-                      className={`flex ${msg.sender === UserId ? "justify-end" : "justify-start"
-                        }`}
-                    >
-                      <div className="flex gap-1">
-                        <div className="h-full flex justify-center items-end">
-                          <img
-                            referrerPolicy="no-referrer"
-                            className="w-4 h-4 rounded-full mb-1" src={msg.photo} alt="" />
-                        </div>
-                        <div
-                          className={`p-2 rounded-lg ${msg.sender === UserId
-                            ? "bg-blue-500 text-white mb-1"
-                            : "bg-black text-white mb-1"
-                            }`}
-                        >
-                          {msg.message}
-                        </div>
-                      </div>
-
-                    </div>
-                  ))
-                }
-              </div>
-            </div>
-            <form
-              onSubmit={handleSend}
-              className="p-4 border-t bg-white flex items-center">
-              <input
-                onChange={(e) => setMessage(e.target.value)}
-                value={message}
-                type="text"
-                placeholder="Type a message..."
-                className="w-full p-2 border rounded-lg"
-              />
-              <button className="ml-2 p-2 text-2xl bg-purple-500 text-white rounded-lg">
-                <IoIosSend />
-              </button>
-            </form>
-          </div>
-        </>
-      ) : (
-        <div className="bg-gray-100 flex-1 flex flex-col justify-center items-center min-h-screen">
-          <div className="bg-white shadow-2xl rounded-md">
-            <button onClick={handleCreateRoom} className="btn w-full bg-primary text-white text-lg">
-              Create Room <ImMakeGroup />
+      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
+        <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
+          <div className="flex items-center">
+            <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
+              <FaEllipsisV />
             </button>
-            <div className="divider">OR</div>
-            <form
-              onSubmit={JoinInit}
-              className="px-5 py-3">
-              <input
-                onChange={(e) => setJoinRoomId(e.target.value)}
-                value={JoinRoomId}
-                type="text"
-                name="JoinRoom"
-                className="input"
-                placeholder="Type Room Id"
-              />
-              <button type="submit" className="text-white text-lg btn w-full bg-primary mt-3 ">
-                Join Room <HiUserAdd />
-              </button>
-            </form>
+            <img
+              src={otherUser?.profilePic || "https://i.ibb.co.com/5gDBVLDV/images.png"}
+              alt="avatar"
+              className="w-10 h-10 rounded-full"
+            />
+            <div className="ml-1 md:ml-2">
+              <p className="font-semibold text-sm md:text-base">
+                {roomUsers.length === 2
+                  ? roomUsers.find(u => u.socketId !== UserId)?.name || "Unknown User"
+                  : roomUsers.length > 2
+                    ? `${roomUsers.find(u => u.socketId !== UserId)?.name} +${roomUsers.length - 1}`
+                    : "Waiting for others"}
+              </p>
+              <p className="text-sm text-green-500">Online</p>
+            </div>
+          </div>
+          <div className="flex gap-1 md:space-x-2">
+            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
+              <FaVideo />
+            </button>
+            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
+              <FaPhoneAlt />
+            </button>
+            <button
+              onClick={() => document.getElementById('my_modal_3').showModal()}
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg"
+            >
+              <IoMdInformationCircleOutline />
+            </button>
+            <button
+              onClick={handleDownloadMessagesAsPDF}
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg"
+            >
+              <RiChatDownloadLine />
+            </button>
           </div>
         </div>
-      )}
+        <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
+          <div className="mb-4">
+            {messages.map((msg, index) => (
+              <div
+                key={index}
+                className={`flex ${msg.sender === UserId ? "justify-end" : "justify-start"}`}
+              >
+                <div className="flex gap-1">
+                  <div className="h-full flex justify-center items-end">
+                    <img
+                      referrerPolicy="no-referrer"
+                      className="w-4 h-4 rounded-full mb-1"
+                      src={msg.photo}
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    title={msg.senderName}
+                    className={` ${msg.sender === UserId
+                      ? "bg-blue-500 text-white mb-1"
+                      : "bg-black text-white mb-1"
+                      } p-2 rounded-lg`}
+                  >
+                    {msg.message}
+                  </div>
+
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <form
+          onSubmit={handleSend}
+          className="p-4 border-t bg-white flex items-center"
+        >
+          <input
+            onChange={(e) => setMessage(e.target.value)}
+            value={message}
+            type="text"
+            placeholder="Type a message..."
+            className="w-full p-2 border rounded-lg"
+          />
+          <button className="ml-2 p-2 text-2xl bg-purple-500 text-white rounded-lg">
+            <IoIosSend />
+          </button>
+        </form>
+      </div>
 
       <dialog id="my_modal_3" className="modal">
-        <div className="modal-box">
+        <div className="modal-box relative p-10">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           </form>
-          <h3 className="font-bold text-lg">Room Code: {CurrentRoom}</h3>
-          <p className="py-4">Press ESC key or click on ✕ button to close</p>
+
+          <h3 className="font-bold text-lg flex items-center gap-2 mb-2">
+            Room Code: {currentRoom}
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(currentRoom);
+              }}
+              className="btn btn-sm btn-outline tooltip"
+              data-tip="Copy Room Code"
+            >
+              📋
+            </button>
+          </h3>
+
+          <div className="text-sm text-gray-500 mt-4 space-y-1">
+            <p>
+              <span className="font-semibold text-gray-600">Created At:</span>{" "}
+              {new Date(createdAt).toLocaleString()}
+            </p>
+            <p>
+              <span className="font-semibold text-gray-600">Creator:</span> {creator}
+            </p>
+          </div>
         </div>
       </dialog>
+
+
+
     </div>
   );
 };
