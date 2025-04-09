@@ -53,12 +53,13 @@ io.on("connection", (socket) => {
     });
 
     // Send Message
-    socket.on("sentMessage", async ({ room, message, senderName, photo, receiverName }) => {
+    socket.on("sentMessage", async ({ room, message, senderName, senderEmail, photo, receiverName }) => {
         const messageData = {
             room,
             message,
             photo,
             senderName,
+            senderEmail,
             receiverName,
             timestamp: new Date()
         };
@@ -153,12 +154,78 @@ async function run() {
             })
         }
 
-        // API to get all messages for a specific room
+        // Get all messages for a specific room APIs
         app.get('/messages/:roomId', async (req, res) => {
             const roomId = req.params.roomId;
             const messages = await messagesCollection.find({ room: roomId }).toArray();
             res.send(messages);
         });
+
+        app.get("/conversations/user/:email", async (req, res) => {
+            const { email } = req.params;
+
+            // Find all rooms where user is sender or receiver
+            const userRooms = await messagesCollection.aggregate([
+                {
+                    $match: {
+                        $or: [
+                            { senderEmail: email },
+                            { receiverEmail: email }
+                        ]
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$room"
+                    }
+                }
+            ]).toArray();
+
+            const roomIds = userRooms.map(r => r._id);
+
+            // Fetch messages from those rooms without sorting inside each room
+            const result = await messagesCollection.aggregate([
+                {
+                    $match: {
+                        room: { $in: roomIds }
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$room",
+                        messages: {
+                            $push: {
+                                message: "$message",
+                                senderName: "$senderName",
+                                receiverName: "$receiverName",
+                                senderEmail: "$senderEmail",
+                                receiverEmail: "$receiverEmail",
+                                photo: "$photo",
+                                timestamp: "$timestamp"
+                            }
+                        },
+                        lastMessageTime: { $max: "$timestamp" }
+                    }
+                },
+                {
+                    $project: {
+                        _id: 0,
+                        room: "$_id",
+                        messages: 1,
+                        lastMessageTime: 1
+                    }
+                },
+                {
+                    $sort: {
+                        lastMessageTime: -1
+                    }
+                }
+            ]).toArray();
+
+            res.json(result);
+        });
+
+
 
         // User API:
         app.post('/users', async (req, res) => {
