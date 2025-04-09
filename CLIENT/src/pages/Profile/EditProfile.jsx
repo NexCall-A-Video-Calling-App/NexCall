@@ -1,7 +1,6 @@
 import { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
-import { motion } from "framer-motion";
 
 const EditProfile = () => {
 const { user, onUpdate } = useAuth(); 
@@ -26,11 +25,7 @@ const { user, onUpdate } = useAuth();
   };
 
   return (
-    <motion.div
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.5, ease: "easeOut" }}
-    className="max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg">
+    <div className="max-w-md h-screen mx-auto p-4 bg-white shadow-lg rounded-lg">
       <h2 className="text-xl font-semibold text-center mb-4">Edit Profile</h2>
       <form onSubmit={handleUpdate}>
         <div className="mb-3">
@@ -68,7 +63,7 @@ const { user, onUpdate } = useAuth();
           Update Profile
         </button>
       </form>
-    </motion.div>
+    </div>
   );
 };
 
