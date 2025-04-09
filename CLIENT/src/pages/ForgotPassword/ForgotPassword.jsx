@@ -4,6 +4,7 @@ import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider"; 
 import { toast } from "react-toastify"; 
 import { useNavigate } from 'react-router-dom';
+
 const ForgotPassword = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { resetPassword } = useContext(AuthContext); 

@@ -117,7 +117,7 @@ const SignIn = () => {
                 {/* Doted Image */}
                 <div className="absolute top-0 left-0 bg-purple-500 w-44 h-20 rounded-tl-lg"></div>
                 <div className="absolute bottom-0 right-0 bg-purple-500 w-52 h-28 rounded-br-lg "></div>
-                <img src={dot} alt="Doted..." className="absolute -bottom-[126px] md:-bottom-25 lg:-bottom-24 -left-1 md:left-[350px] lg:left-[450px]" />
+                <img src={dot} alt="Doted..." className="absolute -bottom-[12px] md:-bottom-2 lg:-bottom-2 -left-5 md:left-[355px] lg:left-[450px]" />
             </div>
         </div>
     );
