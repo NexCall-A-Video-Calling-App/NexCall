@@ -147,7 +147,7 @@ const Dashboard = () => {
           {/* <div className="divider"></div> */}
           {/* Back to Home */}
           <button
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/meeting")}
             className="w-full border flex justify-center items-center gap-2 mt-4 p-2  rounded-lg hover:bg-purple-600 transition-colors"
           >
             <IoHome /> Back to Home
@@ -202,7 +202,7 @@ const Dashboard = () => {
       {showSidebar && <div className="fixed inset-0 bg-black opacity-50 z-10 md:hidden" onClick={toggleSidebar} ></div>}
 
 
-      {/* Join or Create Window */}
+      {/* Chat Window */}
 
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
         <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
