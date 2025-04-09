@@ -19,7 +19,7 @@ function useScheduleData() {
         }
 
     });
-    console.log(scheduleData);
+
   return {isLoading,isError,scheduleData};
 }
 

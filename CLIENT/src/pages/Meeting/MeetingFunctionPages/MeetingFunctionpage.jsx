@@ -32,6 +32,7 @@ const MeetingFunctionpage = () => {
   const [fullTime, setfullTime] = useState("");
   const { user, loading, setLoading } = useAuth();
   const navigate = useNavigate();
+
   const {isLoading,isError,scheduleData} = useScheduleData();
   console.log(scheduleData);
 
@@ -263,9 +264,24 @@ const MeetingFunctionpage = () => {
           </div>
           <div className="border h-56  rounded mt-4 border-red-100 opacity-30">
             <div className="flex justify-center items-center h-full">
-              <p className="text-white opacity-45">
-                No Uncomming meeting today
-              </p>
+
+
+             
+
+
+              {
+                scheduleData?.map((schedule,key)=>(
+                  <div key={key}>
+                    <p className="text-white">Darta</p>
+                    <p>{schedule.Topic}</p>
+
+                  </div>
+                ))
+              
+
+              }
+
+
             </div>
           </div>
         </div>
