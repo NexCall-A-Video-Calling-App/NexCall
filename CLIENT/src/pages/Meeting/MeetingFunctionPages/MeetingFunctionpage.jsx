@@ -15,6 +15,12 @@ import { RxCross1 } from "react-icons/rx";
 import { toast } from "react-hot-toast";
 import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 import Schedule from "../../Home/Schedule";
+import countDwon from "../../../hooks/CountDwon/countDwon";
+
+
+
+
+
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -269,6 +275,7 @@ const MeetingFunctionpage = () => {
                         <td>{schedule
                           .Date}</td>
                         <td>{schedule.Time}</td>
+                        <td>{countDwon(schedule.Date,schedule.Time)}</td>
                       </tr>
                     ))}
 
