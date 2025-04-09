@@ -40,7 +40,7 @@ const SignUp = () => {
                 toast.error(error.message);
             })
 
-            profileUpdate(data.name, photoURL)
+        profileUpdate(data.name, photoURL)
     };
 
     // Google Sign In

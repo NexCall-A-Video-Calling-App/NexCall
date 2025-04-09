@@ -11,6 +11,7 @@ import {
 } from '@tanstack/react-query'
 
 import toast, { Toaster } from 'react-hot-toast'
+import { SocketProvider } from './provider/SocketProvider.jsx'
 const notify = () => {
   toast('notify')
 }
@@ -21,10 +22,13 @@ console.log(queryClient);
 createRoot(document.getElementById('root')).render(
   <>
     <AuthProvider>
-      <QueryClientProvider client={queryClient}>
-        <RouterProvider router={Routes} />
-        <Toaster />
-      </QueryClientProvider>
+      <SocketProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={Routes} />
+          <Toaster />
+        </QueryClientProvider>
+      </SocketProvider>
+
     </AuthProvider>
   </>,
 )
