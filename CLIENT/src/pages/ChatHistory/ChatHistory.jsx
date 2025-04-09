@@ -55,31 +55,49 @@ const ChatHistory = () => {
                             const isSender = msg.senderEmail === user?.email;
                             const decryptedMessage = decryptMessage(msg.message);
 
+                            const prevMsg = room.messages[i - 1];
+                            const isNewSender = !prevMsg || prevMsg.senderEmail !== msg.senderEmail;
+
                             return (
                                 <div
                                     key={i}
                                     className={`flex flex-col ${isSender ? "items-end" : "items-start"}`}
                                 >
-                                    {/* Sender Name */}
-                                    <p className={`text-xs mb-1 px-2 ${isSender ? "text-right text-primary" : "text-left text-gray-500"}`}>
-                                        {msg.senderName}
-                                    </p>
+                                    {isNewSender && (
+                                        <p
+                                            className={`text-xs mb-1 ${isSender ? "pr-10 text-right" : "pl-10 text-left"
+                                                } text-gray-500`}
+                                        >
+                                            {msg.senderName}
+                                        </p>
+                                    )}
 
-                                    {/* Message bubble */}
-                                    <div className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md space-x-2 ${isSender ? "flex-row-reverse" : ""}`}>
+                                    {/* Chat message row */}
+                                    <div
+                                        className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md ${isSender ? "flex-row-reverse" : ""
+                                            }`}
+                                    >
+                                        {/* Profile */} 
                                         <img
                                             src={msg.photo}
                                             alt="user"
                                             className="w-8 h-8 rounded-full object-cover"
                                         />
-                                        <div className={`relative p-3 rounded-2xl ${isSender
-                                            ? "bg-primary text-white rounded-br-none"
-                                            : "bg-gray-200 text-gray-900 rounded-bl-none"
-                                            }`}
+
+                                        {/* Message bubble */}
+                                        <div
+                                            className={`${isSender ? "mr-2" : "ml-2"
+                                                } p-3 rounded-2xl relative ${isSender
+                                                    ? "bg-primary text-white rounded-br-none"
+                                                    : "bg-gray-200 text-gray-900 rounded-bl-none"
+                                                }`}
                                         >
                                             <p className="text-sm break-words">{decryptedMessage}</p>
                                             <p className="text-xs text-right opacity-60 mt-1">
-                                                {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                                {new Date(msg.timestamp).toLocaleTimeString([], {
+                                                    hour: "2-digit",
+                                                    minute: "2-digit",
+                                                })}
                                             </p>
                                         </div>
                                     </div>
@@ -87,6 +105,8 @@ const ChatHistory = () => {
                             );
                         })}
                     </div>
+
+
                 </div>
             ))}
         </div>
