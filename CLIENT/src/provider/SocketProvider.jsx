@@ -4,8 +4,8 @@ import io from 'socket.io-client';
 export const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
-    // const socket = useMemo(() => io.connect("http://localhost:5000"), []);
-    const socket = useMemo(() => io.connect("https://nexcall.up.railway.app/"), []);
+    const socket = useMemo(() => io.connect("http://localhost:5000"), []);
+    // const socket = useMemo(() => io.connect("https://nexcall.up.railway.app/"), []);
 
     const [currentRoom, setCurrentRoom] = useState(null);
     const [UserId, setUserId] = useState(null);  // Client Socket ID 

@@ -9,7 +9,7 @@ import { encryptMessage, decryptMessage } from "../../utilities/encryptDecrypt";
 import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
 import Spinner from "../../components/Spinner";
 import { SocketContext } from './../../provider/SocketProvider';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
 
@@ -146,12 +146,12 @@ const Dashboard = () => {
         <div className="mt-auto">
           {/* <div className="divider"></div> */}
           {/* Back to Home */}
-          <button
-            onClick={() => navigate("/meeting")}
+          <Link
+            to='/meeting'
             className="w-full border flex justify-center items-center gap-2 mt-4 p-2  rounded-lg hover:bg-purple-600 transition-colors"
           >
-            <IoHome /> Back to Home
-          </button>
+            <IoHome /> Back to Dashboard
+          </Link>
 
           {/* Profile */}
           <div className="dropdown dropdown-top dropdown-center w-full">
