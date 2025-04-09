@@ -53,7 +53,7 @@ const ChatHistory = () => {
                     </div>
 
                     {/* Messages Section */}
-                    <div className="max-h-96 overflow-y-auto px-2 pb-4 space-y-3">
+                    <div className="max-h-96 overflow-y-auto px-2 mb-2 space-y-3">
                         {room.messages.map((msg, i) => {
                             const isSender = msg.senderEmail === user?.email;
                             const decryptedMessage = decryptMessage(msg.message);
@@ -80,9 +80,9 @@ const ChatHistory = () => {
                                     >
                                         {/* Profile Image */}
                                         <img
-                                            src={msg.photo}
-                                            alt="user"
-                                            className="w-8 h-8 rounded-full object-cover"
+                                            src={msg.photo || "https://img.icons8.com/?size=50&id=7819&format=png"}
+                                            alt="profile"
+                                            className="w-7 h-7 rounded-full object-cover"
                                         />
 
                                         {/* Message Bubble */}
