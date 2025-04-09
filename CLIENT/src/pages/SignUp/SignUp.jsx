@@ -23,7 +23,7 @@ const SignUp = () => {
       .then((result) => {
         console.log(result.user);
         // navigate('/dashboard')
-        navigate("/meeting-page");
+        navigate("/meeting");
         reset();
       })
       .catch((error) => {
@@ -38,9 +38,9 @@ const SignUp = () => {
       .then((result) => {
         console.log(result.user);
         // navigate('/dashboard')
-        navigate("/meeting-page");
+        navigate("/meeting");
 
-        
+
       })
       .catch((error) => {
         console.log(error.message);
