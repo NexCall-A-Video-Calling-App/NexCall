@@ -275,7 +275,7 @@ const MeetingFunctionpage = () => {
                         <td>{schedule
                           .Date}</td>
                         <td>{schedule.Time}</td>
-                        <td>{countDwon(schedule.Date,schedule.Time)}</td>
+                        <td>{Math.abs(countDwon(schedule.Date,schedule.Time))}</td>
                       </tr>
                     ))}
 
