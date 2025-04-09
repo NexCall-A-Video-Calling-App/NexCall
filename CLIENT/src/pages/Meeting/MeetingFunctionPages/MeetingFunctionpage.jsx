@@ -100,6 +100,7 @@ const MeetingFunctionpage = () => {
     socket.emit("createRoom", {
       name: user?.displayName,
       profilePic: user?.photoURL,
+      timestamp: new Date(),
     });
   };
 
@@ -213,11 +214,7 @@ const MeetingFunctionpage = () => {
                   {errors.exampleRequired && (
                     <span className="text-red-500">This field is required</span>
                   )
-
-
                   }
-
-
                   <div className="flex items-end justify-end gap-4 p-4 ">
                     <button
                       className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
@@ -229,10 +226,7 @@ const MeetingFunctionpage = () => {
                       type="submit"
                       className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
 
-                    //  work on false
-
-
-
+                    //  work on false 
                     // onClick={() => setIsModalOpen(false)}
                     >
                       Submit

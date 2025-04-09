@@ -7,6 +7,8 @@ export const SocketProvider = ({ children }) => {
     const socket = useMemo(() => io.connect("http://localhost:5000"), []);
     const [currentRoom, setCurrentRoom] = useState(null);
     const [UserId, setUserId] = useState(null);  // Client Socket ID 
+    const [creator, setCreator] = useState("")
+    const [createdAt, setCreatedAt] = useState(null)
 
     useEffect(() => {
         socket.on("connect", () => {
@@ -14,7 +16,9 @@ export const SocketProvider = ({ children }) => {
             console.log("Socket connected, My ID:", socket.id);
         });
 
-        socket.on("RoomCreated", (roomId) => {
+        socket.on("RoomCreated", (roomId, name, timestamp) => {
+            setCreator(name)
+            setCreatedAt(timestamp)
             setCurrentRoom(roomId);
             console.log("RoomCreated received:", roomId);
         });
@@ -31,7 +35,7 @@ export const SocketProvider = ({ children }) => {
     }, [socket]);
 
     return (
-        <SocketContext.Provider value={{ socket, currentRoom, setCurrentRoom, UserId }}>
+        <SocketContext.Provider value={{ socket, currentRoom, setCurrentRoom, UserId, creator, createdAt }}>
             {children}
         </SocketContext.Provider>
     );

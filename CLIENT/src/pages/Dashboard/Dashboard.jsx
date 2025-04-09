@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
 
-  const { socket, currentRoom, UserId } = useContext(SocketContext);
+  const { socket, currentRoom, UserId, creator, createdAt } = useContext(SocketContext);
   const { user, userLogOut, loading, setLoading } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const [spin, setSpin] = useState(false);
@@ -294,14 +294,38 @@ const Dashboard = () => {
       </div>
 
       <dialog id="my_modal_3" className="modal">
-        <div className="modal-box">
+        <div className="modal-box relative p-10">
           <form method="dialog">
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
           </form>
-          <h3 className="font-bold text-lg">Room Code: {currentRoom}</h3>
-          <p className="py-4">Press ESC key or click on ✕ button to close</p>
+
+          <h3 className="font-bold text-lg flex items-center gap-2 mb-2">
+            Room Code: {currentRoom}
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(currentRoom);
+              }}
+              className="btn btn-sm btn-outline tooltip"
+              data-tip="Copy Room Code"
+            >
+              📋
+            </button>
+          </h3>
+
+          <div className="text-sm text-gray-500 mt-4 space-y-1">
+            <p>
+              <span className="font-semibold text-gray-600">Created At:</span>{" "}
+              {new Date(createdAt).toLocaleString()}
+            </p>
+            <p>
+              <span className="font-semibold text-gray-600">Creator:</span> {creator}
+            </p>
+          </div>
         </div>
       </dialog>
+
+
+
     </div>
   );
 };
