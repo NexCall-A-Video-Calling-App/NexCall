@@ -258,10 +258,17 @@ async function run() {
         // send schedule to front-end 
         app.get('/schedule-collections/:email',async(req,res)=>{
 
+           try{
             const email = req.params.email
 
             const result = await scheduleCollection.find({email:email}).sort({Date:-1}).toArray();
-            res.send(result);
+            res.send(result)
+           }catch
+           (err)
+           {
+            console.log(err);
+            
+           }
            
         })
 
