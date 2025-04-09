@@ -238,15 +238,15 @@ const MeetingFunctionpage = () => {
             <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
 
-          <div className="border h-56  rounded mt-4 border-red-100 ">
+          <div className="border h-56  rounded mt-4 border-red-100 w-full">
 
-            <div className="flex justify-center items-center h-full flex-col overflow-y-scroll gap-4 w-full">
+            <div className="flex justify-center items-center h-full flex-col overflow-y-scroll gap-4 border border-red-500 ">
 
-              <div className="overflow-x-auto rounded-box border border-base-content/5 bg-white">
+              <div className="overflow-x-auto rounded-box border border-base-content/5 bg-white w-full">
 
                 <table className="table bg-slate-300 w-full">
                   {/* head */}
-                  <thead>
+                  <thead className="">
                     <tr>
                       <th>Serial</th>
                       <th>Topic</th>
