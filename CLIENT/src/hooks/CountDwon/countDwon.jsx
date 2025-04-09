@@ -24,7 +24,9 @@ function countDwon(date,time) {
     const minutes = durationTime.minutes();
     const seconds = durationTime.seconds();
 
-    return `${Math.abs(hour)}h ${minutes}m ${seconds}s`;
+    return `${Math.abs(hour)}h ${Math
+        .abs(minutes)}m ${Math.abs
+            (seconds)}s`;
   
 }
 
