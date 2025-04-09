@@ -4,12 +4,14 @@ import { FaGoogle } from "react-icons/fa";
 import dot from '../../assets/dot.png'
 import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
+import useImageUpload from "../../hooks/useImageUpload";
 
 
 const SignUp = () => {
     const { createUser, loginWithGoogle, profileUpdate } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
+    const { uploadImage } = useImageUpload();
 
 
     // Sign Up
@@ -37,7 +39,7 @@ const SignUp = () => {
                 console.log(error.message);
             })
 
-
+            profileUpdate(data.name, photoURL)
     };
 
     // Google Sign In
