@@ -10,7 +10,7 @@ const SignUp = () => {
     const { createUser, loginWithGoogle, profileUpdate } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
-   
+
 
     // Sign Up
     const onSubmit = async (data) => {
@@ -25,7 +25,7 @@ const SignUp = () => {
             return;
         }
 
-  
+
 
         createUser(data.email, data.password)
             .then((result) => {
@@ -37,7 +37,7 @@ const SignUp = () => {
                 console.log(error.message);
             })
 
-          
+
     };
 
     // Google Sign In
@@ -110,7 +110,21 @@ const SignUp = () => {
                             />
                             {errors.password && <p className="text-red-500">{errors.password.message}</p>}
 
-                   
+                            {/* Upload Photo */}
+                            <div className="form-control mb-3">
+                                <label className="label text-sm font-semibold text-gray-700 mb-1 mt-2 ">Upload Photo</label>
+                                <div className='flex items-center gap-5'>
+                                    <div className='w-full'>
+                                        <input type="file" {...register("photo", { required: true })} className="file-input file-input-bordered w-full rounded-lg" />
+
+
+                                        {errors.photo && <p className='text-red-600'>Photo is required.</p>}
+                                    </div>
+
+
+                                </div>
+                            </div>
+
 
                             <button className="w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 mt-3">
                                 Sign Up
