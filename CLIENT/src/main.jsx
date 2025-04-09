@@ -10,21 +10,21 @@ import {
 
 } from '@tanstack/react-query'
 
+import toast, { Toaster } from 'react-hot-toast'
+const notify = () => {
+  toast('notify')
+}
+
 const queryClient = new QueryClient();
 console.log(queryClient);
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-
+  <>
     <AuthProvider>
-
       <QueryClientProvider client={queryClient}>
-
-      <RouterProvider router={Routes} />
-
+        <RouterProvider router={Routes} />
+        <Toaster />
       </QueryClientProvider>
-   
     </AuthProvider>
-
-  </StrictMode>,
+  </>,
 )

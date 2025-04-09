@@ -17,7 +17,8 @@ const SignUp = () => {
         createUser(data.email, data.password)
             .then((result) => {
                 console.log(result.user);
-                navigate('/dashboard')
+                // navigate('/dashboard')
+                navigate('/meeting')
                 reset();
             })
             .catch((error) => {
@@ -31,7 +32,10 @@ const SignUp = () => {
         loginWithGoogle()
             .then((result) => {
                 console.log(result.user);
-                navigate('/dashboard')
+                // navigate('/dashboard')
+                navigate(
+                    '/meeting'
+                )
             })
             .catch((error) => {
                 console.log(error.message);
