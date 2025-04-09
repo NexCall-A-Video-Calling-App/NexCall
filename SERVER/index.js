@@ -260,7 +260,7 @@ async function run() {
 
             const email = req.params.email
 
-            const result = await scheduleCollection.find({email:email}).toArray();
+            const result = await scheduleCollection.find({email:email}).sort({Date:-1}).toArray();
             res.send(result);
            
         })
