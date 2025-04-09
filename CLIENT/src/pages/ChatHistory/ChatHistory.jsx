@@ -29,10 +29,12 @@ const ChatHistory = () => {
             )}
 
             {userConversations.map((room, idx) => (
-                <div key={idx} className="mb-8 border border-gray-200 p-4 rounded-xl shadow-sm bg-gray-50">
-                    <div className="flex items-center justify-between mb-2">
-                        <h3 className="text-lg font-semibold text-purple-700">
-                            Room ID: {room.room}
+                <div key={idx} className="mb-8 border border-gray-200 rounded-xl shadow-sm bg-gray-50">
+
+                    {/* Room ID and Download Button Section */}
+                    <div className="flex items-center justify-between  p-3 bg-gray-100 rounded-t-xl border-b">
+                        <h3 className="text-lg font-semibold ">
+                            <span className="text-gray-800">Room ID:</span> <span className="text-purple-700">{room.room}</span>
                         </h3>
                         <button
                             onClick={() => {
@@ -43,14 +45,15 @@ const ChatHistory = () => {
 
                                 downloadMessagesAsPDF(room.room, decryptedMessages);
                             }}
-                            className="flex items-center text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200 transition"
+                            className="flex items-center text-sm md:text-base bg-blue-100 text-blue-700 px-3 py-1 rounded hover:bg-blue-200 transition"
                         >
                             <RiChatDownloadLine className="mr-1" />
                             Download
                         </button>
                     </div>
 
-                    <div className="max-h-96 overflow-y-auto pr-2 space-y-3 scrollbar-thin scrollbar-thumb-primary scrollbar-track-secondary">
+                    {/* Messages Section */}
+                    <div className="max-h-96 overflow-y-auto px-2 pb-4 space-y-3">
                         {room.messages.map((msg, i) => {
                             const isSender = msg.senderEmail === user?.email;
                             const decryptedMessage = decryptMessage(msg.message);
@@ -65,34 +68,31 @@ const ChatHistory = () => {
                                 >
                                     {isNewSender && (
                                         <p
-                                            className={`text-xs mb-1 ${isSender ? "pr-10 text-right" : "pl-10 text-left"
-                                                } text-gray-500`}
+                                            className={`text-xs mb-1 ${isSender ? "pr-10 text-right" : "pl-10 text-left"} text-gray-500`}
                                         >
                                             {msg.senderName}
                                         </p>
                                     )}
 
-                                    {/* Chat message row */}
+                                    {/* Message Bubble Section */}
                                     <div
-                                        className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md ${isSender ? "flex-row-reverse" : ""
-                                            }`}
+                                        className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md ${isSender ? "flex-row-reverse" : ""}`}
                                     >
-                                        {/* Profile */} 
+                                        {/* Profile Image */}
                                         <img
                                             src={msg.photo}
                                             alt="user"
                                             className="w-8 h-8 rounded-full object-cover"
                                         />
 
-                                        {/* Message bubble */}
+                                        {/* Message Bubble */}
                                         <div
-                                            className={`${isSender ? "mr-2" : "ml-2"
-                                                } p-3 rounded-2xl relative ${isSender
-                                                    ? "bg-primary text-white rounded-br-none"
-                                                    : "bg-gray-200 text-gray-900 rounded-bl-none"
+                                            className={`${isSender ? "mr-2" : "ml-2"} p-3 rounded-2xl relative ${isSender
+                                                ? "bg-primary text-white rounded-br-none"
+                                                : "bg-gray-200 text-gray-900 rounded-bl-none"
                                                 }`}
                                         >
-                                            <p className="text-sm break-words">{decryptedMessage}</p>
+                                            <p className="text-sm md:text-base break-words">{decryptedMessage}</p>
                                             <p className="text-xs text-right opacity-60 mt-1">
                                                 {new Date(msg.timestamp).toLocaleTimeString([], {
                                                     hour: "2-digit",
@@ -105,11 +105,10 @@ const ChatHistory = () => {
                             );
                         })}
                     </div>
-
-
                 </div>
             ))}
         </div>
+
     );
 };
 
