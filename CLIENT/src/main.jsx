@@ -4,7 +4,6 @@ import { RouterProvider } from 'react-router-dom'
 import './index.css'
 import Routes from './routes/Routes.jsx'
 import AuthProvider from './provider/AuthProvider.jsx'
-import { Bounce, ToastContainer } from 'react-toastify'
 import {
   QueryClient,
   QueryClientProvider,
@@ -24,19 +23,6 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
         <RouterProvider router={Routes} />
-        <ToastContainer
-          position="top-center"
-          autoClose={5000}
-          hideProgressBar={false}
-          newestOnTop={false}
-          closeOnClick={false}
-          rtl={false}
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme="light"
-          transition={Bounce}
-        />
         <Toaster />
       </QueryClientProvider>
     </AuthProvider>

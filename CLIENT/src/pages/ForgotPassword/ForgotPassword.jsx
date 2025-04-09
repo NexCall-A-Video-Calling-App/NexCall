@@ -1,9 +1,8 @@
 import { useLocation, useNavigate,  } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { sendPasswordResetEmail } from "firebase/auth";
-
-import { toast } from "react-toastify"; 
 import { auth } from "../../firebase/firebase.init";
+import toast from "react-hot-toast";
 
 const ForgotPassword = () => {
   const location = useLocation();
