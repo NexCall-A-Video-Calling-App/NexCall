@@ -10,14 +10,14 @@ function MeetingNavbar() {
   const links = (
     <div className="md:flex">
       <li>
-        <Link className="md:flex md:flex-col  md:gap-0 text-gray-200 font-semibold">
+        <Link to={'/meeting'} className="md:flex md:flex-col  md:gap-0 text-gray-200 font-semibold">
           Home <IoMdHome />
         </Link>
       </li>
 
       <li>
-        <Link className="md:flex md:flex-col  md:gap-0 text-gray-600 font-semibold">
-          Chat <IoChatboxEllipses />
+        <Link to={'/meeting/chat-history'} className="md:flex md:flex-col  md:gap-0 text-gray-600 font-semibold">
+          Chat History <IoChatboxEllipses />
         </Link>
       </li>
 
@@ -37,13 +37,13 @@ function MeetingNavbar() {
 
   return (
     <div>
-      <div className="navbar bg-slate-900 shadow-sm w-full px-4 lg:px-12 md:px-10 sm:px-6 fixed border border-black/20">
+      <div className="navbar bg-slate-900 shadow-sm w-full px-4 lg:px-12 md:px-10 sm:px-6 fixed top-0 z-50 border border-black/20">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className=" lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-5 w-5 text-white"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
