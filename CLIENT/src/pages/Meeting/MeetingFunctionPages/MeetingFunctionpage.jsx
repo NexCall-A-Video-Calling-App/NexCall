@@ -238,28 +238,35 @@ const MeetingFunctionpage = () => {
           </div>
           <div className="border h-56  rounded mt-4 border-red-100 opacity-30">
             <div className="flex justify-center items-center h-full flex-col overflow-y-scroll gap-4">
-              {scheduleData?.map((schedule, key) => (
 
 
+            <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
+                    <table className="table">
+                      {/* head */}
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Name</th>
+                          <th>Job</th>
+                          <th>Favorite Color</th>
+                        </tr>
+                      </thead>
 
-
-
-                <section key={key} className="border border-blue-300 flex flex-col  ">
-
-                  <div className="flex">
-                    <p>{schedule.Topic}</p>
-
-                    <p className="text-white">{schedule.Date}</p>
-                    <p>{schedule.Time}</p>
-
-
-
+                      <tbody>
+                        {/* row 1 */}
+                        <tr>
+                          <th>1</th>
+                          <td>Cy Ganderton</td>
+                          <td>Quality Control Specialist</td>
+                          <td>Blue</td>
+                        </tr>
+                        {/* row 2 */}
+                     
+                     
+                      </tbody>
+                    </table>
                   </div>
 
-                </section>
-
-
-              ))}
             </div>
           </div>
         </div>
