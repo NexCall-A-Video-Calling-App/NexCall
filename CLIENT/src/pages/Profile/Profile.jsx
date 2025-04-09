@@ -34,6 +34,7 @@ const ProfileDetails = () => {
         <p className="text-gray-500">{user?.plan || "Basic Plan"}</p>
       </div>
 
+      {/* test */}
       <div className="mt-4 flex flex-col md:flex-row justify-between gap-4">
         <div className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition">
           <button 
