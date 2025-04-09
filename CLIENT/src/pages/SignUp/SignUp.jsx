@@ -5,14 +5,27 @@ import dot from '../../assets/dot.png'
 import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 
+
 const SignUp = () => {
-    const { createUser, loginWithGoogle } = useContext(AuthContext);
+    const { createUser, loginWithGoogle, profileUpdate } = useContext(AuthContext);
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+   
 
     // Sign Up
     const onSubmit = async (data) => {
         console.log(data.email, data.password);
+
+        const imageFile = data.photo[0];
+        const photoURL = await uploadImage(imageFile);
+
+
+        if (!photoURL) {
+            toast.error("Image upload failed.");
+            return;
+        }
+
+  
 
         createUser(data.email, data.password)
             .then((result) => {
@@ -23,6 +36,8 @@ const SignUp = () => {
             .catch((error) => {
                 console.log(error.message);
             })
+
+          
     };
 
     // Google Sign In
@@ -74,6 +89,7 @@ const SignUp = () => {
                                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 "
                             />
                             {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+
                             {/* Email Field */}
                             <label className="block text-gray-700 text-sm font-semibold mb-1 mt-2">Email</label>
                             <input
@@ -83,6 +99,7 @@ const SignUp = () => {
                                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 "
                             />
                             {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+
                             {/* Password Field */}
                             <label className="block text-gray-700 text-sm font-semibold mb-1 mt-2">Password</label>
                             <input
@@ -92,6 +109,9 @@ const SignUp = () => {
                                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                             />
                             {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+
+                   
+
                             <button className="w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 mt-3">
                                 Sign Up
                             </button>
