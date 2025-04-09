@@ -13,6 +13,7 @@ import  axios, {}  from "axios"
 // react icons
 import { RxCross1 } from "react-icons/rx";
 import {toast} from "react-hot-toast";
+import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -31,6 +32,8 @@ const MeetingFunctionpage = () => {
   const [fullTime, setfullTime] = useState("");
   const { user, loading, setLoading } = useAuth();
   const navigate = useNavigate();
+  const {isLoading,isError,scheduleData} = useScheduleData();
+  console.log(scheduleData);
 
   const [JoinRoomId, setJoinRoomId] = useState(""); // RoomID from front-end input
 
