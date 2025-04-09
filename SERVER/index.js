@@ -267,7 +267,8 @@ async function run() {
            (err)
            {
             console.log(err);
-            
+            res.send({message:"This message from schedule-collections get method"})
+
            }
            
         })
