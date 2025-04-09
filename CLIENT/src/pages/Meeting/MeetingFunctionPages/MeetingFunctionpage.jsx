@@ -14,6 +14,7 @@ import axios from "axios";
 import { RxCross1 } from "react-icons/rx";
 import { toast } from "react-hot-toast";
 import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
+import Schedule from "../../Home/Schedule";
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -236,37 +237,40 @@ const MeetingFunctionpage = () => {
             <p className="text-sm font-semibold"> {time}</p>
             <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
-          <div className="border h-56  rounded mt-4 border-red-100 opacity-30">
-            <div className="flex justify-center items-center h-full flex-col overflow-y-scroll gap-4">
 
+          <div className="border h-56  rounded mt-4 border-red-100 ">
 
-            <div className="overflow-x-auto rounded-box border border-base-content/5 bg-base-100">
-                    <table className="table">
-                      {/* head */}
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th>Name</th>
-                          <th>Job</th>
-                          <th>Favorite Color</th>
-                        </tr>
-                      </thead>
+            <div className="flex justify-center items-center h-full flex-col overflow-y-scroll gap-4 w-full">
 
-                      <tbody>
-                        {/* row 1 */}
-                        <tr>
-                          <th>1</th>
-                          <td>Cy Ganderton</td>
-                          <td>Quality Control Specialist</td>
-                          <td>Blue</td>
-                        </tr>
-                        {/* row 2 */}
-                     
-                     
-                      </tbody>
-                    </table>
-                  </div>
+              <div className="overflow-x-auto rounded-box border border-base-content/5 bg-white">
 
+                <table className="table bg-slate-300 w-full">
+                  {/* head */}
+                  <thead>
+                    <tr>
+                      <th>Serial</th>
+                      <th>Topic</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {/* row 1 */}
+
+                    {scheduleData.map((schedule, key) => (
+                      <tr key={key}>
+                        <th>{key+1}</th>
+                        <td>{schedule.Topic}</td>
+                        <td>{schedule
+                          .Date}</td>
+                        <td>{schedule.Time}</td>
+                      </tr>
+                    ))}
+
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
