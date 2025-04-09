@@ -2,23 +2,24 @@
 
 import { useQuery } from '@tanstack/react-query'
 import React from 'react'
+import useAxiosSecure from '../useAxiosSecure';
 
 function useScheduleData() {
 
     const { user, loading, setLoading } = useAuth();
+    const apiCall = useAxiosSecure();
 
-    const {isLoading,data:scheduleData=[]} = useQuery({
-        queryKey:['schedule',]
+    const {isLoading,isError,data:scheduleData=[]} = useQuery({
+        queryKey:['schedule',user?.email],
+        queryFn: async ()=>{
+            const res = await apiCall.get(`/schedule-collections/${user?.email}`)
+            return res?.data
 
-    })
-  return (
-    <div>
+        }
 
-
-
-
-    </div>
-  )
+    });
+    console.log(scheduleData);
+  return {isLoading,isError,scheduleData};
 }
 
 export default useScheduleData
