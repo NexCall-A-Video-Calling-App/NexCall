@@ -12,6 +12,7 @@ import EditProfile from "../pages/Profile/EditProfile";
 import MeetingLayoutes from "../pages/Meeting/MeetingLayouts/MeetingLayoutes";
 import MeetingNavbar from "../pages/Meeting/MeetingNavbar/MeetingNavbar";
 import MeetingFunctionpage from "../pages/Meeting/MeetingFunctionPages/MeetingFunctionpage";
+import ChatHistory from "../pages/ChatHistory/ChatHistory";
 
 const Routes = createBrowserRouter([
   {
@@ -37,12 +38,12 @@ const Routes = createBrowserRouter([
           <ProfileDetails />
         </PrivateRoute>
       },
-      {
-        path: "/editProfile",
-        element: <PrivateRoute>
-          <EditProfile />
-        </PrivateRoute>
-      },
+      // {
+      //   path: "/editProfile",
+      //   element: <PrivateRoute>
+      //     <EditProfile />
+      //   </PrivateRoute>
+      // },
       {
         path: "/dashboard",
         element: <Dashboard />
@@ -50,19 +51,17 @@ const Routes = createBrowserRouter([
     ],
   },
   {
-    path: '/meeting-page',
+    path: '/meeting',
     element: <MeetingLayoutes></MeetingLayoutes>,
     children: [
-
       {
-        path: '/meeting-page/meeting-navbar',
-        elementL: <MeetingNavbar />
+        path: '/meeting',
+        element: <MeetingFunctionpage />
       },
       {
-        path: '/meeting-page/meeting-function',
-        element: <MeetingFunctionpage />
+        path: '/meeting/chat-history',
+        element: <ChatHistory />
       }
-
     ]
   }
 ]);
