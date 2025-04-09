@@ -204,7 +204,7 @@ const Dashboard = () => {
 
       {/* Join or Create Window */}
 
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
         <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
           <div className="flex items-center">
             <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
@@ -264,13 +264,15 @@ const Dashboard = () => {
                     />
                   </div>
                   <div
-                    className={`p-2 rounded-lg ${msg.sender === UserId
+                    title={msg.senderName}
+                    className={` ${msg.sender === UserId
                       ? "bg-blue-500 text-white mb-1"
                       : "bg-black text-white mb-1"
-                      }`}
+                      } p-2 rounded-lg`}
                   >
                     {msg.message}
                   </div>
+
                 </div>
               </div>
             ))}
