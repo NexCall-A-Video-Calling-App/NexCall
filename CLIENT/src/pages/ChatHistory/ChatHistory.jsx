@@ -48,7 +48,7 @@ const ChatHistory = () => {
                         </button>
                     </div>
 
-                    <div className="space-y-3">
+                    <div className="max-h-96 overflow-y-auto pr-2 space-y-3 scrollbar-thin scrollbar-thumb-indigo-400 scrollbar-track-gray-200">
                         {room.messages.map((msg, i) => {
                             const isSender = msg.senderEmail === user?.email;
                             const decryptedMessage = decryptMessage(msg.message);
