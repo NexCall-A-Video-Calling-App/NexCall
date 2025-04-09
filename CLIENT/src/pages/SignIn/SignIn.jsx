@@ -12,6 +12,7 @@ const SignIn = () => {
     const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
 
+
     // Sign In
     const onSubmit = async (data) => {
         console.log(data.email, data.password);
