@@ -4,11 +4,12 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { FaGoogle } from "react-icons/fa";
 import dot from '../../assets/dot.png'
 import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 const SignIn = () => {
     const { loginUser, loginWithGoogle } = useContext(AuthContext);
-    const { register, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, watch, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
 
     // Sign In
@@ -17,14 +18,14 @@ const SignIn = () => {
 
         loginUser(data.email, data.password)
             .then((result) => {
-                console.log(result.user);
+                // console.log(result.user);
+                toast.success("User logged in successfully.");
                 navigate('/dashboard')
-                // navigate('/meeting')
-
                 reset();
             })
             .catch((error) => {
-                console.log(error.message);
+                // console.log(error.message);
+                toast.error(error.message);
             })
     };
 
@@ -33,12 +34,14 @@ const SignIn = () => {
         console.log("Google Sign In");
         loginWithGoogle()
             .then((result) => {
-                console.log(result.user);
+                // console.log(result.user);
+                toast.success("User logged in successfully.");
                 navigate('/dashboard')
                 // navigate('/meeting')
             })
             .catch((error) => {
-                console.log(error.message);
+                // console.log(error.message);
+                toast.error(error.message);
             })
     }
 
@@ -74,7 +77,7 @@ const SignIn = () => {
                             {errors.password && <p className="text-red-500">{errors.password.message}</p>}
                               {/* Forgot Password Link */}
                               <div className="text-right mt-1">
-                                <Link to="/forgot-password" className="text-sm text-blue-600 hover:underline">
+                                <Link to={`/forgot-password?email=${watch("email")}`} className="text-sm text-blue-600 hover:underline">
                                     Forgot Password?
                                 </Link>
                             </div>

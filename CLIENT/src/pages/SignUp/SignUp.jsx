@@ -5,6 +5,7 @@ import dot from '../../assets/dot.png'
 import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import useImageUpload from "../../hooks/useImageUpload";
+import toast from "react-hot-toast";
 
 
 const SignUp = () => {
@@ -18,25 +19,25 @@ const SignUp = () => {
     const onSubmit = async (data) => {
         console.log(data.email, data.password);
 
+        //upload image
         const imageFile = data.photo[0];
         const photoURL = await uploadImage(imageFile);
-
 
         if (!photoURL) {
             toast.error("Image upload failed.");
             return;
         }
 
-
-
         createUser(data.email, data.password)
             .then((result) => {
-                console.log(result.user);
+                // console.log(result.user);
+                toast.success("User created successfully.");
                 navigate('/dashboard')
                 reset();
             })
             .catch((error) => {
-                console.log(error.message);
+                // console.log(error.message);
+                toast.error(error.message);
             })
 
             profileUpdate(data.name, photoURL)
@@ -47,11 +48,13 @@ const SignUp = () => {
         console.log("Google Sign In");
         loginWithGoogle()
             .then((result) => {
-                console.log(result.user);
+                // console.log(result.user);
+                toast.success("User created successfully.");
                 navigate('/dashboard')
             })
             .catch((error) => {
-                console.log(error.message);
+                // console.log(error.message);
+                toast.error(error.message);
             })
     }
 
