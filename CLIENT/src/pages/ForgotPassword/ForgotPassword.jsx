@@ -1,7 +1,19 @@
 
 import { useForm } from "react-hook-form";
+import { useContext } from "react";
+import { AuthContext } from "../../provider/AuthProvider";  
 const ForgotPassword = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const { resetPassword } = useContext(AuthContext); 
+    const onSubmit = data => {
+        resetPassword(data.email)
+            .then(() => {
+                toast.success("Password reset email sent!");
+            })
+            .catch(err => {
+                toast.error(err.message);
+            });
+    }
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
         <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
