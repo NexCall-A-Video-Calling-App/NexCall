@@ -43,12 +43,12 @@ const Routes = createBrowserRouter([
           <ProfileDetails />
         </PrivateRoute>
       },
-      {
-        path: "/editProfile",
-        element: <PrivateRoute>
-          <EditProfile />
-        </PrivateRoute>
-      },
+      // {
+      //   path: "/editProfile",
+      //   element: <PrivateRoute>
+      //     <EditProfile />
+      //   </PrivateRoute>
+      // },
       {
         path: "/dashboard",
         element: <Dashboard />

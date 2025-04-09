@@ -11,7 +11,8 @@ import { HiUserAdd } from "react-icons/hi";
 import { RiChatDownloadLine } from "react-icons/ri";
 import jsPDF from "jspdf";
 import { encryptMessage, decryptMessage } from "../../utilities/encryptDecrypt";
-import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
+// import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
+import Spinner from "../../components/Spinner";
 
 const Dashboard = () => {
   const socket = useMemo(() => io.connect("http://localhost:5000"), []); // for local server
@@ -20,6 +21,7 @@ const Dashboard = () => {
   const { user, userLogOut, loading, setLoading } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const toggleSidebar = () => setShowSidebar(!showSidebar);
+  const [spin, setSpin] = useState(false);
   const navigate = useNavigate();
   const handleLogOut = () => {
     userLogOut()
@@ -152,6 +154,12 @@ const Dashboard = () => {
     handleJoinRoom(JoinRoomId)
   }
 
+  const handleProfileClick = () => {
+    setSpin(true);
+    setTimeout(() => {
+      navigate('/userProfile');
+    }, 1500); 
+  };
   return (
     <div className="flex h-screen bg-gray-100 relative -mt-16">
       {/* Sidebar */}
@@ -197,41 +205,46 @@ const Dashboard = () => {
           </button>
 
           {/* Profile */}
-          <div className="drawer">
-            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content">
-              {/* Page content here */}
-              <label htmlFor="my-drawer" className="drawer-button border w-full flex justify-center items-center gap-2 mt-2 p-2 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors">
-                <img
-                  src={user?.photoURL}
-                  referrerPolicy="no-referrer"
-                  alt="avatar"
-                  className="w-6 h-6 rounded-full"
-                />
-                <span>{user?.displayName || "Anonymous user"}</span>
-              </label>
+          <div className="dropdown dropdown-top dropdown-center w-full">
+            <div
+              tabIndex={0}
+              role="button"
+              className="border w-full flex justify-center items-center gap-2 mt-2 p-2 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              <img
+                src={user?.photoURL}
+                referrerPolicy="no-referrer"
+                alt="avatar"
+                className="w-6 h-6 rounded-full"
+              />
+              <span>{user?.displayName || "Anonymous user"}</span>
             </div>
-            <div className="drawer-side">
-              <label
-                htmlFor="my-drawer"
-                aria-label="close sidebar"
-                className="drawer-overlay"
-              ></label>
-              <ul className="menu bg-base-200 text-base-content min-h-full w-50 p-4">
-                {/* Sidebar content here */}
-                <li>
-                  <a>Sidebar Item 1</a>
-                </li>
-                <li>
-                  <a>Sidebar Item 2</a>
-                </li>
-                <li className="mt-auto">
-                  <button className="btn btn-sm w-full mb-2"><Link to={'/userProfile'} className="w-full">Profile</Link></button>
-                  <button onClick={handleLogOut} className="btn btn-sm w-full">Log out</button>
-                </li>
-              </ul>
-            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content menu bg-base-300 rounded-box z-1 w-52 p-2 shadow-sm"
+            >
+              <li>
+                <button
+                  onClick={handleProfileClick}
+                  className="btn btn-sm w-full mb-2"
+                >
+                  Profile
+                </button>
+              </li>
+              <li>
+                {spin ? (
+                  <div className="flex justify-center py-2">
+                    <Spinner />
+                  </div>
+                ) : (
+                  <button onClick={handleLogOut} className="btn btn-sm w-full">
+                    Log out
+                  </button>
+                )}
+              </li>
+            </ul>
           </div>
+          {spin && <Spinner />}
 
         </div>
       </div>
