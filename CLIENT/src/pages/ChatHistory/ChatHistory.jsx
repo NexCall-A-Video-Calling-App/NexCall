@@ -22,9 +22,11 @@ const ChatHistory = () => {
 
     return (
         <div className="container mx-auto p-4 bg-white rounded-lg mt-4 w-full overflow-y-auto">
-            <h2 className="text-xl font-bold mb-4">Your Chat History</h2>
+            <h2 className="text-2xl font-bold text-gray-800 mb-6 border-b pb-2">📜 Your Chat History</h2>
 
-            {userConversations.length === 0 && <p>History is empty.</p>}
+            {userConversations.length === 0 && (
+                <p className="text-gray-500">No chat history found.</p>
+            )}
 
             {userConversations.map((room, idx) => (
                 <div key={idx} className="mb-8 border border-gray-200 p-4 rounded-xl shadow-sm bg-gray-50">
