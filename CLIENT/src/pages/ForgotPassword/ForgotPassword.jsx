@@ -3,13 +3,18 @@ import { useForm } from "react-hook-form";
 import { useContext } from "react";
 import { AuthContext } from "../../provider/AuthProvider"; 
 import { toast } from "react-toastify"; 
+import { useNavigate } from 'react-router-dom';
 const ForgotPassword = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
     const { resetPassword } = useContext(AuthContext); 
+    const navigate = useNavigate();
+
+    // Reset Password
     const onSubmit = data => {
         resetPassword(data.email)
             .then(() => {
                 toast.success("Password reset email sent!");
+                navigate('/sign-in');
             })
             .catch(err => {
                 toast.error(err.message);
