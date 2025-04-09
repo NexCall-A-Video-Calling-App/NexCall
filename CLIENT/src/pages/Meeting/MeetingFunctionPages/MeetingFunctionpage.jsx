@@ -263,7 +263,8 @@ const MeetingFunctionpage = () => {
             <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
           <div className="border h-56  rounded mt-4 border-red-100 opacity-30">
-            <div className="flex justify-center items-center h-full">
+
+            <div className="flex justify-center items-center h-full flex-col overflow-y-scroll">
 
 
              
@@ -272,8 +273,8 @@ const MeetingFunctionpage = () => {
               {
                 scheduleData?.map((schedule,key)=>(
                   <div key={key}>
-                    <p className="text-white">Darta</p>
-                    <p>{schedule.Topic}</p>
+               
+                    <p className="text-white">{schedule.Date}</p>
 
                   </div>
                 ))
