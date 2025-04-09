@@ -36,20 +36,28 @@ io.on("connection", (socket) => {
     socket.on("createRoom", (userData) => {
         const roomId = Math.random().toString(36).substr(2, 6);
         socket.join(roomId);
-        roomUsers[roomId] = [{ socketId: socket.id, ...userData }]
+        roomUsers[roomId] = [{ socketId: socket.id, ...userData }];
         socket.emit("RoomCreated", roomId);
-        console.log("Room Created: ", roomId)
+        console.log("Room Created: ", roomId);
     });
 
-    // Join Room
+    // Join Room 
     socket.on("JoinRoom", ({ roomId, userData }) => {
         socket.join(roomId);
         if (!roomUsers[roomId]) {
             roomUsers[roomId] = []
         }
-        socket.emit("RoomJoined", roomId);
         roomUsers[roomId].push({ socketId: socket.id, ...userData })
+        socket.emit("RoomJoined", roomId);
         io.to(roomId).emit("updatedRoomUser", roomUsers[roomId])
+    });
+
+    socket.on("getRoomUsers", (roomId) => {
+        if (roomUsers[roomId]) {
+            socket.emit("updatedRoomUser", roomUsers[roomId]);
+        } else {
+            socket.emit("updatedRoomUser", []); // Empty array if room doesn’t exist
+        }
     });
 
     // Send Message
@@ -61,7 +69,7 @@ io.on("connection", (socket) => {
             senderName,
             senderEmail,
             receiverName,
-            timestamp: new Date()
+            timestamp: new Date(),
         };
         io.to(room).emit("receiveMessage", { sender: socket.id, senderName, photo, message });
 
@@ -72,9 +80,9 @@ io.on("connection", (socket) => {
 
     // Handle Disconnect
     socket.on("disconnect", () => {
-        for (roomId in roomUsers) {
-            roomUsers[roomId] = roomUsers[roomId].filter(user => user.socketId !== socket.id)
-            io.to(roomId).emit("updatedRoomUser", roomUsers[roomId])
+        for (let roomId in roomUsers) {
+            roomUsers[roomId] = roomUsers[roomId].filter(user => user.socketId !== socket.id);
+            io.to(roomId).emit("updatedRoomUser", roomUsers[roomId]);
         }
         console.log(`Disconnected user ID: ${socket.id}`);
     });
@@ -104,9 +112,6 @@ async function run() {
         // COLLECTIONS 
         const usersCollections = client.db("NexCall").collection('users');
         const messagesCollection = client.db("NexCall").collection('messages');
-        // Schedule COLLECTION
-        const scheduleCollection = client.db("NextCall").collection("schedule");
-
 
         // JWT AUTH ENDPOINTS
         app.post('/jwt', async (req, res) => {
@@ -154,78 +159,12 @@ async function run() {
             })
         }
 
-        // Get all messages for a specific room APIs
+        // API to get all messages for a specific room
         app.get('/messages/:roomId', async (req, res) => {
             const roomId = req.params.roomId;
             const messages = await messagesCollection.find({ room: roomId }).toArray();
             res.send(messages);
         });
-
-        app.get("/conversations/user/:email", async (req, res) => {
-            const { email } = req.params;
-
-            // Find all rooms where user is sender or receiver
-            const userRooms = await messagesCollection.aggregate([
-                {
-                    $match: {
-                        $or: [
-                            { senderEmail: email },
-                            { receiverEmail: email }
-                        ]
-                    }
-                },
-                {
-                    $group: {
-                        _id: "$room"
-                    }
-                }
-            ]).toArray();
-
-            const roomIds = userRooms.map(r => r._id);
-
-            // Fetch messages from those rooms without sorting inside each room
-            const result = await messagesCollection.aggregate([
-                {
-                    $match: {
-                        room: { $in: roomIds }
-                    }
-                },
-                {
-                    $group: {
-                        _id: "$room",
-                        messages: {
-                            $push: {
-                                message: "$message",
-                                senderName: "$senderName",
-                                receiverName: "$receiverName",
-                                senderEmail: "$senderEmail",
-                                receiverEmail: "$receiverEmail",
-                                photo: "$photo",
-                                timestamp: "$timestamp"
-                            }
-                        },
-                        lastMessageTime: { $max: "$timestamp" }
-                    }
-                },
-                {
-                    $project: {
-                        _id: 0,
-                        room: "$_id",
-                        messages: 1,
-                        lastMessageTime: 1
-                    }
-                },
-                {
-                    $sort: {
-                        lastMessageTime: -1
-                    }
-                }
-            ]).toArray();
-
-            res.json(result);
-        });
-
-
 
         // User API:
         app.post('/users', async (req, res) => {
@@ -237,32 +176,6 @@ async function run() {
         app.get('/users', async (req, res) => {
             const results = await usersCollections.find().toArray()
             res.send(results)
-        })
-
-        // Schedule 
-        app.post("/schedule-collections",async(req,res)=>{
-
-           try{
-            const scheduleResult = req.body;
-            const result = await scheduleCollection.insertOne(scheduleResult);
-          
-            res.send(result);
-
-           }catch(error)
-           {
-            console.log(err.message)
-            res.send({message:"This error from Schedule api"})
-           }
-
-        })
-        // send schedule to front-end 
-        app.get('/schedule-collections/:email',async(req,res)=>{
-
-            const email = req.params.email
-
-            const result = await scheduleCollection.find({email:email}).toArray();
-            res.send(result);
-           
         })
 
 
