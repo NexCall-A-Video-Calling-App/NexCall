@@ -72,6 +72,12 @@ const SignIn = () => {
                                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                             />
                             {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+                              {/* Forgot Password Link */}
+                              <div className="text-right mt-1">
+                                <Link to="/forgot-password" className="text-sm text-blue-600 hover:underline">
+                                    Forgot Password?
+                                </Link>
+                            </div>
                             <button className="w-full bg-purple-600 text-white py-2 rounded-lg font-semibold hover:bg-purple-700 mt-5">
                                 Sign In
                             </button>
