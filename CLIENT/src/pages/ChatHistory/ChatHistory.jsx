@@ -51,38 +51,42 @@ const ChatHistory = () => {
                     </div>
 
                     <div className="max-h-96 overflow-y-auto pr-2 space-y-3 scrollbar-thin scrollbar-thumb-primary scrollbar-track-secondary">
-  {room.messages.map((msg, i) => {
-    const isSender = msg.senderEmail === user?.email;
-    const decryptedMessage = decryptMessage(msg.message);
+                        {room.messages.map((msg, i) => {
+                            const isSender = msg.senderEmail === user?.email;
+                            const decryptedMessage = decryptMessage(msg.message);
 
-    return (
-      <div
-        key={i}
-        className={`flex ${isSender ? "justify-end" : "justify-start"}`}
-      >
-        <div className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md space-x-2 ${isSender ? "flex-row-reverse" : ""}`}>
-          <img
-            src={msg.photo}
-            alt="user"
-            className="w-8 h-8 rounded-full object-cover"
-          />
-          <div className={`relative p-3 rounded-2xl ${isSender
-            ? "bg-primary text-white rounded-br-none"
-            : "bg-gray-200 text-gray-900 rounded-bl-none"
-            }`}
-          >
-            <p className="font-medium">{msg.senderName}</p>
-            <p className="text-sm break-words">{decryptedMessage}</p>
-            <p className="text-xs text-right opacity-60 mt-1">
-              {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  })}
-</div>
+                            return (
+                                <div
+                                    key={i}
+                                    className={`flex flex-col ${isSender ? "items-end" : "items-start"}`}
+                                >
+                                    {/* Sender Name */}
+                                    <p className={`text-xs mb-1 px-2 ${isSender ? "text-right text-primary" : "text-left text-gray-500"}`}>
+                                        {msg.senderName}
+                                    </p>
 
+                                    {/* Message bubble */}
+                                    <div className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md space-x-2 ${isSender ? "flex-row-reverse" : ""}`}>
+                                        <img
+                                            src={msg.photo}
+                                            alt="user"
+                                            className="w-8 h-8 rounded-full object-cover"
+                                        />
+                                        <div className={`relative p-3 rounded-2xl ${isSender
+                                            ? "bg-primary text-white rounded-br-none"
+                                            : "bg-gray-200 text-gray-900 rounded-bl-none"
+                                            }`}
+                                        >
+                                            <p className="text-sm break-words">{decryptedMessage}</p>
+                                            <p className="text-xs text-right opacity-60 mt-1">
+                                                {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
                 </div>
             ))}
         </div>
