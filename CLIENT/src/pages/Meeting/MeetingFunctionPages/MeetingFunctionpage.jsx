@@ -96,6 +96,9 @@ const MeetingFunctionpage = () => {
     }
   };
 
+  // idea 1.count dwon time , show calender 
+  // after complete count dwon meeting delete from db 
+
   return (
     <div>
       <section className="w-full   border border-white/20 grid md:grid-cols-2  py-40 bg-slate-900 min-h-screen">
@@ -252,6 +255,7 @@ const MeetingFunctionpage = () => {
                       <th>Topic</th>
                       <th>Date</th>
                       <th>Time</th>
+                      <th>Countdwon</th>
                     </tr>
                   </thead>
 
