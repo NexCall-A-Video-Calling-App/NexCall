@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut,sendPasswordResetEmail  } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut,profileUpdate,sendPasswordResetEmail  } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
 
 
@@ -46,6 +46,16 @@ const AuthProvider = ({ children }) => {
             .finally(() => setLoading(false));
     };
 
+        // update current user profile
+        const profileUpdate = (name, photoURL) => {
+            setLoading(true);
+            return updateProfile(auth.currentUser, {
+                displayName: name || user.displayName || null,
+                photoURL: photoURL || user.photoURL || null
+            }).finally(() => setLoading(false));
+        }
+    
+
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
@@ -70,7 +80,7 @@ const AuthProvider = ({ children }) => {
         loading,
         setLoading,
         createUser,
-        
+        profileUpdate,
         loginUser,
         loginWithGoogle,
         userLogOut,
