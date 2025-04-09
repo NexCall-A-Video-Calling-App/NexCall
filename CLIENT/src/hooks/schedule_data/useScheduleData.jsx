@@ -5,8 +5,11 @@ import React from 'react'
 
 function useScheduleData() {
 
-    const {} = useQuery({
-        
+    const { user, loading, setLoading } = useAuth();
+
+    const {isLoading,data:scheduleData=[]} = useQuery({
+        queryKey:['schedule',]
+
     })
   return (
     <div>
