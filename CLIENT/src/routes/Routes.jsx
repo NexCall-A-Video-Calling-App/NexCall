@@ -13,6 +13,7 @@ import MeetingLayoutes from "../pages/Meeting/MeetingLayouts/MeetingLayoutes";
 import MeetingNavbar from "../pages/Meeting/MeetingNavbar/MeetingNavbar";
 import MeetingFunctionpage from "../pages/Meeting/MeetingFunctionPages/MeetingFunctionpage";
 import ChatHistory from "../pages/ChatHistory/ChatHistory";
+import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 
 const Routes = createBrowserRouter([
   {
@@ -33,17 +34,21 @@ const Routes = createBrowserRouter([
         element: <SignIn />,
       },
       {
+        path: "/forgot-password",
+        element:<ForgotPassword></ForgotPassword>,
+      },
+      {
         path: "/userProfile",
         element: <PrivateRoute>
           <ProfileDetails />
         </PrivateRoute>
       },
-      {
-        path: "/editProfile",
-        element: <PrivateRoute>
-          <EditProfile />
-        </PrivateRoute>
-      },
+      // {
+      //   path: "/editProfile",
+      //   element: <PrivateRoute>
+      //     <EditProfile />
+      //   </PrivateRoute>
+      // },
       {
         path: "/dashboard",
         element: <Dashboard />

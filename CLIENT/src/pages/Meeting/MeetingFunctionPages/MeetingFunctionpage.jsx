@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState, useTransition } from "react";
+import React, { useContext, useEffect, useMemo, useState, useTransition } from "react";
 import moment from "moment";
 import { GoDeviceCameraVideo } from "react-icons/go";
 import { Gi3dGlasses, GiTimeTrap } from "react-icons/gi";
@@ -12,10 +12,11 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 // react icons
 import { RxCross1 } from "react-icons/rx";
-import { toast } from "react-hot-toast";
+import {  toast  } from "react-hot-toast";
 import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 import Schedule from "../../Home/Schedule";
 import countDwon from "../../../hooks/CountDwon/countDwon";
+import { SocketContext } from "../../../provider/SocketProvider";
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -28,6 +29,8 @@ const MeetingFunctionpage = () => {
     reset,
     formState: { errors },
   } = useForm();
+
+  const { socket, currentRoom } = useContext(SocketContext);
 
   const [time, settime] = useState("");
   const [fullTime, setfullTime] = useState("");
@@ -52,12 +55,12 @@ const MeetingFunctionpage = () => {
     };
   }, []);
 
-  // Schedule button
-
+  // Schedule button 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit = (data) => {
-    console.log("data ", data);
+
+ 
     const { Date, Time, Topic } = data;
     console.log(Date, Time, Topic);
     // gave condition
@@ -105,6 +108,7 @@ const MeetingFunctionpage = () => {
       <section className="w-full   border border-white/20 grid md:grid-cols-2  py-40 bg-slate-900 min-h-screen">
         <div className=" grid grid-cols-2 place-content-center place-items-center gap-2 ">
           <button
+            onClick={handleCreateRoom}
             id="create"
             className="flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md w-1/2 ml-10 hover:cursor-pointer hover:bg-violet-400 transition delay-200 duration-100"
           >
@@ -113,11 +117,12 @@ const MeetingFunctionpage = () => {
             <span className="font-semibold text-white">New Meeting</span>
           </button>
 
-          <div className=" flex flex-col items-center justify-center bg-indigo-700 md:h-24 h-20  rounded-md w-1/2 -ml-10 ">
-            {/* Join */}
+          <button
+            onClick={() => document.getElementById('my_modal_3').showModal()}
+            className="flex flex-col items-center justify-center bg-indigo-700 md:h-24 h-20 rounded-md w-1/2 -ml-10">
             <IoPersonAddSharp className="size-8 text-white" />
             <span className="font-semibold text-white">Join</span>
-          </div>
+          </button>
 
           {/* add schedule button  */}
 
@@ -133,16 +138,14 @@ const MeetingFunctionpage = () => {
           </button>
           {/* modal added here  */}
           <div
-            className={`${
-              isModalOpen ? " visible" : " invisible"
-            } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300`}
+            className={`${isModalOpen ? " visible" : " invisible"
+              } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300`}
           >
             <div
-              className={`${
-                isModalOpen
-                  ? " translate-y-[0px] opacity-100"
-                  : " translate-y-[-200px] opacity-0"
-              } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
+              className={`${isModalOpen
+                ? " translate-y-[0px] opacity-100"
+                : " translate-y-[-200px] opacity-0"
+                } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
             >
               <div className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
                 <h1 className="text-[1.5rem] font-bold">schedule</h1>
@@ -160,6 +163,11 @@ const MeetingFunctionpage = () => {
                   className="flex flex-col md:gap-3 gap-2"
                 >
                   <input
+
+                    {...register("Topic", { required: "Topic is requirerd" })}
+
+
+
                     {...register("Topic", { required: "Topic is requirerd" })}
                     className="border px-6 py-2 rounded focus:outline-blue-400"
                     placeholder="Topic"
@@ -175,7 +183,12 @@ const MeetingFunctionpage = () => {
                   <input
                     type="date"
                     {...register("Date", { required: "Date is required" })}
+
+
+
                     className="border px-6 py-2 rounded focus:outline-blue-400"
+                    {...register("Date", { required: "Date is required" })}
+                 
                     placeholder="Date"
                   />
                   {errors.Date && (
@@ -188,7 +201,9 @@ const MeetingFunctionpage = () => {
                   <input
                     type="time"
                     {...register("Time", { required: "Time is requirred" })}
+
                     className="border px-6 py-2 rounded focus:outline-blue-400"
+            
                     placeholder="Time"
                   />
                   {errors.Time && (
@@ -214,6 +229,7 @@ const MeetingFunctionpage = () => {
                     </button>
                     <button
                       type="submit"
+                  
                       className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
 
                       //  work on false
@@ -283,6 +299,27 @@ const MeetingFunctionpage = () => {
           </div>
         </div>
       </section>
+
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box">
+          <form method="dialog" className="flex gap-2 items-center">
+            <input
+              type="text"
+              value={joinRoomId}
+              onChange={(e) => setJoinRoomId(e.target.value)}
+              placeholder="Enter Room ID"
+              className="input"
+            />
+            <button
+              onClick={handleJoinRoom}
+              className="btn text-white bg-indigo-500 hover:bg-indigo-600 p-1 rounded text-sm"
+            >
+              Join Room
+            </button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+        </div>
+      </dialog>
     </div>
   );
 };

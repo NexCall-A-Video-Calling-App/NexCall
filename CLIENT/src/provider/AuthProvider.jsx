@@ -1,14 +1,14 @@
 import { createContext, useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut,sendPasswordResetEmail,updateProfile } from "firebase/auth";
 import { auth } from "../firebase/firebase.init";
 
 
 
 export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
-    
+
     const [user, setUser] = useState(null);
-    // console.log(user);
+    console.log(user);
     const [loading, setLoading] = useState(true);
 
 
@@ -18,14 +18,7 @@ const AuthProvider = ({ children }) => {
         return createUserWithEmailAndPassword(auth, email, password)
     }
 
-    // update current user profile
-    const onUpdate = (name, photoURL) => {
-        setLoading(true);
-        return updateProfile(auth.currentUser, {
-            displayName: name || user.displayName || null,
-            photoURL: photoURL || user.photoURL || null
-        }).finally(() => setLoading(false));
-    }
+
     // Login user
     const loginUser = (email, password) => {
         setLoading(true);
@@ -45,6 +38,23 @@ const AuthProvider = ({ children }) => {
         setLoading(true);
         return signOut(auth)
     }
+
+    // Reset Password
+    const resetPassword = (email) => {
+        setLoading(true);
+        return sendPasswordResetEmail(auth, email)
+            .finally(() => setLoading(false));
+    };
+
+        // update current user profile
+        const profileUpdate = (name, photoURL) => {
+            setLoading(true);
+            return updateProfile(auth.currentUser, {
+                displayName: name || user.displayName || null,
+                photoURL: photoURL || user.photoURL || null
+            }).finally(() => setLoading(false));
+        }
+    
 
 
     useEffect(() => {
@@ -70,10 +80,11 @@ const AuthProvider = ({ children }) => {
         loading,
         setLoading,
         createUser,
-        onUpdate,
+        profileUpdate,
         loginUser,
         loginWithGoogle,
         userLogOut,
+        resetPassword
 
     }
     return (

@@ -6,7 +6,7 @@ import { MdOutlineVoiceChat } from "react-icons/md";
 
 const Navbar = () => {
   const { user } = useAuth();
-
+  console.log(user)
   const links = (
     <>
       <li>
@@ -70,14 +70,14 @@ const Navbar = () => {
       <div className="navbar-end">
         {user ? (
           <div className="indicator">
-            <Link to={"/dashboard"}>
-              <MdOutlineVoiceChat className="text-3xl" />
+            <Link to={"/meeting"}>
+              <img src={user?.photoURL} referrerPolicy="no-referrer" className="w-8 h-8 rounded-full" alt="" />
             </Link>
             <span className="badge badge-xs badge-primary indicator-item"></span>
           </div>
         ) : (
           <Link to="/sign-up" className="btn">
-            join us
+            SignUp
           </Link>
         )}
       </div>

@@ -36,20 +36,30 @@ io.on("connection", (socket) => {
     socket.on("createRoom", (userData) => {
         const roomId = Math.random().toString(36).substr(2, 6);
         socket.join(roomId);
-        roomUsers[roomId] = [{ socketId: socket.id, ...userData }]
-        socket.emit("RoomCreated", roomId);
-        console.log("Room Created: ", roomId)
+        roomUsers[roomId] = [{ socketId: socket.id, ...userData }];
+        const { name, timestamp } = userData
+        socket.emit("RoomCreated", roomId, name, timestamp);
+        console.log("Room Created: ", roomId);
     });
 
-    // Join Room
+    // Join Room 
     socket.on("JoinRoom", ({ roomId, userData }) => {
         socket.join(roomId);
         if (!roomUsers[roomId]) {
             roomUsers[roomId] = []
         }
-        socket.emit("RoomJoined", roomId);
         roomUsers[roomId].push({ socketId: socket.id, ...userData })
+        socket.emit("RoomJoined", roomId);
         io.to(roomId).emit("updatedRoomUser", roomUsers[roomId])
+    });
+
+
+    socket.on("getRoomUsers", (roomId) => {
+        if (roomUsers[roomId]) {
+            socket.emit("updatedRoomUser", roomUsers[roomId]);
+        } else {
+            socket.emit("updatedRoomUser", []); // Empty array if room doesn’t exist
+        }
     });
 
     // Send Message
@@ -240,23 +250,22 @@ async function run() {
         })
 
         // Schedule 
-        app.post("/schedule-collections",async(req,res)=>{
+        app.post("/schedule-collections", async (req, res) => {
 
-           try{
-            const scheduleResult = req.body;
-            const result = await scheduleCollection.insertOne(scheduleResult);
-          
-            res.send(result);
+            try {
+                const scheduleResult = req.body;
+                const result = await scheduleCollection.insertOne(scheduleResult);
 
-           }catch(error)
-           {
-            console.log(err.message)
-            res.send({message:"This error from Schedule api"})
-           }
+                res.send(result);
+
+            } catch (error) {
+                console.log(err.message)
+                res.send({ message: "This error from Schedule api" })
+            }
 
         })
         // send schedule to front-end 
-        app.get('/schedule-collections/:email',async(req,res)=>{
+        app.get('/schedule-collections/:email', async (req, res) => {
 
            try{
             const email = req.params.email
@@ -271,6 +280,8 @@ async function run() {
 
            }
            
+          
+
         })
 
 
