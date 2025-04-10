@@ -17,11 +17,6 @@ import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 import Schedule from "../../Home/Schedule";
 import countDwon from "../../../hooks/CountDwon/countDwon";
 
-
-
-
-
-
 const MeetingFunctionpage = () => {
   // main function go under navbar
   // /schedule-collections -> this is api end-point
@@ -102,8 +97,8 @@ const MeetingFunctionpage = () => {
     }
   };
 
-  // idea 1.count dwon time , show calender 
-  // after complete count dwon meeting delete from db 
+  // idea 1.count dwon time , show calender
+  // after complete count dwon meeting delete from db
 
   return (
     <div>
@@ -248,11 +243,8 @@ const MeetingFunctionpage = () => {
           </div>
 
           <div className=" h-56  rounded mt-4 w-full">
-
             <div className="flex justify-center items-center h-full flex-col overflow-y-scroll gap-4  ">
-
               <div className="overflow-x-auto rounded-box border  w-full bg-stone-300">
-
                 <table className="table  w-full">
                   {/* head */}
                   <thead className="">
@@ -268,17 +260,22 @@ const MeetingFunctionpage = () => {
                   <tbody>
                     {/* row 1 */}
 
-                    {scheduleData.map((schedule, key) => (
-                      <tr key={key}>
-                        <th>{key+1}</th>
+                    {scheduleData.filter((schedule) => {
+                      const now = new Date();
+                      const meetingTime = new Date(
+                        `${schedule.Date} ${schedule.Time}`
+                      )
+                      return meetingTime<now
+                    }) .map((schedule, index) => (
+                      <tr key={index}>
+                        <th>{index + 1}</th>
                         <td>{schedule.Topic}</td>
-                        <td>{schedule
-                          .Date}</td>
+                        <td>{schedule.Date}</td>
                         <td>{schedule.Time}</td>
-                        <td>{countDwon(schedule.Date,schedule.Time)}</td>
+                        <td>{countDwon(schedule.Date, schedule.Time)}</td>
                       </tr>
+                    
                     ))}
-
                   </tbody>
                 </table>
               </div>
