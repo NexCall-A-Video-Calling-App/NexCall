@@ -6,7 +6,7 @@ import { MdOutlineVoiceChat } from "react-icons/md";
 
 const Navbar = () => {
   const { user } = useAuth();
-
+  console.log(user)
   const links = (
     <>
       <li>
