@@ -32,14 +32,13 @@ const SignUp = () => {
             .then((result) => {
                 // console.log(result.user);
                 toast.success("User created successfully.");
-                navigate('/dashboard')
+                navigate('/meeting')
                 reset();
             })
             .catch((error) => {
                 // console.log(error.message);
                 toast.error(error.message);
-            })
-
+            }) 
         profileUpdate(data.name, photoURL)
     };
 
@@ -50,7 +49,7 @@ const SignUp = () => {
             .then((result) => {
                 // console.log(result.user);
                 toast.success("User created successfully.");
-                navigate('/dashboard')
+                navigate('/meeting')
             })
             .catch((error) => {
                 // console.log(error.message);

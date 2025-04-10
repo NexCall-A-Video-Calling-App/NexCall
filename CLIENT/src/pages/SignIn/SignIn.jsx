@@ -21,7 +21,7 @@ const SignIn = () => {
             .then((result) => {
                 // console.log(result.user);
                 toast.success("User logged in successfully.");
-                navigate('/dashboard')
+                navigate('/meeting')
                 reset();
             })
             .catch((error) => {
@@ -36,9 +36,8 @@ const SignIn = () => {
         loginWithGoogle()
             .then((result) => {
                 // console.log(result.user);
-                toast.success("User logged in successfully.");
-                navigate('/dashboard')
-                // navigate('/meeting')
+                toast.success("User logged in successfully."); 
+                navigate('/meeting')
             })
             .catch((error) => {
                 // console.log(error.message);
