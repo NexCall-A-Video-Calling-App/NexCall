@@ -10,7 +10,7 @@ function useScheduleData() {
     const { user, loading, setLoading } = useAuth();
     const apiCall = useAxiosSecure();
 
-    const {isLoading,isError,data:scheduleData=[]} = useQuery({
+    const {isLoading,isError,refetch,data:scheduleData=[]} = useQuery({
         queryKey:['schedule',user?.email],
         queryFn: async ()=>{
             const res = await apiCall.get(`/schedule-collections/${user?.email}`)
@@ -20,7 +20,7 @@ function useScheduleData() {
 
     });
 
-  return {isLoading,isError,scheduleData};
+  return {isLoading,isError,refetch,scheduleData};
 }
 
 export default useScheduleData

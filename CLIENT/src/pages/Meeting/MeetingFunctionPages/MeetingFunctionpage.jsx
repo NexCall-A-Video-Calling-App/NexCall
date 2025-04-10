@@ -14,7 +14,7 @@ import axios from "axios";
 import { RxCross1 } from "react-icons/rx";
 import {  toast  } from "react-hot-toast";
 import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
-import Schedule from "../../Home/Schedule";
+
 import countDwon from "../../../hooks/CountDwon/countDwon";
 import { SocketContext } from "../../../provider/SocketProvider";
 
@@ -37,10 +37,11 @@ const MeetingFunctionpage = () => {
   const { user, loading, setLoading } = useAuth();
   const navigate = useNavigate();
 
-  const { isLoading, isError, scheduleData } = useScheduleData();
+  const { isLoading, isError,refetch, scheduleData } = useScheduleData();
   console.log(scheduleData);
 
-  const [JoinRoomId, setJoinRoomId] = useState(""); // RoomID from front-end input
+  const [joinRoomId, setJoinRoomId] = useState(""); // For joining a room
+  
 
   // LIVE TIME
   useEffect(() => {
@@ -85,6 +86,7 @@ const MeetingFunctionpage = () => {
           if (res.data.insertedId) {
             alert("date inserted");
             toast.success("done");
+            refetch();
             reset();
             setIsModalOpen(false);
           } else {
@@ -93,7 +95,7 @@ const MeetingFunctionpage = () => {
         })
         .catch((error) => alert(error, "/schedule-collections"));
 
-      setIsModalOpen(true);
+  
     } else {
       console.log("false");
       setIsModalOpen(false);
@@ -102,6 +104,30 @@ const MeetingFunctionpage = () => {
 
   // idea 1.count dwon time , show calender
   // after complete count dwon meeting delete from db
+  // Navigate to Dashboard when currentRoom is set
+  useEffect(() => {
+    if (currentRoom) {
+      setLoading(false);
+      navigate('/dashboard');
+    }
+  }, [currentRoom, navigate, setLoading]);
+  const handleCreateRoom = () => {
+    setLoading(true);
+    socket.emit("createRoom", {
+      name: user?.displayName,
+      profilePic: user?.photoURL,
+      timestamp: new Date(),
+    });
+  };
+  const handleJoinRoom = () => {
+    if (!joinRoomId) return;
+    setLoading(true);
+    socket.emit("JoinRoom", {
+      roomId: joinRoomId,
+      userData: { name: user?.displayName, profilePic: user?.photoURL, email: user?.email },
+    });
+    setJoinRoomId("");
+  };
 
   return (
     <div>
@@ -276,12 +302,12 @@ const MeetingFunctionpage = () => {
                   <tbody>
                     {/* row 1 */}
 
-                    {scheduleData.filter((schedule) => {
+                    { scheduleData.filter((schedule) => {
                       const now = new Date();
                       const meetingTime = new Date(
                         `${schedule.Date} ${schedule.Time}`
                       )
-                      return meetingTime<now
+                      return meetingTime>now
                     }) .map((schedule, index) => (
                       <tr key={index}>
                         <th>{index + 1}</th>
