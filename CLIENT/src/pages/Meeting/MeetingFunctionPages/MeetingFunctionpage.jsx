@@ -9,10 +9,13 @@ import { io } from "socket.io-client";
 import { useNavigate } from "react-router-dom";
 import socket from "../../../utilities/socket";
 import { useForm } from "react-hook-form";
-import axios, { } from "axios"
+import axios from "axios";
 // react icons
 import { RxCross1 } from "react-icons/rx";
-import { toast } from "react-hot-toast";
+import {  toast  } from "react-hot-toast";
+import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
+
+import countDwon from "../../../hooks/CountDwon/countDwon";
 import { SocketContext } from "../../../provider/SocketProvider";
 
 const MeetingFunctionpage = () => {
@@ -28,11 +31,17 @@ const MeetingFunctionpage = () => {
   } = useForm();
 
   const { socket, currentRoom } = useContext(SocketContext);
+
   const [time, settime] = useState("");
   const [fullTime, setfullTime] = useState("");
   const { user, loading, setLoading } = useAuth();
   const navigate = useNavigate();
+
+  const { isLoading, isError,refetch, scheduleData } = useScheduleData();
+  console.log(scheduleData);
+
   const [joinRoomId, setJoinRoomId] = useState(""); // For joining a room
+  
 
   // LIVE TIME
   useEffect(() => {
@@ -51,42 +60,50 @@ const MeetingFunctionpage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit = (data) => {
-    console.log("data ", data);
+
+ 
     const { Date, Time, Topic } = data;
     console.log(Date, Time, Topic);
+    // gave condition
 
-    // gave condition  
     if (Date && Time && Topic) {
       console.log("true");
 
-      // send data to backend 
-      // also store user email  
-      const scheduleHandler = {
-        Date, Time, Topic, email: user?.email,
-      }
+      // send data to backend
+      // also store user email
 
-      axios.post("http://localhost:5000/schedule-collections", scheduleHandler)
+      const scheduleHandler = {
+        Date,
+        Time,
+        Topic,
+        email: user?.email,
+      };
+
+      axios
+        .post("http://localhost:5000/schedule-collections", scheduleHandler)
 
         .then((res) => {
           if (res.data.insertedId) {
             alert("date inserted");
-            toast.success("done")
+            toast.success("done");
+            refetch();
             reset();
             setIsModalOpen(false);
           } else {
-            alert("falied")
+            alert("falied");
           }
-        }).catch(error => alert(error, "/schedule-collections"))
+        })
+        .catch((error) => alert(error, "/schedule-collections"));
 
-      setIsModalOpen(true);
-    }
-    else {
+  
+    } else {
       console.log("false");
       setIsModalOpen(false);
     }
   };
 
-
+  // idea 1.count dwon time , show calender
+  // after complete count dwon meeting delete from db
   // Navigate to Dashboard when currentRoom is set
   useEffect(() => {
     if (currentRoom) {
@@ -94,7 +111,6 @@ const MeetingFunctionpage = () => {
       navigate('/dashboard');
     }
   }, [currentRoom, navigate, setLoading]);
-
   const handleCreateRoom = () => {
     setLoading(true);
     socket.emit("createRoom", {
@@ -103,7 +119,6 @@ const MeetingFunctionpage = () => {
       timestamp: new Date(),
     });
   };
-
   const handleJoinRoom = () => {
     if (!joinRoomId) return;
     setLoading(true);
@@ -169,26 +184,27 @@ const MeetingFunctionpage = () => {
               <div className="p-4 border-b border-[#d1d1d1]">
                 {/* inside this have info input box  */}
                 {/* use react hook form */}
-                <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col md:gap-3 gap-2">
-
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="flex flex-col md:gap-3 gap-2"
+                >
                   <input
 
                     {...register("Topic", { required: "Topic is requirerd" })}
 
 
 
+                    {...register("Topic", { required: "Topic is requirerd" })}
                     className="border px-6 py-2 rounded focus:outline-blue-400"
-
-
-
                     placeholder="Topic"
                   />
-                  {
-                    errors.Topic && <span className="text-red-500">
-                      <span className="text-red-500">This field is required</span>
+                  {errors.Topic && (
+                    <span className="text-red-500">
+                      <span className="text-red-500">
+                        This field is required
+                      </span>
                     </span>
-                  }
-
+                  )}
 
                   <input
                     type="date"
@@ -197,24 +213,39 @@ const MeetingFunctionpage = () => {
 
 
                     className="border px-6 py-2 rounded focus:outline-blue-400"
+                    {...register("Date", { required: "Date is required" })}
+                 
                     placeholder="Date"
                   />
-                  {errors.Date && <span className="text-red-500">
-                    <span className="text-red-500">This field is required</span></span>}
+                  {errors.Date && (
+                    <span className="text-red-500">
+                      <span className="text-red-500">
+                        This field is required
+                      </span>
+                    </span>
+                  )}
                   <input
                     type="time"
                     {...register("Time", { required: "Time is requirred" })}
 
                     className="border px-6 py-2 rounded focus:outline-blue-400"
+            
                     placeholder="Time"
                   />
-                  {errors.Time && <span className="text-red-500"> <span className="text-red-500">This field is required</span></span>}
+                  {errors.Time && (
+                    <span className="text-red-500">
+                      {" "}
+                      <span className="text-red-500">
+                        This field is required
+                      </span>
+                    </span>
+                  )}
 
                   {/* errors will return when field validation fails  */}
                   {errors.exampleRequired && (
                     <span className="text-red-500">This field is required</span>
-                  )
-                  }
+                  )}
+
                   <div className="flex items-end justify-end gap-4 p-4 ">
                     <button
                       className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
@@ -224,10 +255,12 @@ const MeetingFunctionpage = () => {
                     </button>
                     <button
                       type="submit"
+                  
                       className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
 
-                    //  work on false 
-                    // onClick={() => setIsModalOpen(false)}
+                      //  work on false
+
+                      // onClick={() => setIsModalOpen(false)}
                     >
                       Submit
                     </button>
@@ -250,11 +283,44 @@ const MeetingFunctionpage = () => {
             <p className="text-sm font-semibold"> {time}</p>
             <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
-          <div className="border h-56  rounded mt-4 border-red-100 opacity-30">
-            <div className="flex justify-center items-center h-full">
-              <p className="text-white opacity-45">
-                No Uncomming meeting today
-              </p>
+
+          <div className=" h-56  rounded mt-4 w-full">
+            <div className="flex justify-center items-center h-full flex-col overflow-y-scroll gap-4  ">
+              <div className="overflow-x-auto rounded-box border  w-full bg-stone-300">
+                <table className="table  w-full">
+                  {/* head */}
+                  <thead className="">
+                    <tr>
+                      <th>Serial</th>
+                      <th>Topic</th>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Countdwon</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {/* row 1 */}
+
+                    { scheduleData.filter((schedule) => {
+                      const now = new Date();
+                      const meetingTime = new Date(
+                        `${schedule.Date} ${schedule.Time}`
+                      )
+                      return meetingTime>now
+                    }) .map((schedule, index) => (
+                      <tr key={index}>
+                        <th>{index + 1}</th>
+                        <td>{schedule.Topic}</td>
+                        <td>{schedule.Date}</td>
+                        <td>{schedule.Time}</td>
+                        <td>{countDwon(schedule.Date, schedule.Time)}</td>
+                      </tr>
+                    
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
