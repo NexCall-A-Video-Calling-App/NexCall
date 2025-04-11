@@ -80,7 +80,7 @@ const MeetingFunctionpage = () => {
       };
 
       axios
-        .post("http://localhost:5000/schedule-collections", scheduleHandler)
+        .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
 
         .then((res) => {
           if (res.data.insertedId) {
