@@ -281,7 +281,12 @@ const Dashboard = () => {
                         }`}
                     >
                       <p className="text-sm md:text-base break-words">{msg.message}</p>
-                      
+                      <p className="text-xs text-right opacity-60 mt-1">
+                        {new Date().toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </p>
                     </div>
 
                   </div>
