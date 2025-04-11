@@ -139,18 +139,18 @@ const MeetingFunctionpage = () => {
   // jai time a submit button click kora hobba oi time zoom id send korta hobba
 
   return (
-    <div className="">
+    <div className="min-h-screen">
       <section
-        className="w-full   border border-white/20 grid md:grid-cols-2  py-40
+        className="w-full   border border-white/20 grid lg:grid-cols-2  py-40
 
      
 
 
-      min-h-screen"
+    justify-center "
       >
-        <section className="flex flex-col gap-4 ">
+        <section className="flex flex-col gap-4 w-full ">
 
-          <div className="flex gap-x-4 border">
+          <div className="flex gap-x-4 ">
 
             <button
               onClick={handleCreateRoom}
@@ -174,7 +174,8 @@ const MeetingFunctionpage = () => {
 
           {/* add schedule and help  */}
 
-          <div className="flex ">
+          <div className="flex gap-x-4 px-10">
+            
             <button
               onClick={() => setIsModalOpen(true)}
               className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md  w-40 md:w-44"
@@ -189,25 +190,22 @@ const MeetingFunctionpage = () => {
             <div
               className={`${
                 isModalOpen ? " visible" : " invisible"
-              } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300`}
+              } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300 `}
             >
               <div
                 className={`${
                   isModalOpen
                     ? " translate-y-[0px] opacity-100"
                     : " translate-y-[-200px] opacity-0"
-                } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
+                } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8 `}
               >
-                <button className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]  w-40 md:w-44">
+                <button className=" flex items-end p-4 justify-between border-[#d1d1d1]  text-center w-full">
                   
-                  <h1 className="text-[1.5rem] font-bold">schedule</h1>
-                  <RxCross1
-                    className="p-2 text-[2.5rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
-                    onClick={() => setIsModalOpen(false)}
-                  />
+                  <h1 className="text-[1.5rem] font-bold text-center w-full  flex justify-center">schedule</h1>
+                 
                 </button>
 
-                <div className="p-4 border-b border-[#d1d1d1]">
+                <div className="p-4  border-[#d1d1d1]">
                   {/* inside this have info input box  */}
                   {/* use react hook form */}
                   <form
@@ -294,18 +292,20 @@ const MeetingFunctionpage = () => {
           </div>
         </section>
 
-        <div id="asdf" className=" p-2 ">
+        <div id="asdf" className=" p-2 md:mt-0 mt-4  ">
           {/* show time */}
           {/* moments .js  */}
-          <div className="text-center text-black">
+          <div className="text-center text-black border">
             <p className="text-sm font-semibold"> {time}</p>
             <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
 
-          <div className=" h-56  rounded  w-full">
-            <div className="flex  h-full flex-col overflow-y-scroll gap-4  ">
-              <div className="overflow-x-auto rounded-box border  w-full bg-stone-300">
-                <table className="table  w-full">
+          <div className="w-full h-56 rounded   border ">
+
+            <div className="flex   flex-col overflow-y-scroll gap-4  h-full  p-2">
+
+              <div className="overflow-x-auto rounded-box border  w-full bg-stone-100">
+                <table className="table  ">
                   {/* head */}
                   <thead className="">
                     <tr>
