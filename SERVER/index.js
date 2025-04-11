@@ -55,6 +55,7 @@ io.on("connection", (socket) => {
 
 
     socket.on("getRoomUsers", (roomId) => {
+        
         if (roomUsers[roomId]) {
             socket.emit("updatedRoomUser", roomUsers[roomId]);
         } else {

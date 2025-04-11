@@ -84,9 +84,10 @@ const MeetingFunctionpage = () => {
 
         .then((res) => {
           if (res.data.insertedId) {
-            alert("date inserted");
+       
             toast.success("done");
-            refetch();
+            refetch(); 
+            // instant add task
             reset();
             setIsModalOpen(false);
           } else {
@@ -111,6 +112,7 @@ const MeetingFunctionpage = () => {
       navigate('/dashboard');
     }
   }, [currentRoom, navigate, setLoading]);
+
   const handleCreateRoom = () => {
     setLoading(true);
     socket.emit("createRoom", {
@@ -119,6 +121,7 @@ const MeetingFunctionpage = () => {
       timestamp: new Date(),
     });
   };
+
   const handleJoinRoom = () => {
     if (!joinRoomId) return;
     setLoading(true);
@@ -128,6 +131,9 @@ const MeetingFunctionpage = () => {
     });
     setJoinRoomId("");
   };
+
+  // jai time a submit button click kora hobba oi time zoom id send korta hobba 
+  
 
   return (
     <div>
@@ -302,7 +308,7 @@ const MeetingFunctionpage = () => {
                   <tbody>
                     {/* row 1 */}
 
-                    { scheduleData.filter((schedule) => {
+                    {Array.isArray(scheduleData) &&  scheduleData.filter((schedule) => {
                       const now = new Date();
                       const meetingTime = new Date(
                         `${schedule.Date} ${schedule.Time}`
