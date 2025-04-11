@@ -33,7 +33,7 @@ function MeetingNavbar() {
         </Link>
       </li>
     </div>
-  );
+  )
 
   return (
     <div className="">
