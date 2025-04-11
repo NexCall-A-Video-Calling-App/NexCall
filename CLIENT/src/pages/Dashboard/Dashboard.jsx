@@ -13,12 +13,11 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
 
-  const { socket, currentRoom, UserId, creator, createdAt } = useContext(SocketContext);
+  const { socket, currentRoom, setCurrentRoom, UserId, creator, createdAt } = useContext(SocketContext);
   const { user, userLogOut, loading, setLoading } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const [spin, setSpin] = useState(false);
   const [messages, setMessages] = useState([]); // all messages(both sender & receiver) 
-  console.log(messages);
   const [message, setMessage] = useState(""); // single message from sender 
   const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.   
   const [searchUser, setSearchUser] = useState("")
@@ -99,6 +98,11 @@ const Dashboard = () => {
     }, 1500);
   };
 
+  const handleBackToDashboard = () => {
+    setCurrentRoom(null);
+    navigate('/meeting');
+  }
+
   if (!currentRoom) {
     return (
       <div className="flex-1 flex flex-col justify-center items-center min-h-screen bg-gray-100">
@@ -145,10 +149,9 @@ const Dashboard = () => {
 
         {/* Logout an Profile */}
         <div className="mt-auto">
-          {/* <div className="divider"></div> */}
-          {/* Back to Home */}
+          {/* Back to Dashboard */}
           <Link
-            to='/meeting'
+            onClick={handleBackToDashboard}
             className="w-full border flex justify-center items-center gap-2 mt-4 p-2  rounded-lg hover:bg-purple-600 transition-colors"
           >
             <IoHome /> Back to Dashboard
@@ -289,7 +292,7 @@ const Dashboard = () => {
 
                     {/* Message Bubble Section */}
                     <div
-                      className={`${isSender ? "mr-2" : "ml-2"} p-3 rounded-2xl relative ${isSender
+                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-2xl relative ${isSender
                         ? "bg-purple-500 text-white rounded-br-none"
                         : "bg-gray-200 text-gray-900 rounded-bl-none"
                         }`}
