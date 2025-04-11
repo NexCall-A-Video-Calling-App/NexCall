@@ -176,7 +176,7 @@ const MeetingFunctionpage = () => {
           <div className="flex gap-x-4 px-10">
             <button
               onClick={() => setIsModalOpen(true)}
-              className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md  w-40 md:w-44"
+              className=" flex flex-col items-center justify-center hover:bg-blue-600 bg-blue-700 md:h-24 h-20 rounded-md  w-40 md:w-44"
             >
               {/* sehedule */}
 
