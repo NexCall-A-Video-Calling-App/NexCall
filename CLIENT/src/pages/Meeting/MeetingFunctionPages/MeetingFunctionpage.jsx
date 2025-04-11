@@ -115,10 +115,24 @@ const MeetingFunctionpage = () => {
 
   const handleCreateRoom = () => {
     setLoading(true);
-    socket.emit("createRoom", {
+    const userData = {
       name: user?.displayName,
       profilePic: user?.photoURL,
       timestamp: new Date(),
+    };
+    socket.emit("createRoom", userData);
+
+    // Listen for RoomCreated event from server
+    socket.on("RoomCreated", (roomId, name, timestamp) => {
+      setCurrentRoom(roomId); // Set 100ms roomId as currentRoom
+      setLoading(false);
+      navigate("/dashboard");
+    });
+
+    // Handle errors
+    socket.on("RoomCreationError", (error) => {
+      toast.error(error);
+      setLoading(false);
     });
   };
 
@@ -141,13 +155,7 @@ const MeetingFunctionpage = () => {
   return (
     <div className=" ">
       <section
-        className="w-full   border border-white/20 grid lg:grid-cols-2  py-40
-        min-h-screen
-
-     
-
-
-    justify-center "
+        className="w-full   border border-white/20 grid lg:grid-cols-2  py-40 min-h-screen justify-center "
       >
         <section className="flex flex-col gap-4 w-full ">
           <div className="flex gap-x-4 ">
