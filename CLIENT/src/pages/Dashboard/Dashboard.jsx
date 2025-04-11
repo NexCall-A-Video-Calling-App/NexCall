@@ -18,6 +18,7 @@ const Dashboard = () => {
   const [showSidebar, setShowSidebar] = useState(false);
   const [spin, setSpin] = useState(false);
   const [messages, setMessages] = useState([]); // all messages(both sender & receiver) 
+  console.log(messages);
   const [message, setMessage] = useState(""); // single message from sender 
   const [roomUsers, setRoomUsers] = useState([]);  // sockets or users that are connected in the room.   
   const [searchUser, setSearchUser] = useState("")
@@ -248,35 +249,50 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
-          <div className="mb-4">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`flex ${msg.sender === UserId ? "justify-end" : "justify-start"}`}
-              >
-                <div className="flex gap-1">
-                  <div className="h-full flex justify-center items-end">
-                    <img
-                      referrerPolicy="no-referrer"
-                      className="w-4 h-4 rounded-full mb-1"
-                      src={msg.photo}
-                      alt=""
-                    />
-                  </div>
-                  <div
-                    title={msg.senderName}
-                    className={` ${msg.sender === UserId
-                      ? "bg-blue-500 text-white mb-1"
-                      : "bg-black text-white mb-1"
-                      } p-2 rounded-lg`}
-                  >
-                    {msg.message}
-                  </div>
 
+          <div className="mb-4">
+            {messages.map((msg, index) => {
+              const isSender = msg.sender === UserId;
+              const prevMsg = messages[index - 1];
+              const isNewSender = !prevMsg || prevMsg.sender !== msg.sender;
+              return (
+                <div
+                  key={index}
+                  className={`flex flex-col ${isSender ? "items-end" : "items-start"}`}
+                >
+                  {isNewSender && (
+                    <p
+                      className={`text-xs mb-1 ${isSender ? "pr-10 text-right" : "pl-10 text-left"} text-gray-500`}
+                    >
+                      {msg.senderName}
+                    </p>
+                  )}
+                  <div className="flex gap-1">
+                    <div className="h-full flex justify-center items-end">
+                      <img
+                        referrerPolicy="no-referrer"
+                        className="w-4 h-4 rounded-full mb-1"
+                        src={msg.photo}
+                        alt=""
+                      />
+                    </div>
+                    <div
+                      title={msg.senderName}
+                      className={` ${msg.sender === UserId
+                        ? "bg-blue-500 text-white mb-1"
+                        : "bg-black text-white mb-1"
+                        } p-2 rounded-lg`}
+                    >
+                      {msg.message}
+                    </div>
+
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+
+            })}
           </div>
+
         </div>
         <form
           onSubmit={handleSend}
