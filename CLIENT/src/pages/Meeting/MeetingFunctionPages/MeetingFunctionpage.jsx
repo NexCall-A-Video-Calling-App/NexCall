@@ -23,6 +23,7 @@ import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 
 import countDwon from "../../../hooks/CountDwon/countDwon";
 import { SocketContext } from "../../../provider/SocketProvider";
+import { LiaHandsHelpingSolid } from "react-icons/lia";
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -154,7 +155,7 @@ const MeetingFunctionpage = () => {
             <button
               onClick={handleCreateRoom}
               id="create"
-              className="flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md  ml-10 hover:cursor-pointer hover:bg-violet-400 transition delay-200 duration-100  w-40 md:w-44"
+              className="flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md  ml-10 hover:cursor-pointer hover:bg-violet-700 transition delay-200 duration-100  w-40 md:w-44"
             >
               {/* meeting */}
               <BsFillCameraReelsFill className="text-4xl text-white font-bold  " />
@@ -284,6 +285,7 @@ const MeetingFunctionpage = () => {
 
             <button className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20   w-40 md:w-44 rounded-md">
               {/* help */}
+              {/* <LiaHandsHelpingSolid className="text-3xl text-white"/> */}
               <h2 className="text-xl font-semibold text-white">help</h2>
             </button>
           </div>
