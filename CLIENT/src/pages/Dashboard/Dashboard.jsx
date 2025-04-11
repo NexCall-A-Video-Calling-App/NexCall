@@ -275,12 +275,13 @@ const Dashboard = () => {
                     />
                     <div
                       title={msg.senderName}
-                      className={` ${msg.sender === UserId
-                        ? "bg-blue-500 text-white mb-1"
-                        : "bg-black text-white mb-1"
-                        } p-2 rounded-lg`}
+                      className={`${isSender ? "mr-2" : "ml-2"} p-3 rounded-2xl relative ${isSender
+                        ? "bg-purple-500 text-white rounded-br-none"
+                        : "bg-gray-200 text-gray-900 rounded-bl-none"
+                        }`}
                     >
-                      {msg.message}
+                      <p className="text-sm md:text-base break-words">{msg.message}</p>
+                      
                     </div>
 
                   </div>
