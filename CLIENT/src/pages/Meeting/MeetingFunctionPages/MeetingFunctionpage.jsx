@@ -47,6 +47,7 @@ const MeetingFunctionpage = () => {
   console.log(scheduleData);
 
   const [joinRoomId, setJoinRoomId] = useState(""); // For joining a room
+  
 
   // LIVE TIME
   useEffect(() => {
@@ -65,6 +66,8 @@ const MeetingFunctionpage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit = (data) => {
+
+ 
     const { Date, Time, Topic } = data;
     console.log(Date, Time, Topic);
     // gave condition
@@ -97,6 +100,8 @@ const MeetingFunctionpage = () => {
           }
         })
         .catch((error) => alert(error, "/schedule-collections"));
+
+  
     } else {
       console.log("false");
       setIsModalOpen(false);
@@ -228,34 +233,40 @@ const MeetingFunctionpage = () => {
                       </span>
                     )}
 
-                    <input
-                      type="date"
-                      {...register("Date", { required: "Date is required" })}
-                      className="border px-6 py-2 rounded focus:outline-blue-400"
-                      {...register("Date", { required: "Date is required" })}
-                      placeholder="Date"
-                    />
-                    {errors.Date && (
+                  <input
+                    type="date"
+                    {...register("Date", { required: "Date is required" })}
+
+
+
+                    className="border px-6 py-2 rounded focus:outline-blue-400"
+                    {...register("Date", { required: "Date is required" })}
+                 
+                    placeholder="Date"
+                  />
+                  {errors.Date && (
+                    <span className="text-red-500">
                       <span className="text-red-500">
-                        <span className="text-red-500">
-                          This field is required
-                        </span>
+                        This field is required
                       </span>
-                    )}
-                    <input
-                      type="time"
-                      {...register("Time", { required: "Time is requirred" })}
-                      className="border px-6 py-2 rounded focus:outline-blue-400"
-                      placeholder="Time"
-                    />
-                    {errors.Time && (
+                    </span>
+                  )}
+                  <input
+                    type="time"
+                    {...register("Time", { required: "Time is requirred" })}
+
+                    className="border px-6 py-2 rounded focus:outline-blue-400"
+            
+                    placeholder="Time"
+                  />
+                  {errors.Time && (
+                    <span className="text-red-500">
+                      {" "}
                       <span className="text-red-500">
-                        {" "}
-                        <span className="text-red-500">
-                          This field is required
-                        </span>
+                        This field is required
                       </span>
-                    )}
+                    </span>
+                  )}
 
                     {/* errors will return when field validation fails  */}
                     {errors.exampleRequired && (
@@ -264,28 +275,29 @@ const MeetingFunctionpage = () => {
                       </span>
                     )}
 
-                    <div className="flex items-end justify-end gap-4 p-4 ">
-                      <button
-                        className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
-                        onClick={() => setIsModalOpen(false)}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
+                  <div className="flex items-end justify-end gap-4 p-4 ">
+                    <button
+                      className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
+                      onClick={() => setIsModalOpen(false)}
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                  
+                      className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
 
-                        //  work on false
+                      //  work on false
 
-                        // onClick={() => setIsModalOpen(false)}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </form>
-                </div>
+                      // onClick={() => setIsModalOpen(false)}
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
+          </div>
 
             <button className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20   w-40 md:w-44 rounded-md">
               {/* help */}
@@ -322,24 +334,22 @@ const MeetingFunctionpage = () => {
                   <tbody>
                     {/* row 1 */}
 
-                    {Array.isArray(scheduleData) &&
-                      scheduleData
-                        .filter((schedule) => {
-                          const now = new Date();
-                          const meetingTime = new Date(
-                            `${schedule.Date} ${schedule.Time}`
-                          );
-                          return meetingTime > now;
-                        })
-                        .map((schedule, index) => (
-                          <tr key={index} className="border border-black">
-                            <th>{index + 1}</th>
-                            <td>{schedule.Topic}</td>
-                            <td>{schedule.Date}</td>
-                            <td>{schedule.Time}</td>
-                            <td>{countDwon(schedule.Date, schedule.Time)}</td>
-                          </tr>
-                        ))}
+                    { scheduleData.filter((schedule) => {
+                      const now = new Date();
+                      const meetingTime = new Date(
+                        `${schedule.Date} ${schedule.Time}`
+                      )
+                      return meetingTime>now
+                    }) .map((schedule, index) => (
+                      <tr key={index}>
+                        <th>{index + 1}</th>
+                        <td>{schedule.Topic}</td>
+                        <td>{schedule.Date}</td>
+                        <td>{schedule.Time}</td>
+                        <td>{countDwon(schedule.Date, schedule.Time)}</td>
+                      </tr>
+                    
+                    ))}
                   </tbody>
                 </table>
               </div>
