@@ -122,11 +122,11 @@ const Dashboard = () => {
     <div className="flex h-screen bg-gray-100 relative -mt-16">
       {/* Sidebar */}
       <div
-        className={`fixed md:static top-0 left-0 h-full w-64 bg-gray-50 p-4 border-r shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
+        className={`fixed md:static top-0 left-0 h-full w-64 bg-gray-50 p-3 border-r shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 flex flex-col`}
       >
         {/* Sidebar Content */}
-        <div className="flex-1 overflow-y-auto custom-scroll">
+        <div className="flex-1 overflow-y-auto p-1">
           <h2 className="text-xl font-bold text-gray-700 mb-3">Users</h2>
           <input
             id="searchUser"
@@ -158,7 +158,7 @@ const Dashboard = () => {
           {/* Back to Dashboard */}
           <Link
             onClick={handleBackToDashboard}
-            className="w-full border text-white bg-primary flex justify-center items-center gap-2 mt-4 p-2 rounded-lg hover:bg-purple-600 transition-colors"
+            className="w-full border text-white bg-purple-500 flex justify-center items-center gap-2 mt-4 p-2 rounded-lg hover:bg-purple-600 transition-colors"
           >
             <MdOutlineArrowBackIosNew /> Back to Dashboard
           </Link>
@@ -327,7 +327,7 @@ const Dashboard = () => {
             value={message}
             type="text"
             placeholder="Type a message..."
-            className="w-full p-2 border rounded-lg"
+            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
           />
           <button className="ml-2 p-2 text-2xl bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
             <IoIosSend />
