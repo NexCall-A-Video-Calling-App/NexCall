@@ -37,7 +37,8 @@ function MeetingNavbar() {
 
   return (
     <div className="">
-      <div className="navbar  shadow-md w-full px-4 lg:px-12 md:px-10 sm:px-6 fixed top-0  border border-black/20 z-50 bg-white">
+      <div className="navbar  shadow-md w-full px-4 lg:px-12 md:px-10 sm:px-6 fixed top-0  border border-black/20 z-50 bg-white ">
+      
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className=" lg:hidden">
