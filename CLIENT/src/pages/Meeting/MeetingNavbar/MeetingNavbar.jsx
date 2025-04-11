@@ -16,19 +16,19 @@ function MeetingNavbar() {
       </li>
 
       <li>
-        <Link to={'/meeting/chat-history'} className="md:flex md:flex-col  md:gap-0 text-gray-600 font-semibold">
+        <Link to={'/meeting/chat-history'} className="md:flex md:flex-col  md:gap-0 font-semibold">
           Chat History <IoChatboxEllipses />
         </Link>
       </li>
 
       <li>
-        <Link className="md:flex md:flex-col  md:gap-0 text-gray-600 font-semibold">
+        <Link className="md:flex md:flex-col  md:gap-0 font-semibold">
           Meeting <SiGoogleclassroom />
         </Link>
       </li>
 
       <li>
-        <Link className="md:flex md:flex-col  md:gap-0 text-gray-600 font-semibold">
+        <Link className="md:flex md:flex-col  md:gap-0 font-semibold">
           Contact <MdContactMail />
         </Link>
       </li>
