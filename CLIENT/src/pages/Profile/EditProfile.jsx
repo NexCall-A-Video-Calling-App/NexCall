@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 
 const EditProfile = () => {
-const { user, onUpdate } = useAuth(); 
+const { user, profileUpdate } = useAuth(); 
   const [name, setName] = useState(user?.displayName || "");
   const [photoURL, setPhotoURL] = useState(user?.photoURL || "");
 
@@ -17,7 +17,7 @@ const { user, onUpdate } = useAuth();
     }
 
     try {
-        await onUpdate(name, photoURL);
+        await profileUpdate(name, photoURL);
         toast.success("Profile updated successfully!");
     } catch (error) {
         console.error("Error updating profile:", error);
