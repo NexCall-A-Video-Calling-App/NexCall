@@ -188,7 +188,7 @@ const MeetingFunctionpage = () => {
 
               <span className="font-semibold text-white">Schedule</span>
             </button>
-            {/* modal added here  */}
+            {/* modal  */}
             <div
               className={`${
                 isModalOpen ? " visible" : " invisible"
