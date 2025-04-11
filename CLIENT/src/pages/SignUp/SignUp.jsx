@@ -32,7 +32,8 @@ const SignUp = () => {
             .then((result) => {
                 // console.log(result.user);
                 toast.success("User created successfully.");
-               
+                profileUpdate(data.name, photoURL)
+                console.log(data.name, photoURL);
                 navigate('/meeting')
                 reset();
             })
@@ -40,9 +41,7 @@ const SignUp = () => {
                 // console.log(error.message);
                 toast.error(error.message);
             }) 
-            profileUpdate(data.name, photoURL)
-            console.log(data.name, photoURL);
-    
+        
     };
 
     // Google Sign In
