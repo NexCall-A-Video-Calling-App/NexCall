@@ -12,10 +12,20 @@ const ForgotPassword = () => {
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const emailFromQuery = params.get("email");
-    if (emailFromQuery) {
+  
+    // check if email is valid
+    if (emailFromQuery && validateEmail(emailFromQuery)) {
       setDefaultEmail(emailFromQuery);
+    } else {
+      toast.error("Please enter a valid email first.");
+      navigate("/sign-in");
     }
   }, [location]);
+  
+  // helper function
+  const validateEmail = (email) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
 
   const handleSubmitReset = async () => {
     try {
