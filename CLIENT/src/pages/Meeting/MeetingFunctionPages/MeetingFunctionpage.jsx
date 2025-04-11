@@ -199,6 +199,7 @@ const MeetingFunctionpage = () => {
                 } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
               >
                 <div className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
+                  
                   <h1 className="text-[1.5rem] font-bold">schedule</h1>
                   <RxCross1
                     className="p-2 text-[2.5rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
@@ -286,7 +287,7 @@ const MeetingFunctionpage = () => {
               </div>
             </div>
 
-            <div className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20  rounded-md w-1/2 -ml-10">
+            <div className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20   w-40 md:w-44 -ml-10">
               {/* help */}
               <h2 className="text-xl font-semibold text-white">help</h2>
             </div>
