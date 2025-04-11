@@ -164,7 +164,7 @@ const MeetingFunctionpage = () => {
 
             <button
               onClick={() => document.getElementById("my_modal_3").showModal()}
-              className="flex flex-col items-center justify-center bg-indigo-700 md:h-24 h-20 rounded-md  w-40 md:w-44 "
+              className="flex flex-col items-center justify-center hover:bg-indigo-600 bg-indigo-700 md:h-24 h-20 rounded-md  w-40 md:w-44 "
             >
               <IoPersonAddSharp className="size-8 text-white" />
               <span className="font-semibold text-white">Join</span>
