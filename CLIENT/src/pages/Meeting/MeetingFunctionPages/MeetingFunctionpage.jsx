@@ -91,7 +91,7 @@ const MeetingFunctionpage = () => {
             reset();
             setIsModalOpen(false);
           } else {
-            alert("falied");
+            toast.error("failed")
           }
         })
         .catch((error) => alert(error, "/schedule-collections"));
@@ -136,8 +136,14 @@ const MeetingFunctionpage = () => {
   
 
   return (
-    <div>
-      <section className="w-full   border border-white/20 grid md:grid-cols-2  py-40 bg-slate-900 min-h-screen">
+    <div className="">
+      <section className="w-full   border border-white/20 grid md:grid-cols-2  py-40
+
+     
+
+
+      min-h-screen">
+
         <div className=" grid grid-cols-2 place-content-center place-items-center gap-2 ">
           <button
             onClick={handleCreateRoom}
@@ -285,17 +291,18 @@ const MeetingFunctionpage = () => {
         <div id="asdf" className=" p-2 ">
           {/* show time */}
           {/* moments .js  */}
-          <div className="text-center text-white">
+          <div className="text-center text-black">
             <p className="text-sm font-semibold"> {time}</p>
             <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
 
-          <div className=" h-56  rounded mt-4 w-full">
-            <div className="flex justify-center items-center h-full flex-col overflow-y-scroll gap-4  ">
+          <div className=" h-56  rounded  w-full">
+            <div className="flex  h-full flex-col overflow-y-scroll gap-4  ">
               <div className="overflow-x-auto rounded-box border  w-full bg-stone-300">
                 <table className="table  w-full">
                   {/* head */}
                   <thead className="">
+                  
                     <tr>
                       <th>Serial</th>
                       <th>Topic</th>
@@ -304,9 +311,12 @@ const MeetingFunctionpage = () => {
                       <th>Countdwon</th>
                     </tr>
                   </thead>
+                 
 
                   <tbody>
                     {/* row 1 */}
+
+                   
 
                     {Array.isArray(scheduleData) &&  scheduleData.filter((schedule) => {
                       const now = new Date();
@@ -326,7 +336,11 @@ const MeetingFunctionpage = () => {
                     ))}
                   </tbody>
                 </table>
+                
               </div>
+              {
+                      scheduleData.length===0  && <span className="flex justify-center items-center w-full"> No Schedule Founed</span>
+                    }
             </div>
           </div>
         </div>
