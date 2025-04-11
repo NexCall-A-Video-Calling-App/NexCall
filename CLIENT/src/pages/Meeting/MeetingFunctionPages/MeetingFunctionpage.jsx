@@ -139,7 +139,7 @@ const MeetingFunctionpage = () => {
   // jai time a submit button click kora hobba oi time zoom id send korta hobba
 
   return (
-    <div className=" ">
+    <div className=" container">
       <section
         className="w-full   border border-white/20 grid lg:grid-cols-2  py-40
         min-h-screen

@@ -8,9 +8,9 @@ import { IoSearchOutline } from "react-icons/io5";
 
 function MeetingNavbar() {
   const links = (
-    <div className="md:flex">
+    <div className="md:flex text-black">
       <li>
-        <Link to={'/meeting'} className="md:flex md:flex-col  md:gap-0 text-gray-200 font-semibold">
+        <Link to={'/meeting'} className="md:flex md:flex-col  md:gap-0  font-semibold">
           Home <IoMdHome />
         </Link>
       </li>
@@ -64,14 +64,14 @@ function MeetingNavbar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow md:mt-2 bg-slate-900 text-stone-500"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow md:mt-2 "
             >
               {links}
             </ul>
           </div>
         </div>
         <div className="navbar-center hidden lg:flex ">
-          <ul className="menu menu-horizontal px-1 text-base">{links}</ul>
+          <ul className="menu menu-horizontal px-1 text-base bg-white">{links}</ul>
         </div>
 
         <div className="navbar-end ">
