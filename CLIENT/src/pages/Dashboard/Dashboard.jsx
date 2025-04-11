@@ -10,7 +10,7 @@ import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
 import Spinner from "../../components/Spinner";
 import { SocketContext } from './../../provider/SocketProvider';
 import { Link, useNavigate } from 'react-router-dom';
-import { MdDashboard } from "react-icons/md";
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
 const Dashboard = () => {
 
@@ -110,7 +110,7 @@ const Dashboard = () => {
         <p>Please create or join a room first.</p>
         <button
           onClick={() => navigate('/meeting')}
-          className="mt-4 p-2 bg-purple-500 text-white rounded-lg"
+          className="mt-4 p-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg"
         >
           Go to Meeting Page
         </button>
@@ -122,48 +122,53 @@ const Dashboard = () => {
     <div className="flex h-screen bg-gray-100 relative -mt-16">
       {/* Sidebar */}
       <div
-        className={`fixed md:static top-0 left-0 h-full w-64 bg-white p-4 border-r shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
+        className={`fixed md:static top-0 left-0 h-full w-64 bg-gray-50 p-4 border-r shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 flex flex-col`}
       >
         {/* Sidebar Content */}
-        <div className="flex-1 overflow-y-auto">
-          <h2 className="text-lg font-semibold">Users</h2>
+        <div className="flex-1 overflow-y-auto custom-scroll">
+          <h2 className="text-xl font-bold text-gray-700 mb-3">Users</h2>
           <input
             id="searchUser"
             onChange={(e) => setSearchUser(e.target.value)}
             type="text"
             placeholder="Search users"
-            className="w-full p-2 mt-2 border rounded-lg"
+            className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
           />
-          <div className="mt-4">
-            {
-              roomUsers
-                .filter((userFilter) => userFilter?.name?.toLowerCase().includes(searchUser?.toLowerCase()))
-                .map((userinRoom, idx) => (
-                  <div key={idx}>
-                    <h1>{idx + 1}: {userinRoom.name}</h1>
-                  </div>
-                ))
-            }
+          <div className="space-y-2">
+            {roomUsers
+              .filter((userFilter) =>
+                userFilter?.name?.toLowerCase().includes(searchUser?.toLowerCase())
+              )
+              .map((userinRoom, idx) => (
+                <div
+                  key={idx}
+                  className="p-2 bg-white rounded-md shadow-sm hover:bg-purple-100 transition-colors"
+                >
+                  <h1 className="text-gray-800 text-sm font-medium">
+                    {idx + 1}. {userinRoom.name}
+                  </h1>
+                </div>
+              ))}
           </div>
         </div>
 
-        {/* Logout an Profile */}
+        {/* Logout and Profile */}
         <div className="mt-auto">
           {/* Back to Dashboard */}
           <Link
             onClick={handleBackToDashboard}
-            className="w-full border flex justify-center items-center gap-2 mt-4 p-2  rounded-lg hover:bg-purple-600 transition-colors"
+            className="w-full border text-white bg-primary flex justify-center items-center gap-2 mt-4 p-2 rounded-lg hover:bg-purple-600 transition-colors"
           >
-            <MdDashboard /> Back to Dashboard
+            <MdOutlineArrowBackIosNew /> Back to Dashboard
           </Link>
 
-          {/* Profile */}
-          <div className="dropdown dropdown-top dropdown-center w-full">
+          {/* Profile Dropdown */}
+          <div className="dropdown dropdown-top dropdown-center w-full mt-2">
             <div
               tabIndex={0}
               role="button"
-              className="border w-full flex justify-center items-center gap-2 mt-2 p-2 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              className="border w-full flex justify-center items-center gap-2 p-2 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
             >
               <img
                 src={user?.photoURL}
@@ -175,7 +180,7 @@ const Dashboard = () => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-300 rounded-box z-1 w-52 p-2 shadow-sm"
+              className="dropdown-content menu bg-base-300 rounded-box z-50 w-52 p-2 shadow-lg mt-2"
             >
               <li>
                 <button
@@ -199,9 +204,9 @@ const Dashboard = () => {
             </ul>
           </div>
           {spin && <Spinner />}
-
         </div>
       </div>
+
 
       {/* Overlay for Sidebar */}
       {showSidebar && <div className="fixed inset-0 bg-black opacity-50 z-10 md:hidden" onClick={toggleSidebar} ></div>}
@@ -232,21 +237,21 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex gap-1 md:space-x-2">
-            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
+            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
               <FaVideo />
             </button>
-            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
+            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
               <FaPhoneAlt />
             </button>
             <button
               onClick={() => document.getElementById('my_modal_3').showModal()}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
             >
               <IoMdInformationCircleOutline />
             </button>
             <button
               onClick={handleDownloadMessagesAsPDF}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
             >
               <RiChatDownloadLine />
             </button>
@@ -294,7 +299,7 @@ const Dashboard = () => {
                     {/* Message Bubble Section */}
                     <div
                       className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-2xl relative ${isSender
-                        ? "bg-purple-500 text-white rounded-br-none"
+                        ? "bg-purple-500 hover:bg-purple-600 text-white rounded-br-none"
                         : "bg-gray-200 text-gray-900 rounded-bl-none"
                         }`}
                     >
@@ -324,7 +329,7 @@ const Dashboard = () => {
             placeholder="Type a message..."
             className="w-full p-2 border rounded-lg"
           />
-          <button className="ml-2 p-2 text-2xl bg-purple-500 text-white rounded-lg">
+          <button className="ml-2 p-2 text-2xl bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
             <IoIosSend />
           </button>
         </form>
