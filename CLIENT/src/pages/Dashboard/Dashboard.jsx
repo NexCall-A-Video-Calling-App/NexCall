@@ -248,13 +248,17 @@ const Dashboard = () => {
             </button>
           </div>
         </div>
-        <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
 
+        {/* Messages Section */}
+        <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
           <div className="mb-4 space-y-1">
             {messages.map((msg, index) => {
               const isSender = msg.sender === UserId;
               const prevMsg = messages[index - 1];
+              const nextMsg = messages[index + 1];
               const isNewSender = !prevMsg || prevMsg.sender !== msg.sender;
+              const isLastInGroup = !nextMsg || nextMsg.sender !== msg.sender;
+
               return (
                 <div
                   key={index}
@@ -271,14 +275,19 @@ const Dashboard = () => {
                   <div
                     className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md ${isSender ? "flex-row-reverse" : ""}`}
                   >
-                    {isNewSender && (
-                      <img
-                        src={msg.photo || "https://img.icons8.com/?size=50&id=7819&format=png"}
-                        alt="profile"
-                        className="w-7 h-7 rounded-full object-cover"
-                      />
-                    )}
+                    <div className="w-7 h-7">
+                      {isLastInGroup ? (
+                        <img
+                          src={msg.photo || "https://img.icons8.com/?size=50&id=7819&format=png"}
+                          alt="profile"
+                          className="w-7 h-7 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-7 h-7" /> // Empty space to keep alignment
+                      )}
+                    </div>
 
+                    {/* Message Bubble Section */}
                     <div
                       className={`${isSender ? "mr-2" : "ml-2"} p-3 rounded-2xl relative ${isSender
                         ? "bg-purple-500 text-white rounded-br-none"
@@ -298,7 +307,6 @@ const Dashboard = () => {
               );
             })}
           </div>
-
 
         </div>
         <form
