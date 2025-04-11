@@ -12,7 +12,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 // react icons
 import { RxCross1 } from "react-icons/rx";
-import {  toast  } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 
 import countDwon from "../../../hooks/CountDwon/countDwon";
@@ -37,11 +37,11 @@ const MeetingFunctionpage = () => {
   const { user, loading, setLoading } = useAuth();
   const navigate = useNavigate();
 
-  const { isLoading, isError,refetch, scheduleData } = useScheduleData();
+  const { isLoading, isError, refetch, scheduleData } = useScheduleData();
   console.log(scheduleData);
 
   const [joinRoomId, setJoinRoomId] = useState(""); // For joining a room
-  
+
 
   // LIVE TIME
   useEffect(() => {
@@ -61,7 +61,7 @@ const MeetingFunctionpage = () => {
 
   const onSubmit = (data) => {
 
- 
+
     const { Date, Time, Topic } = data;
     console.log(Date, Time, Topic);
     // gave condition
@@ -95,7 +95,7 @@ const MeetingFunctionpage = () => {
         })
         .catch((error) => alert(error, "/schedule-collections"));
 
-  
+
     } else {
       console.log("false");
       setIsModalOpen(false);
@@ -214,7 +214,7 @@ const MeetingFunctionpage = () => {
 
                     className="border px-6 py-2 rounded focus:outline-blue-400"
                     {...register("Date", { required: "Date is required" })}
-                 
+
                     placeholder="Date"
                   />
                   {errors.Date && (
@@ -229,7 +229,7 @@ const MeetingFunctionpage = () => {
                     {...register("Time", { required: "Time is requirred" })}
 
                     className="border px-6 py-2 rounded focus:outline-blue-400"
-            
+
                     placeholder="Time"
                   />
                   {errors.Time && (
@@ -255,12 +255,12 @@ const MeetingFunctionpage = () => {
                     </button>
                     <button
                       type="submit"
-                  
+
                       className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
 
-                      //  work on false
+                    //  work on false
 
-                      // onClick={() => setIsModalOpen(false)}
+                    // onClick={() => setIsModalOpen(false)}
                     >
                       Submit
                     </button>
@@ -302,13 +302,13 @@ const MeetingFunctionpage = () => {
                   <tbody>
                     {/* row 1 */}
 
-                    { scheduleData.filter((schedule) => {
+                    {scheduleData.filter((schedule) => {
                       const now = new Date();
                       const meetingTime = new Date(
                         `${schedule.Date} ${schedule.Time}`
                       )
-                      return meetingTime>now
-                    }) .map((schedule, index) => (
+                      return meetingTime > now
+                    }).map((schedule, index) => (
                       <tr key={index}>
                         <th>{index + 1}</th>
                         <td>{schedule.Topic}</td>
@@ -316,7 +316,7 @@ const MeetingFunctionpage = () => {
                         <td>{schedule.Time}</td>
                         <td>{countDwon(schedule.Date, schedule.Time)}</td>
                       </tr>
-                    
+
                     ))}
                   </tbody>
                 </table>

@@ -10,6 +10,7 @@ import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
 import Spinner from "../../components/Spinner";
 import { SocketContext } from './../../provider/SocketProvider';
 import { Link, useNavigate } from 'react-router-dom';
+import { MdDashboard } from "react-icons/md";
 
 const Dashboard = () => {
 
@@ -154,7 +155,7 @@ const Dashboard = () => {
             onClick={handleBackToDashboard}
             className="w-full border flex justify-center items-center gap-2 mt-4 p-2  rounded-lg hover:bg-purple-600 transition-colors"
           >
-            <IoHome /> Back to Dashboard
+            <MdDashboard /> Back to Dashboard
           </Link>
 
           {/* Profile */}
@@ -281,7 +282,7 @@ const Dashboard = () => {
                     <div className="w-7 h-7">
                       {isLastInGroup ? (
                         <img
-                          src={msg.photo || "https://img.icons8.com/?size=50&id=7819&format=png"}
+                          src={msg.photo || "https://i.ibb.co.com/5gDBVLDV/images.png"}
                           alt="profile"
                           className="w-7 h-7 rounded-full object-cover"
                         />
