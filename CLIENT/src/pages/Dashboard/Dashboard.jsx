@@ -267,15 +267,12 @@ const Dashboard = () => {
                       {msg.senderName}
                     </p>
                   )}
-                  <div className="flex gap-1">
-                    <div className="h-full flex justify-center items-end">
-                      <img
-                        referrerPolicy="no-referrer"
-                        className="w-4 h-4 rounded-full mb-1"
-                        src={msg.photo}
-                        alt=""
-                      />
-                    </div>
+                  <div className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md ${isSender ? "flex-row-reverse" : ""}`}>
+                    <img
+                      src={msg.photo || "https://img.icons8.com/?size=50&id=7819&format=png"}
+                      alt="profile"
+                      className="w-7 h-7 rounded-full object-cover"
+                    />
                     <div
                       title={msg.senderName}
                       className={` ${msg.sender === UserId
