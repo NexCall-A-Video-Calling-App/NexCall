@@ -283,7 +283,7 @@ const MeetingFunctionpage = () => {
               </div>
             </div>
 
-            <button className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20   w-40 md:w-44 rounded-md">
+            <button className="flex flex-col items-center justify-center hover:bg-lime-500 bg-lime-600 md:h-24 h-20   w-40 md:w-44 rounded-md">
               {/* help */}
               {/* <LiaHandsHelpingSolid className="text-3xl text-white"/> */}
               <h2 className="text-xl font-semibold text-white">help</h2>
