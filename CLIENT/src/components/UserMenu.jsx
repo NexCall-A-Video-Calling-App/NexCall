@@ -1,16 +1,18 @@
 import React from 'react';
 import useAuth from '../hooks/useAuth';
 import toast from 'react-hot-toast';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 
 const UserMenu = () => {
     const { user, userLogOut } = useAuth();
     const location = useLocation();
     // console.log(location);
+    const navigate = useNavigate();
 
     const handleLogout = async () => {
         try {
             userLogOut();
+            navigate('/sign-up');
             toast.success('Logged out successfully.');
         } catch {
             toast.error('Logout failed. Please try again.');
