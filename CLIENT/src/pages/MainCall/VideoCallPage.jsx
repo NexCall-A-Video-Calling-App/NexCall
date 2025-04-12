@@ -65,7 +65,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
   const joinRoom = async (roomId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/token?roomId=${encodeURIComponent(roomId)}`
+        `https://nexcall.up.railway.app/token?roomId=${encodeURIComponent(roomId)}`
       );
       if (!response.ok) throw new Error(`Failed to fetch token: ${response.statusText}`);
       const { token } = await response.json();
@@ -143,21 +143,19 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
   };
 
   return (
-    <div className="space-y-4 flex flex-col items-center justify-center min-h-screen p-4">
-      {error && <div className="text-red-500">{error}</div>}
-      {!isConnected && <p>Connecting...</p>}
+    <div className="space-y-4 flex flex-col items-center justify-center min-h-screen p-4 text-white">
+      {error && <div className="text-red-300 font-semibold">{error}</div>}
+      {!isConnected && <p className="text-lg animate-pulse">Connecting...</p>}
       {isConnected && (
-        <div className="w-full">
-          <div className="flex justify-center items-center gap-2 text-white text-sm mb-2">
-            <div className="flex items-center gap-2">
-              <FaUsers className="text-xl" />
-              <span>{peerCount} Participants</span>
-            </div>
+        <div className="w-full max-w-7xl">
+          <div className="flex justify-center items-center gap-2 text-sm mb-4">
+            <FaUsers className="text-xl" />
+            <span>{peerCount} Participants</span>
           </div>
 
           {raisedHands.length > 0 && (
             <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-2 rounded mb-4">
-              Raised Hands: {" "}
+              Raised Hands:{" "}
               {raisedHands.map((peer) => (
                 <button
                   key={peer.id}
@@ -170,23 +168,26 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
             </div>
           )}
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {localPeer && !peers.some((p) => p.isLocal) && (
-              <div className="relative">
+              <div className="relative bg-white/10 rounded-xl overflow-hidden shadow-md backdrop-blur-sm h-[250px]">
                 <video
                   ref={localVideoRef}
                   autoPlay
                   muted
                   playsInline
-                  className="w-full rounded-lg shadow-md"
+                  className="w-full h-full object-cover"
                 />
-                <p className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded">
+                <p className="absolute top-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
                   {localPeer.name} (You)
                 </p>
               </div>
             )}
             {peers.map((peer) => (
-              <div key={peer.id} className="relative">
+              <div
+                key={peer.id}
+                className="relative bg-white/10 rounded-xl overflow-hidden shadow-md backdrop-blur-sm h-[250px]"
+              >
                 <video
                   ref={(ref) => {
                     if (ref && peer.videoTrack) {
@@ -197,35 +198,35 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
                   autoPlay
                   playsInline
                   muted={peer.isLocal}
-                  className="w-full rounded-lg shadow-md"
+                  className="w-full h-full object-cover"
                 />
-                <p className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded">
+                <p className="absolute top-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
                   {peer.name}
                 </p>
               </div>
             ))}
           </div>
 
-          <div className="flex justify-center mt-6 gap-4 flex-wrap">
-            <button onClick={toggleAudio} className="text-white bg-blue-500 p-3 rounded-full">
+          <div className="flex justify-center mt-6 gap-3 flex-wrap">
+            <button onClick={toggleAudio} className="bg-[#8659d3] hover:bg-[#7744cc] p-3 rounded-full shadow-md">
               {isAudioMuted ? <FaMicrophoneSlash /> : <FaMicrophone />}
             </button>
-            <button onClick={toggleVideo} className="text-white bg-blue-500 p-3 rounded-full">
+            <button onClick={toggleVideo} className="bg-[#8659d3] hover:bg-[#7744cc] p-3 rounded-full shadow-md">
               {isVideoMuted ? <FaVideoSlash /> : <FaVideo />}
             </button>
-            <button onClick={leaveRoom} className="text-white bg-red-500 p-3 rounded-full">
+            <button onClick={leaveRoom} className="bg-red-600 hover:bg-red-700 p-3 rounded-full shadow-md">
               <FaSignOutAlt />
             </button>
-            <button onClick={raiseHand} className="text-white bg-yellow-500 p-3 rounded-full text-sm">
+            <button onClick={raiseHand} className="bg-yellow-500 hover:bg-yellow-600 p-3 rounded-full shadow-md">
               ✋
             </button>
-            <button onClick={toggleScreenShare} className="text-white bg-green-600 p-3 rounded-full">
+            <button onClick={toggleScreenShare} className="bg-green-600 hover:bg-green-700 p-3 rounded-full shadow-md">
               <FaDesktop />
             </button>
-            <button onClick={openChat} className="text-white bg-purple-500 p-3 rounded-full">
+            <button onClick={openChat} className="bg-[#9333ea] hover:bg-[#7e2cd4] p-3 rounded-full shadow-md">
               <FaComments />
             </button>
-            <button onClick={muteAll} className="text-white bg-black p-3 rounded-full">
+            <button onClick={muteAll} className="bg-black hover:bg-gray-800 p-3 rounded-full shadow-md">
               <FaChalkboardTeacher />
             </button>
           </div>
@@ -233,6 +234,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
       )}
     </div>
   );
+
 };
 
 export default VideoCallPage;
