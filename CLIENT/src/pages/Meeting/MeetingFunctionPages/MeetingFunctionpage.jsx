@@ -36,7 +36,7 @@ const MeetingFunctionpage = () => {
     formState: { errors },
   } = useForm();
 
-  const { socket, currentRoom } = useContext(SocketContext);
+  const { socket, currentRoom, setCurrentRoom } = useContext(SocketContext);
 
   const [time, settime] = useState("");
   const [fullTime, setfullTime] = useState("");

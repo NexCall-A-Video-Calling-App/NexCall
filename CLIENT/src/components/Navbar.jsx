@@ -22,16 +22,16 @@ const Navbar = () => {
   const links = (
     <>
       <li>
-        <Link to={"/product"}>Product</Link>
+        <a href="#banner">Home</a>
       </li>
       <li>
-        <Link to={"/resource"}>Resouce</Link>
+        <a href="#about">About Us</a>
       </li>
       <li>
-        <Link to={"/company"}>Company</Link>
+        <a href="#features">Features</a>
       </li>
       <li>
-        <Link to={"/pricing"}>Pricing</Link>
+        <a href="#faq">FAQ</a>
       </li>
     </>
   );
