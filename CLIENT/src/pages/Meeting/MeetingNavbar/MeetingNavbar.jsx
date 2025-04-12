@@ -1,11 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
-import { IoChatboxEllipses, IoContract } from "react-icons/io5";
+import { IoChatboxEllipses } from "react-icons/io5";
 import { MdContactMail } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
-import { IoSearchOutline } from "react-icons/io5";
+import { Link } from "react-router-dom";
 import UserMenu from "../../../components/UserMenu";
+import logo from "../../../assets/nclogo.png";
 
 function MeetingNavbar() {
   const links = (
@@ -60,9 +60,17 @@ function MeetingNavbar() {
               </svg>
             </div>
 
-            <div className="lg:visible invisible text-black text-xl font-semibold">
-              Next Call
-            </div>
+            <Link
+              to={"/"}
+              className="flex items-center font-semibold text-2xl"
+            >
+              <img
+                className="w-12 h-12 object-cover"
+                src={logo}
+                alt="NexCall Logo"
+              />
+              <span>NexCall</span>
+            </Link>
             <ul
               tabIndex={0}
               className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow md:mt-2 bg-slate-900 text-stone-500"

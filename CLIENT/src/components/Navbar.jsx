@@ -67,10 +67,10 @@ const Navbar = () => {
 
           <Link
             to={"/"}
-            className="flex items-center  text-xl"
+            className="flex items-center font-semibold text-2xl"
           >
             <img
-              className="w-10 h-10 object-cover"
+              className="w-12 h-12 object-cover"
               src={logo}
               alt="NexCall Logo"
             />
