@@ -84,6 +84,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
     }
   };
 
+  // leave room and close the window
   const leaveRoom = () => {
     hmsActions.leave();
     window.close();
