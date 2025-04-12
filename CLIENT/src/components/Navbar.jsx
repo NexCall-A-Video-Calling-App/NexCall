@@ -4,6 +4,7 @@ import logo from "../assets/nclogo.png";
 import useAuth from "../hooks/useAuth";
 import { MdOutlineVoiceChat } from "react-icons/md";
 import toast from "react-hot-toast";
+import UserMenu from "./UserMenu";
 
 const Navbar = () => {
   const { user, userLogOut } = useAuth();
@@ -80,38 +81,8 @@ const Navbar = () => {
           <ul className="menu menu-horizontal px-1 text-base">{links}</ul>
         </div>
         <div className="navbar-end">
-          <div className="dropdown dropdown-end">
-            {
-              user ? (
-                <>
-                  <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                      <div className="w-10 rounded-full">
-                        <img src={user?.photoURL} referrerPolicy="no-referrer" className="w-8 h-8 rounded-full" alt="" />
-                      </div>
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-44 p-2 shadow">
-                      <li>
-                        <Link to={'/profile'}>Profile</Link>
-                      </li>
-                      <li>
-                        <Link to={'/meeting'}>Dashboard</Link>
-                      </li>
-                      <li>
-                        <button onClick={handleLogout}>Logout</button>
-                      </li>
-                    </ul>
-                  </div>
-                </>
-              ) : (
-                <Link to="/sign-in" className="btn">
-                  Sign in
-                </Link>
-              )
-            }
-          </div>
+          {/* User menu */}
+          <UserMenu />
         </div>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { IoChatboxEllipses, IoContract } from "react-icons/io5";
 import { MdContactMail } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 import { IoSearchOutline } from "react-icons/io5";
+import UserMenu from "../../../components/UserMenu";
 
 function MeetingNavbar() {
   const links = (
@@ -38,7 +39,7 @@ function MeetingNavbar() {
   return (
     <div className="">
       <div className="navbar  shadow-md w-full px-4 lg:px-12 md:px-10 sm:px-6 fixed top-0  border border-black/20 z-50 bg-white ">
-      
+
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className=" lg:hidden">
@@ -75,18 +76,8 @@ function MeetingNavbar() {
         </div>
 
         <div className="navbar-end ">
-          {/* implents search */}
-          {/* need color change */}
-
-          <div className="flex border border-black/10 items-center ml-2 shadow-sm p-1">
-            <IoSearchOutline className="text-gray-500 ml-3" />
-
-            <input
-              type="text"
-              placeholder="Search"
-              className="bg-transparent ml-2 outline-none text-white"
-            />
-          </div>
+          {/* User menu */}
+          <UserMenu />
         </div>
       </div>
     </div>
