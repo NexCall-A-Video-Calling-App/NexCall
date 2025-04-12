@@ -18,7 +18,7 @@ const UserMenu = () => {
     }
 
     return (
-        <div className="dropdown dropdown-end">
+        <div className="dropdown dropdown-end border rounded-full">
             {
                 user ? (
                     <>
@@ -30,7 +30,7 @@ const UserMenu = () => {
                             </div>
                             <ul
                                 tabIndex={0}
-                                className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-44 p-2 shadow">
+                                className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-44 p-2 shadow border">
                                 <li>
                                     <Link to={'/profile'}>Profile</Link>
                                 </li>

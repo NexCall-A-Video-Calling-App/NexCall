@@ -155,7 +155,7 @@ const MeetingFunctionpage = () => {
   return (
     <div className="container mx-auto ">
       <section
-        className="w-full   border border-white/20 grid md:grid-cols-2  py-40 min-h-screen justify-center "
+        className="w-full border border-white/20 grid md:grid-cols-2  py-40 justify-center"
       >
         {/* Left Panel */}
         <section className="flex flex-col gap-6">
