@@ -9,27 +9,27 @@ import logo from "../../../assets/nclogo.png";
 
 function MeetingNavbar() {
   const links = (
-    <div className="md:flex">
+    <div className="lg:flex">
       <li>
-        <Link to={'/meeting'} className="md:flex md:flex-col  md:gap-0 text-gray-200 font-semibold">
+        <Link to={'/meeting'} className="md:flex lg:flex-col  md:gap-2 lg:gap-0 text-gray-200 font-semibold">
           Home <IoMdHome />
         </Link>
       </li>
 
       <li>
-        <Link to={'/meeting/chat-history'} className="md:flex md:flex-col  md:gap-0 text-gray-600 font-semibold">
+        <Link to={'/meeting/chat-history'} className="md:flex lg:flex-col  md:gap-2 lg:gap-0 text-gray-600 font-semibold">
           Chat History <IoChatboxEllipses />
         </Link>
       </li>
 
       <li>
-        <Link className="md:flex md:flex-col  md:gap-0 text-gray-600 font-semibold">
+        <Link className="md:flex lg:flex-col  md:gap-2 lg:gap-0 text-gray-600 font-semibold">
           Meeting <SiGoogleclassroom />
         </Link>
       </li>
 
       <li>
-        <Link className="md:flex md:flex-col  md:gap-0 text-gray-600 font-semibold">
+        <Link className="md:flex lg:flex-col  md:gap-2 lg:gap-0 text-gray-600 font-semibold">
           Contact <MdContactMail />
         </Link>
       </li>
@@ -37,15 +37,14 @@ function MeetingNavbar() {
   );
 
   return (
-    <div className="">
-      <div className="navbar  shadow-md w-full px-4 lg:px-12 md:px-10 sm:px-6 fixed top-0  border border-black/20 z-50 bg-white ">
-
+    <div className="bg-base-100 shadow-sm w-full fixed top-0 z-50 border-b">
+      <div className="container mx-auto navbar px-2 ">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className=" lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-black mt-4"
+                className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -59,31 +58,30 @@ function MeetingNavbar() {
                 />{" "}
               </svg>
             </div>
-
-            <Link
-              to={"/"}
-              className="flex items-center font-semibold text-2xl"
-            >
-              <img
-                className="w-12 h-12 object-cover"
-                src={logo}
-                alt="NexCall Logo"
-              />
-              <span>NexCall</span>
-            </Link>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow md:mt-2 bg-slate-900 text-stone-500"
+              className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-44 p-2 shadow"
             >
               {links}
             </ul>
           </div>
+
+          <Link
+            to={"/"}
+            className="flex items-center font-semibold text-2xl"
+          >
+            <img
+              className="w-12 h-12 object-cover"
+              src={logo}
+              alt="NexCall Logo"
+            />
+            <span>NexCall</span>
+          </Link>
         </div>
-        <div className="navbar-center hidden lg:flex ">
+        <div className="navbar-center hidden lg:flex">
           <ul className="menu menu-horizontal px-1 text-base">{links}</ul>
         </div>
-
-        <div className="navbar-end ">
+        <div className="navbar-end">
           {/* User menu */}
           <UserMenu />
         </div>
