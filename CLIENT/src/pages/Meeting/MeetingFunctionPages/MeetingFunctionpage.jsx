@@ -108,8 +108,7 @@ const MeetingFunctionpage = () => {
     }
   }, [currentRoom, navigate, setLoading]);
 
-  const handleCreateRoom = () => {
-    setLoading(true);
+  const handleCreateRoom = () => { 
     const userData = {
       name: user?.displayName,
       profilePic: user?.photoURL,
@@ -131,9 +130,9 @@ const MeetingFunctionpage = () => {
     });
   };
 
+  
   const handleJoinRoom = () => {
-    if (!joinRoomId) return;
-    setLoading(true);
+    if (!joinRoomId) return; 
     socket.emit("JoinRoom", {
       roomId: joinRoomId,
       userData: {
