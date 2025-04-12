@@ -40,8 +40,8 @@ const SignUp = () => {
             .catch((error) => {
                 // console.log(error.message);
                 toast.error(error.message);
-            }) 
-        
+            })
+
     };
 
     // Google Sign In
@@ -60,7 +60,7 @@ const SignUp = () => {
     }
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100 py-10 px-2">
+        <div className="flex justify-center items-center bg-gray-50 py-10 px-2">
             <div className="relative max-w-[992px] w-full bg-white p-7 md:p-10 lg:p-16 shadow-lg rounded-lg overflow-hidden border">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-8 max-w-4xl w-full items-center md:flex md:flex-row-reverse">
 
