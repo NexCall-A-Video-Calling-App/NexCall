@@ -3,10 +3,21 @@ import { Link } from "react-router-dom";
 import logo from "../assets/nclogo.png";
 import useAuth from "../hooks/useAuth";
 import { MdOutlineVoiceChat } from "react-icons/md";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
-  const { user } = useAuth();
-  console.log(user)
+  const { user, userLogOut } = useAuth();
+  // console.log(user)
+
+  const handleLogout = async () => {
+    try {
+      userLogOut();
+      toast.success('Logged out successfully.');
+    } catch {
+      toast.error('Logout failed. Please try again.');
+    }
+  }
+
   const links = (
     <>
       <li>
@@ -87,7 +98,9 @@ const Navbar = () => {
                     <li>
                       <Link to={'/meeting'}>Dashboard</Link>
                     </li>
-                    <li><a>Logout</a></li>
+                    <li>
+                      <button onClick={handleLogout}>Logout</button>
+                    </li>
                   </ul>
                 </div>
               </>
