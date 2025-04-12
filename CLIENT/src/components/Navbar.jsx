@@ -35,7 +35,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="bg-base-100 shadow-sm w-full fixed top-0 z-50">
+    <div className="bg-base-100 shadow-sm w-full fixed top-0 z-50 border-b">
       <div className="container mx-auto navbar px-2 ">
         <div className="navbar-start">
           <div className="dropdown">
@@ -66,7 +66,7 @@ const Navbar = () => {
 
           <Link
             to={"/"}
-            className="flex items-center hover:underline hover:text-blue-700 text-xl"
+            className="flex items-center  text-xl"
           >
             <img
               className="w-10 h-10 object-cover"
@@ -106,8 +106,8 @@ const Navbar = () => {
                   </div>
                 </>
               ) : (
-                <Link to="/sign-up" className="btn">
-                  SignUp
+                <Link to="/sign-in" className="btn">
+                  Sign in
                 </Link>
               )
             }
