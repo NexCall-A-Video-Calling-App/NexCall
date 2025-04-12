@@ -36,7 +36,7 @@ function MeetingNavbar() {
         </NavLink>
       </li>
 
-      <li>
+      {/* <li>
         <NavLink
           to={'/meeting/classroom'}
           className={({ isActive }) =>
@@ -56,7 +56,7 @@ function MeetingNavbar() {
         >
           Contact <MdContactMail />
         </NavLink>
-      </li>
+      </li> */}
     </div>
   );
 
