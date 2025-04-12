@@ -128,7 +128,7 @@ const Dashboard = () => {
         return;
       }
       const videoCallWindow = window.open(
-        `/video-call?roomId=${encodeURIComponent(currentRoom)}`,
+        `/meeting/video-call?roomId=${encodeURIComponent(currentRoom)}`,
         "_blank",
         "width=800,height=600"
       );

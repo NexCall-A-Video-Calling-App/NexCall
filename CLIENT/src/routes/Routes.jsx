@@ -54,10 +54,10 @@ const Routes = createBrowserRouter([
         path: "/dashboard",
         element: <PrivateRoute><Dashboard /></PrivateRoute>
       },
-      {
-        path: '/video-call',
-        element: <PrivateRoute><VideoCall /></PrivateRoute>
-      }
+      // {
+      //   path: '/video-call',
+      //   element: <PrivateRoute><VideoCall /></PrivateRoute>
+      // }
     ],
   },
   {
@@ -71,6 +71,10 @@ const Routes = createBrowserRouter([
       {
         path: '/meeting/chat-history',
         element: <ChatHistory />
+      },
+      {
+        path: '/meeting/video-call',
+        element: <VideoCall />
       }
     ]
   }
