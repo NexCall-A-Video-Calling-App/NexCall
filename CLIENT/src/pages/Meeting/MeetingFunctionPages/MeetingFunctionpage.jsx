@@ -282,6 +282,38 @@ const MeetingFunctionpage = () => {
           </div>
         </div>
       )}
+
+      {/* Join Room Modal */}
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box max-w-md w-full rounded-xl shadow-lg border bg-white p-6 relative">
+          {/* Close Button */}
+          <form method="dialog">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-4 top-4 hover:bg-gray-200">
+              ✕
+            </button>
+          </form>
+
+          {/* Modal Title */}
+          <h3 className="text-lg font-bold mb-4 text-center text-gray-800">Join a Meeting Room</h3>
+
+          {/* Input & Button */}
+          <div className="flex flex-col sm:flex-row items-center gap-3">
+            <input
+              type="text"
+              value={joinRoomId}
+              onChange={(e) => setJoinRoomId(e.target.value)}
+              placeholder="Enter Room ID"
+              className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            />
+            <button
+              onClick={handleJoinRoom}
+              className="w-full sm:w-auto px-6 py-2 rounded-md bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition"
+            >
+              Join
+            </button>
+          </div>
+        </div>
+      </dialog>
     </div>
   );
 };
