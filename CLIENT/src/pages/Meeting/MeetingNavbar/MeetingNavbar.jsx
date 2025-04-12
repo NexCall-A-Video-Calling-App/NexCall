@@ -3,35 +3,59 @@ import { IoMdHome } from "react-icons/io";
 import { IoChatboxEllipses } from "react-icons/io5";
 import { MdContactMail } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import UserMenu from "../../../components/UserMenu";
 import logo from "../../../assets/nclogo.png";
 
 function MeetingNavbar() {
+
+  const baseStyle = "md:flex lg:flex-col md:gap-2 lg:gap-0 font-semibold";
+
   const links = (
     <div className="lg:flex">
       <li>
-        <Link to={'/meeting'} className="md:flex lg:flex-col  md:gap-2 lg:gap-0 text-gray-200 font-semibold">
+        <NavLink
+          to="/meeting"
+          end
+          className={({ isActive }) =>
+            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
+          }
+        >
           Home <IoMdHome />
-        </Link>
+        </NavLink>
       </li>
 
       <li>
-        <Link to={'/meeting/chat-history'} className="md:flex lg:flex-col  md:gap-2 lg:gap-0 text-gray-600 font-semibold">
+        <NavLink
+          to="/meeting/chat-history"
+          className={({ isActive }) =>
+            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
+          }
+        >
           Chat History <IoChatboxEllipses />
-        </Link>
+        </NavLink>
       </li>
 
       <li>
-        <Link className="md:flex lg:flex-col  md:gap-2 lg:gap-0 text-gray-600 font-semibold">
+        <NavLink
+          to={'/meeting/classroom'}
+          className={({ isActive }) =>
+            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
+          }
+        >
           Meeting <SiGoogleclassroom />
-        </Link>
+        </NavLink>
       </li>
 
       <li>
-        <Link className="md:flex lg:flex-col  md:gap-2 lg:gap-0 text-gray-600 font-semibold">
+        <NavLink
+          to={"/meeting/contact"}
+          className={({ isActive }) =>
+            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
+          }
+        >
           Contact <MdContactMail />
-        </Link>
+        </NavLink>
       </li>
     </div>
   );
