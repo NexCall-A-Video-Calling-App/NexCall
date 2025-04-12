@@ -39,7 +39,7 @@ const Routes = createBrowserRouter([
         element: <ForgotPassword></ForgotPassword>,
       },
       {
-        path: "/userProfile",
+        path: "/profile",
         element: <PrivateRoute>
           <ProfileDetails />
         </PrivateRoute>

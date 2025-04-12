@@ -117,7 +117,7 @@ const Dashboard = () => {
   const handleProfileClick = () => {
     setSpin(true);
     setTimeout(() => {
-      navigate('/userProfile');
+      navigate('/profile');
     }, 1500);
   };
 
