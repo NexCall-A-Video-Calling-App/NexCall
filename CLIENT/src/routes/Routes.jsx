@@ -14,6 +14,7 @@ import MeetingNavbar from "../pages/Meeting/MeetingNavbar/MeetingNavbar";
 import MeetingFunctionpage from "../pages/Meeting/MeetingFunctionPages/MeetingFunctionpage";
 import ChatHistory from "../pages/ChatHistory/ChatHistory";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
+import VideoCall from "../pages/Video/VideoCall";
 
 const Routes = createBrowserRouter([
   {
@@ -53,6 +54,10 @@ const Routes = createBrowserRouter([
         path: "/dashboard",
         element: <Dashboard />
       },
+      {
+        path: '/video-call',
+        element: <VideoCall />
+      }
     ],
   },
   {

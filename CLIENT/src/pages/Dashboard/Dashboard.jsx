@@ -29,17 +29,12 @@ const Dashboard = () => {
   useEffect(() => {
     if (!currentRoom) return; // Prevent running if no room is set
 
-    const handleUpdatedRoomUser = (users) => {
-      console.log("Received updatedRoomUser:", users);
+    socket.on("updatedRoomUser", (users) => {
+      console.log("Updated room users:", users);
       setRoomUsers(users);
-    };
+    });
 
-    socket.on("updatedRoomUser", handleUpdatedRoomUser);
-
-    // Request initial room users when joining or loading the dashboard
-    socket.emit("getRoomUsers", currentRoom);
-
-    // Handle incoming messages
+     // Handle incoming messages
     socket.on("receiveMessage", (msg) => {
       const decryptedMessage = {
         ...msg,
@@ -48,12 +43,36 @@ const Dashboard = () => {
       setMessages((prevMsg) => [...prevMsg, decryptedMessage]);
     });
 
-    return () => {
-      socket.off("updatedRoomUser", handleUpdatedRoomUser);
-      socket.off("receiveMessage");
-    };
-  }, [currentRoom, socket]);
+    socket.on("RoomJoined", (roomId) => {
+      setCurrentRoom(roomId);
+      setLoading(false);
+      navigate("/dashboard");
+    });
 
+    socket.on("RoomCreationError", (error) => {
+      toast.error(error);
+      setLoading(false);
+    });
+
+    socket.on("RoomJoinError", (error) => {
+      toast.error(error);
+      setLoading(false);
+    });
+
+        // Fetch initial room users
+        socket.emit("getRoomUsers", currentRoom);
+
+    // Cleanup listeners
+    return () => {
+      socket.off("updatedRoomUser");
+      socket.off("receiveMessage");
+      socket.off("RoomJoined");
+      socket.off("RoomCreationError");
+      socket.off("RoomJoinError");
+    };
+  }, [currentRoom, socket, setCurrentRoom, navigate, setLoading]);
+
+  // Logout handler
   const handleLogOut = () => {
     userLogOut()
       .then(() => {
@@ -66,11 +85,13 @@ const Dashboard = () => {
       .catch((error) => {
         // An error happened.
         console.error(error);
+        toast.error("Logout failed");
       });
   }
 
   const otherUser = roomUsers.find(u => u.socketId !== UserId);
 
+    // Send message handler
   const handleSend = (e) => {
     e.preventDefault();
     if (message.trim() && currentRoom) {
@@ -81,7 +102,7 @@ const Dashboard = () => {
         senderName: user?.displayName,
         senderEmail: user?.email,
         photo: user?.photoURL,
-        receiverName: otherUser?.name
+        receiverName: roomUsers.find((u) => u.socketId !== socket.id)?.name,
       });
       setMessage("");
     }
@@ -92,12 +113,29 @@ const Dashboard = () => {
     downloadMessagesAsPDF(currentRoom, messages)
   };
 
+   // Navigate to profile with spinner
   const handleProfileClick = () => {
     setSpin(true);
     setTimeout(() => {
       navigate('/userProfile');
     }, 1500);
   };
+
+    // Open video call in a new window
+    const handleVideoCall = () => {
+      if (!currentRoom) {
+        toast.error("No room selected!");
+        return;
+      }
+      const videoCallWindow = window.open(
+        `/video-call?roomId=${encodeURIComponent(currentRoom)}`,
+        "_blank",
+        "width=800,height=600"
+      );
+      if (!videoCallWindow) {
+        toast.error("Please allow pop-ups for this site!");
+      }
+    };
 
   const handleBackToDashboard = () => {
     setCurrentRoom(null);
@@ -213,15 +251,17 @@ const Dashboard = () => {
 
 
       {/* Chat Window */}
+      {/* Main content */}
 
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
+       {/* Header */}
         <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
           <div className="flex items-center">
             <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
               <FaEllipsisV />
             </button>
             <img
-              src={otherUser?.profilePic || "https://i.ibb.co.com/5gDBVLDV/images.png"}
+              src={roomUsers.find((u) => u.socketId !== socket.id)?.profilePic || "https://i.ibb.co.com/5gDBVLDV/images.png"}
               alt="avatar"
               className="w-10 h-10 rounded-full"
             />
@@ -237,12 +277,11 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex gap-1 md:space-x-2">
-            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
+            <button 
+             onClick={handleVideoCall}
+            className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
               <FaVideo />
-            </button>
-            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
-              <FaPhoneAlt />
-            </button>
+            </button> 
             <button
               onClick={() => document.getElementById('my_modal_3').showModal()}
               className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
@@ -318,6 +357,8 @@ const Dashboard = () => {
           </div>
 
         </div>
+
+           {/* Message input */}
         <form
           onSubmit={handleSend}
           className="p-4 border-t bg-white flex items-center"
@@ -335,6 +376,7 @@ const Dashboard = () => {
         </form>
       </div>
 
+      {/* Modal for Invite Code */}
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box relative p-10">
           <form method="dialog">
@@ -342,10 +384,11 @@ const Dashboard = () => {
           </form>
 
           <h3 className="font-bold text-lg flex items-center gap-2 mb-2">
-            Room Code: {currentRoom}
+          Invite Code: {currentRoom}
             <button
               onClick={() => {
                 navigator.clipboard.writeText(currentRoom);
+                toast.success("Invite code copied!");
               }}
               className="btn btn-sm btn-outline tooltip"
               data-tip="Copy Room Code"
