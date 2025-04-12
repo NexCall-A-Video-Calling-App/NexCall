@@ -79,12 +79,12 @@ function MeetingNavbar() {
           {/* need color change */}
 
           <div className="flex border border-black/10 items-center ml-2 shadow-sm p-1">
-            <IoSearchOutline className="text-gray-500 ml-3" />
+            <IoSearchOutline className="text-gray-500 ml-3 rounded" />
 
             <input
               type="text"
               placeholder="Search"
-              className="bg-transparent ml-2 outline-none text-black"
+              className="bg-transparent ml-2 outline-none text-black rounded"
             />
           </div>
         </div>
