@@ -65,7 +65,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
   const joinRoom = async (roomId) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/token?roomId=${encodeURIComponent(roomId)}`
+        `https://nexcall.up.railway.app/token?roomId=${encodeURIComponent(roomId)}`
       );
       if (!response.ok) throw new Error(`Failed to fetch token: ${response.statusText}`);
       const { token } = await response.json();
@@ -84,6 +84,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
     }
   };
 
+  // leave room and close the window
   const leaveRoom = () => {
     hmsActions.leave();
     window.close();
