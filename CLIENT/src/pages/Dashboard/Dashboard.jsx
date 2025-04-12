@@ -10,10 +10,11 @@ import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
 import Spinner from "../../components/Spinner";
 import { SocketContext } from './../../provider/SocketProvider';
 import { Link, useNavigate } from 'react-router-dom';
+import { MdOutlineArrowBackIosNew } from "react-icons/md";
 
 const Dashboard = () => {
 
-  const { socket, currentRoom, UserId, creator, createdAt } = useContext(SocketContext);
+  const { socket, currentRoom, setCurrentRoom, UserId, creator, createdAt } = useContext(SocketContext);
   const { user, userLogOut, loading, setLoading } = useAuth();
   const [showSidebar, setShowSidebar] = useState(false);
   const [spin, setSpin] = useState(false);
@@ -28,17 +29,12 @@ const Dashboard = () => {
   useEffect(() => {
     if (!currentRoom) return; // Prevent running if no room is set
 
-    const handleUpdatedRoomUser = (users) => {
-      console.log("Received updatedRoomUser:", users);
+    socket.on("updatedRoomUser", (users) => {
+      console.log("Updated room users:", users);
       setRoomUsers(users);
-    };
+    });
 
-    socket.on("updatedRoomUser", handleUpdatedRoomUser);
-
-    // Request initial room users when joining or loading the dashboard
-    socket.emit("getRoomUsers", currentRoom);
-
-    // Handle incoming messages
+     // Handle incoming messages
     socket.on("receiveMessage", (msg) => {
       const decryptedMessage = {
         ...msg,
@@ -47,12 +43,36 @@ const Dashboard = () => {
       setMessages((prevMsg) => [...prevMsg, decryptedMessage]);
     });
 
-    return () => {
-      socket.off("updatedRoomUser", handleUpdatedRoomUser);
-      socket.off("receiveMessage");
-    };
-  }, [currentRoom, socket]);
+    socket.on("RoomJoined", (roomId) => {
+      setCurrentRoom(roomId);
+      setLoading(false);
+      navigate("/dashboard");
+    });
 
+    socket.on("RoomCreationError", (error) => {
+      toast.error(error);
+      setLoading(false);
+    });
+
+    socket.on("RoomJoinError", (error) => {
+      toast.error(error);
+      setLoading(false);
+    });
+
+        // Fetch initial room users
+        socket.emit("getRoomUsers", currentRoom);
+
+    // Cleanup listeners
+    return () => {
+      socket.off("updatedRoomUser");
+      socket.off("receiveMessage");
+      socket.off("RoomJoined");
+      socket.off("RoomCreationError");
+      socket.off("RoomJoinError");
+    };
+  }, [currentRoom, socket, setCurrentRoom, navigate, setLoading]);
+
+  // Logout handler
   const handleLogOut = () => {
     userLogOut()
       .then(() => {
@@ -65,11 +85,13 @@ const Dashboard = () => {
       .catch((error) => {
         // An error happened.
         console.error(error);
+        toast.error("Logout failed");
       });
   }
 
   const otherUser = roomUsers.find(u => u.socketId !== UserId);
 
+    // Send message handler
   const handleSend = (e) => {
     e.preventDefault();
     if (message.trim() && currentRoom) {
@@ -80,7 +102,7 @@ const Dashboard = () => {
         senderName: user?.displayName,
         senderEmail: user?.email,
         photo: user?.photoURL,
-        receiverName: otherUser?.name
+        receiverName: roomUsers.find((u) => u.socketId !== socket.id)?.name,
       });
       setMessage("");
     }
@@ -91,6 +113,7 @@ const Dashboard = () => {
     downloadMessagesAsPDF(currentRoom, messages)
   };
 
+   // Navigate to profile with spinner
   const handleProfileClick = () => {
     setSpin(true);
     setTimeout(() => {
@@ -98,13 +121,34 @@ const Dashboard = () => {
     }, 1500);
   };
 
+    // Open video call in a new window
+    const handleVideoCall = () => {
+      if (!currentRoom) {
+        toast.error("No room selected!");
+        return;
+      }
+      const videoCallWindow = window.open(
+        `/video-call?roomId=${encodeURIComponent(currentRoom)}`,
+        "_blank",
+        "width=800,height=600"
+      );
+      if (!videoCallWindow) {
+        toast.error("Please allow pop-ups for this site!");
+      }
+    };
+
+  const handleBackToDashboard = () => {
+    setCurrentRoom(null);
+    navigate('/meeting');
+  }
+
   if (!currentRoom) {
     return (
       <div className="flex-1 flex flex-col justify-center items-center min-h-screen bg-gray-100">
         <p>Please create or join a room first.</p>
         <button
           onClick={() => navigate('/meeting')}
-          className="mt-4 p-2 bg-purple-500 text-white rounded-lg"
+          className="mt-4 p-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg"
         >
           Go to Meeting Page
         </button>
@@ -116,49 +160,53 @@ const Dashboard = () => {
     <div className="flex h-screen bg-gray-100 relative -mt-16">
       {/* Sidebar */}
       <div
-        className={`fixed md:static top-0 left-0 h-full w-64 bg-white p-4 border-r shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
+        className={`fixed md:static top-0 left-0 h-full w-64 bg-gray-50 p-3 border-r shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 flex flex-col`}
       >
         {/* Sidebar Content */}
-        <div className="flex-1 overflow-y-auto">
-          <h2 className="text-lg font-semibold">Users</h2>
+        <div className="flex-1 overflow-y-auto p-1">
+          <h2 className="text-xl font-bold text-gray-700 mb-3">Users</h2>
           <input
             id="searchUser"
             onChange={(e) => setSearchUser(e.target.value)}
             type="text"
             placeholder="Search users"
-            className="w-full p-2 mt-2 border rounded-lg"
+            className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
           />
-          <div className="mt-4">
-            {
-              roomUsers
-                .filter((userFilter) => userFilter?.name?.toLowerCase().includes(searchUser?.toLowerCase()))
-                .map((userinRoom, idx) => (
-                  <div key={idx}>
-                    <h1>{idx + 1}: {userinRoom.name}</h1>
-                  </div>
-                ))
-            }
+          <div className="space-y-2">
+            {roomUsers
+              .filter((userFilter) =>
+                userFilter?.name?.toLowerCase().includes(searchUser?.toLowerCase())
+              )
+              .map((userinRoom, idx) => (
+                <div
+                  key={idx}
+                  className="p-2 bg-white rounded-md shadow-sm hover:bg-purple-100 transition-colors"
+                >
+                  <h1 className="text-gray-800 text-sm font-medium">
+                    {idx + 1}. {userinRoom.name}
+                  </h1>
+                </div>
+              ))}
           </div>
         </div>
 
-        {/* Logout an Profile */}
+        {/* Logout and Profile */}
         <div className="mt-auto">
-          {/* <div className="divider"></div> */}
-          {/* Back to Home */}
+          {/* Back to Dashboard */}
           <Link
-            to='/meeting'
-            className="w-full border flex justify-center items-center gap-2 mt-4 p-2  rounded-lg hover:bg-purple-600 transition-colors"
+            onClick={handleBackToDashboard}
+            className="w-full border text-white bg-purple-500 flex justify-center items-center gap-2 mt-4 p-2 rounded-lg hover:bg-purple-600 transition-colors"
           >
-            <IoHome /> Back to Dashboard
+            <MdOutlineArrowBackIosNew /> Back to Dashboard
           </Link>
 
-          {/* Profile */}
-          <div className="dropdown dropdown-top dropdown-center w-full">
+          {/* Profile Dropdown */}
+          <div className="dropdown dropdown-top dropdown-center w-full mt-2">
             <div
               tabIndex={0}
               role="button"
-              className="border w-full flex justify-center items-center gap-2 mt-2 p-2 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+              className="border w-full flex justify-center items-center gap-2 p-2 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
             >
               <img
                 src={user?.photoURL}
@@ -170,7 +218,7 @@ const Dashboard = () => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-300 rounded-box z-1 w-52 p-2 shadow-sm"
+              className="dropdown-content menu bg-base-300 rounded-box z-50 w-52 p-2 shadow-lg mt-2"
             >
               <li>
                 <button
@@ -194,24 +242,26 @@ const Dashboard = () => {
             </ul>
           </div>
           {spin && <Spinner />}
-
         </div>
       </div>
+
 
       {/* Overlay for Sidebar */}
       {showSidebar && <div className="fixed inset-0 bg-black opacity-50 z-10 md:hidden" onClick={toggleSidebar} ></div>}
 
 
       {/* Chat Window */}
+      {/* Main content */}
 
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
+       {/* Header */}
         <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
           <div className="flex items-center">
             <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
               <FaEllipsisV />
             </button>
             <img
-              src={otherUser?.profilePic || "https://i.ibb.co.com/5gDBVLDV/images.png"}
+              src={roomUsers.find((u) => u.socketId !== socket.id)?.profilePic || "https://i.ibb.co.com/5gDBVLDV/images.png"}
               alt="avatar"
               className="w-10 h-10 rounded-full"
             />
@@ -227,57 +277,88 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex gap-1 md:space-x-2">
-            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
+            <button 
+             onClick={handleVideoCall}
+            className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
               <FaVideo />
-            </button>
-            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-base">
-              <FaPhoneAlt />
-            </button>
+            </button> 
             <button
               onClick={() => document.getElementById('my_modal_3').showModal()}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
             >
               <IoMdInformationCircleOutline />
             </button>
             <button
               onClick={handleDownloadMessagesAsPDF}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 text-white rounded-lg text-sm md:text-lg"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
             >
               <RiChatDownloadLine />
             </button>
           </div>
         </div>
-        <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
-          <div className="mb-4">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={`flex ${msg.sender === UserId ? "justify-end" : "justify-start"}`}
-              >
-                <div className="flex gap-1">
-                  <div className="h-full flex justify-center items-end">
-                    <img
-                      referrerPolicy="no-referrer"
-                      className="w-4 h-4 rounded-full mb-1"
-                      src={msg.photo}
-                      alt=""
-                    />
-                  </div>
-                  <div
-                    title={msg.senderName}
-                    className={` ${msg.sender === UserId
-                      ? "bg-blue-500 text-white mb-1"
-                      : "bg-black text-white mb-1"
-                      } p-2 rounded-lg`}
-                  >
-                    {msg.message}
-                  </div>
 
+        {/* Messages Section */}
+        <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
+          <div className="mb-4 space-y-1">
+            {messages.map((msg, index) => {
+              const isSender = msg.sender === UserId;
+              const prevMsg = messages[index - 1];
+              const nextMsg = messages[index + 1];
+              const isNewSender = !prevMsg || prevMsg.sender !== msg.sender;
+              const isLastInGroup = !nextMsg || nextMsg.sender !== msg.sender;
+
+              return (
+                <div
+                  key={index}
+                  className={`flex flex-col ${isSender ? "items-end" : "items-start"}`}
+                >
+                  {isNewSender && (
+                    <p
+                      className={`text-xs mb-1 ${isSender ? "pr-10 text-right" : "pl-10 text-left"} text-gray-500`}
+                    >
+                      {msg.senderName}
+                    </p>
+                  )}
+
+                  <div
+                    className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md ${isSender ? "flex-row-reverse" : ""}`}
+                  >
+                    <div className="w-7 h-7">
+                      {isLastInGroup ? (
+                        <img
+                          src={msg.photo || "https://i.ibb.co.com/5gDBVLDV/images.png"}
+                          alt="profile"
+                          className="w-7 h-7 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-7 h-7" /> // Empty space to keep alignment
+                      )}
+                    </div>
+
+                    {/* Message Bubble Section */}
+                    <div
+                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-2xl relative ${isSender
+                        ? "bg-purple-500 hover:bg-purple-600 text-white rounded-br-none"
+                        : "bg-gray-200 text-gray-900 rounded-bl-none"
+                        }`}
+                    >
+                      <p className="text-sm md:text-base break-words">{msg.message}</p>
+                      <p className="text-xs text-right opacity-60 mt-1">
+                        {new Date().toLocaleTimeString([], {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        })}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
+
         </div>
+
+           {/* Message input */}
         <form
           onSubmit={handleSend}
           className="p-4 border-t bg-white flex items-center"
@@ -287,14 +368,15 @@ const Dashboard = () => {
             value={message}
             type="text"
             placeholder="Type a message..."
-            className="w-full p-2 border rounded-lg"
+            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
           />
-          <button className="ml-2 p-2 text-2xl bg-purple-500 text-white rounded-lg">
+          <button className="ml-2 p-2 text-2xl bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
             <IoIosSend />
           </button>
         </form>
       </div>
 
+      {/* Modal for Invite Code */}
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box relative p-10">
           <form method="dialog">
@@ -302,10 +384,11 @@ const Dashboard = () => {
           </form>
 
           <h3 className="font-bold text-lg flex items-center gap-2 mb-2">
-            Room Code: {currentRoom}
+          Invite Code: {currentRoom}
             <button
               onClick={() => {
                 navigator.clipboard.writeText(currentRoom);
+                toast.success("Invite code copied!");
               }}
               className="btn btn-sm btn-outline tooltip"
               data-tip="Copy Room Code"

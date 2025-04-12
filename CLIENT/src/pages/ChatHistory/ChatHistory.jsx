@@ -59,7 +59,9 @@ const ChatHistory = () => {
                             const decryptedMessage = decryptMessage(msg.message);
 
                             const prevMsg = room.messages[i - 1];
+                            const nextMsg = room.messages[i + 1];
                             const isNewSender = !prevMsg || prevMsg.senderEmail !== msg.senderEmail;
+                            const isLastInGroup = !nextMsg || nextMsg.senderEmail !== msg.senderEmail;
 
                             return (
                                 <div
@@ -78,12 +80,18 @@ const ChatHistory = () => {
                                     <div
                                         className={`flex items-end max-w-xs sm:max-w-sm md:max-w-md ${isSender ? "flex-row-reverse" : ""}`}
                                     >
-                                        {/* Profile Image */}
-                                        <img
-                                            src={msg.photo || "https://img.icons8.com/?size=50&id=7819&format=png"}
-                                            alt="profile"
-                                            className="w-7 h-7 rounded-full object-cover"
-                                        />
+                                        {/* Profile Image or Placeholder */}
+                                        <div className="w-7 h-7">
+                                            {isLastInGroup ? (
+                                                <img
+                                                    src={msg.photo || "https://img.icons8.com/?size=50&id=7819&format=png"}
+                                                    alt="profile"
+                                                    className="w-7 h-7 rounded-full object-cover"
+                                                />
+                                            ) : (
+                                                <div className="w-7 h-7" /> // Placeholder div
+                                            )}
+                                        </div>
 
                                         {/* Message Bubble */}
                                         <div
@@ -105,6 +113,7 @@ const ChatHistory = () => {
                             );
                         })}
                     </div>
+
                 </div>
             ))}
         </div>

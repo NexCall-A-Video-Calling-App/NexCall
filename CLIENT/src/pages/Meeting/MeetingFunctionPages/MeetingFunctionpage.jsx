@@ -1,4 +1,10 @@
-import React, { useContext, useEffect, useMemo, useState, useTransition } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  useTransition,
+} from "react";
 import moment from "moment";
 import { GoDeviceCameraVideo } from "react-icons/go";
 import { Gi3dGlasses, GiTimeTrap } from "react-icons/gi";
@@ -12,7 +18,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 // react icons
 import { RxCross1 } from "react-icons/rx";
-import {  toast  } from "react-hot-toast";
+import { toast } from "react-hot-toast";
 import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 
 import countDwon from "../../../hooks/CountDwon/countDwon";
@@ -37,11 +43,10 @@ const MeetingFunctionpage = () => {
   const { user, loading, setLoading } = useAuth();
   const navigate = useNavigate();
 
-  const { isLoading, isError,refetch, scheduleData } = useScheduleData();
+  const { isLoading, isError, refetch, scheduleData } = useScheduleData();
   console.log(scheduleData);
 
   const [joinRoomId, setJoinRoomId] = useState(""); // For joining a room
-  
 
   // LIVE TIME
   useEffect(() => {
@@ -56,12 +61,10 @@ const MeetingFunctionpage = () => {
     };
   }, []);
 
-  // Schedule button 
+  // Schedule button
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onSubmit = (data) => {
-
- 
     const { Date, Time, Topic } = data;
     console.log(Date, Time, Topic);
     // gave condition
@@ -80,22 +83,20 @@ const MeetingFunctionpage = () => {
       };
 
       axios
-        .post("http://localhost:5000/schedule-collections", scheduleHandler)
+        .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
 
         .then((res) => {
           if (res.data.insertedId) {
-            alert("date inserted");
             toast.success("done");
             refetch();
+            // instant add task
             reset();
             setIsModalOpen(false);
           } else {
-            alert("falied");
+            toast.error("failed");
           }
         })
         .catch((error) => alert(error, "/schedule-collections"));
-
-  
     } else {
       console.log("false");
       setIsModalOpen(false);
@@ -108,186 +109,204 @@ const MeetingFunctionpage = () => {
   useEffect(() => {
     if (currentRoom) {
       setLoading(false);
-      navigate('/dashboard');
+      navigate("/dashboard");
     }
   }, [currentRoom, navigate, setLoading]);
+
   const handleCreateRoom = () => {
     setLoading(true);
-    socket.emit("createRoom", {
+    const userData = {
       name: user?.displayName,
       profilePic: user?.photoURL,
       timestamp: new Date(),
+    };
+    socket.emit("createRoom", userData);
+
+    // Listen for RoomCreated event from server
+    socket.on("RoomCreated", (roomId, name, timestamp) => {
+      setCurrentRoom(roomId); // Set 100ms roomId as currentRoom
+      setLoading(false);
+      navigate("/dashboard");
+    });
+
+    // Handle errors
+    socket.on("RoomCreationError", (error) => {
+      toast.error(error);
+      setLoading(false);
     });
   };
+
   const handleJoinRoom = () => {
     if (!joinRoomId) return;
     setLoading(true);
     socket.emit("JoinRoom", {
       roomId: joinRoomId,
-      userData: { name: user?.displayName, profilePic: user?.photoURL, email: user?.email },
+      userData: {
+        name: user?.displayName,
+        profilePic: user?.photoURL,
+        email: user?.email,
+      },
     });
     setJoinRoomId("");
   };
 
+  // jai time a submit button click kora hobba oi time zoom id send korta hobba
+
   return (
-    <div>
-      <section className="w-full   border border-white/20 grid md:grid-cols-2  py-40 bg-slate-900 min-h-screen">
-        <div className=" grid grid-cols-2 place-content-center place-items-center gap-2 ">
-          <button
-            onClick={handleCreateRoom}
-            id="create"
-            className="flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md w-1/2 ml-10 hover:cursor-pointer hover:bg-violet-400 transition delay-200 duration-100"
-          >
-            {/* meeting */}
-            <BsFillCameraReelsFill className="text-4xl text-white font-bold  " />
-            <span className="font-semibold text-white">New Meeting</span>
-          </button>
-
-          <button
-            onClick={() => document.getElementById('my_modal_3').showModal()}
-            className="flex flex-col items-center justify-center bg-indigo-700 md:h-24 h-20 rounded-md w-1/2 -ml-10">
-            <IoPersonAddSharp className="size-8 text-white" />
-            <span className="font-semibold text-white">Join</span>
-          </button>
-
-          {/* add schedule button  */}
-
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md w-1/2 ml-10"
-          >
-            {/* sehedule */}
-
-            <GiTimeTrap className="size-8 text-white" />
-
-            <span className="font-semibold text-white">Schedule</span>
-          </button>
-          {/* modal added here  */}
-          <div
-            className={`${isModalOpen ? " visible" : " invisible"
-              } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300`}
-          >
-            <div
-              className={`${isModalOpen
-                ? " translate-y-[0px] opacity-100"
-                : " translate-y-[-200px] opacity-0"
-                } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8`}
+    <div className=" ">
+      <section
+        className="w-full   border border-white/20 grid lg:grid-cols-2  py-40 min-h-screen justify-center "
+      >
+        <section className="flex flex-col gap-4 w-full ">
+          <div className="flex gap-x-4 ">
+            <button
+              onClick={handleCreateRoom}
+              id="create"
+              className="flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md  ml-10 hover:cursor-pointer hover:bg-violet-400 transition delay-200 duration-100  w-40 md:w-44"
             >
-              <div className="w-full flex items-end p-4 justify-between border-b border-[#d1d1d1]">
-                <h1 className="text-[1.5rem] font-bold">schedule</h1>
-                <RxCross1
-                  className="p-2 text-[2.5rem] hover:bg-[#e7e7e7] rounded-full transition-all duration-300 cursor-pointer"
-                  onClick={() => setIsModalOpen(false)}
-                />
-              </div>
+              {/* meeting */}
+              <BsFillCameraReelsFill className="text-4xl text-white font-bold  " />
+              <span className="font-semibold text-white">New Meeting</span>
+            </button>
 
-              <div className="p-4 border-b border-[#d1d1d1]">
-                {/* inside this have info input box  */}
-                {/* use react hook form */}
-                <form
-                  onSubmit={handleSubmit(onSubmit)}
-                  className="flex flex-col md:gap-3 gap-2"
-                >
-                  <input
+            <button
+              onClick={() => document.getElementById("my_modal_3").showModal()}
+              className="flex flex-col items-center justify-center bg-indigo-700 md:h-24 h-20 rounded-md  w-40 md:w-44 "
+            >
+              <IoPersonAddSharp className="size-8 text-white" />
+              <span className="font-semibold text-white">Join</span>
+            </button>
+          </div>
 
-                    {...register("Topic", { required: "Topic is requirerd" })}
+          {/* add schedule and help  */}
 
+          <div className="flex gap-x-4 px-10">
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md  w-40 md:w-44"
+            >
+              {/* sehedule */}
 
+              <GiTimeTrap className="size-8 text-white" />
 
-                    {...register("Topic", { required: "Topic is requirerd" })}
-                    className="border px-6 py-2 rounded focus:outline-blue-400"
-                    placeholder="Topic"
-                  />
-                  {errors.Topic && (
-                    <span className="text-red-500">
+              <span className="font-semibold text-white">Schedule</span>
+            </button>
+            {/* modal  */}
+            <div
+              className={`${isModalOpen ? " visible" : " invisible"
+                } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300 `}
+            >
+              <div
+                className={`${isModalOpen
+                  ? " translate-y-[0px] opacity-100"
+                  : " translate-y-[-200px] opacity-0"
+                  } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8 `}
+              >
+                <button className=" flex items-end p-4 justify-between border-[#d1d1d1]  text-center w-full">
+                  <h1 className="text-[1.5rem] font-bold text-center w-full  flex justify-center">
+                    schedule
+                  </h1>
+                </button>
+
+                <div className="p-4  border-[#d1d1d1]">
+                  {/* inside this have info input box  */}
+                  {/* use react hook form */}
+                  <form
+                    onSubmit={handleSubmit(onSubmit)}
+                    className="flex flex-col md:gap-3 gap-2"
+                  >
+                    <input
+                      {...register("Topic", { required: "Topic is requirerd" })}
+                      {...register("Topic", { required: "Topic is requirerd" })}
+                      className="border px-6 py-2 rounded focus:outline-blue-400"
+                      placeholder="Topic"
+                    />
+                    {errors.Topic && (
+                      <span className="text-red-500">
+                        <span className="text-red-500">
+                          This field is required
+                        </span>
+                      </span>
+                    )}
+
+                    <input
+                      type="date"
+                      {...register("Date", { required: "Date is required" })}
+                      className="border px-6 py-2 rounded focus:outline-blue-400"
+                      {...register("Date", { required: "Date is required" })}
+                      placeholder="Date"
+                    />
+                    {errors.Date && (
+                      <span className="text-red-500">
+                        <span className="text-red-500">
+                          This field is required
+                        </span>
+                      </span>
+                    )}
+                    <input
+                      type="time"
+                      {...register("Time", { required: "Time is requirred" })}
+                      className="border px-6 py-2 rounded focus:outline-blue-400"
+                      placeholder="Time"
+                    />
+                    {errors.Time && (
+                      <span className="text-red-500">
+                        {" "}
+                        <span className="text-red-500">
+                          This field is required
+                        </span>
+                      </span>
+                    )}
+
+                    {/* errors will return when field validation fails  */}
+                    {errors.exampleRequired && (
                       <span className="text-red-500">
                         This field is required
                       </span>
-                    </span>
-                  )}
+                    )}
 
-                  <input
-                    type="date"
-                    {...register("Date", { required: "Date is required" })}
-
-
-
-                    className="border px-6 py-2 rounded focus:outline-blue-400"
-                    {...register("Date", { required: "Date is required" })}
-                 
-                    placeholder="Date"
-                  />
-                  {errors.Date && (
-                    <span className="text-red-500">
-                      <span className="text-red-500">
-                        This field is required
-                      </span>
-                    </span>
-                  )}
-                  <input
-                    type="time"
-                    {...register("Time", { required: "Time is requirred" })}
-
-                    className="border px-6 py-2 rounded focus:outline-blue-400"
-            
-                    placeholder="Time"
-                  />
-                  {errors.Time && (
-                    <span className="text-red-500">
-                      {" "}
-                      <span className="text-red-500">
-                        This field is required
-                      </span>
-                    </span>
-                  )}
-
-                  {/* errors will return when field validation fails  */}
-                  {errors.exampleRequired && (
-                    <span className="text-red-500">This field is required</span>
-                  )}
-
-                  <div className="flex items-end justify-end gap-4 p-4 ">
-                    <button
-                      className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
-                      onClick={() => setIsModalOpen(false)}
-                    >
-                      Cancel
-                    </button>
-                    <button
-                      type="submit"
-                  
-                      className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
+                    <div className="flex items-end justify-end gap-4 p-4 ">
+                      <button
+                        className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
+                        onClick={() => setIsModalOpen(false)}
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        type="submit"
+                        className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
 
                       //  work on false
 
                       // onClick={() => setIsModalOpen(false)}
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20  rounded-md w-1/2 -ml-10">
-            {/* help */}
-            <h2 className="text-xl font-semibold text-white">help</h2>
+            <button className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20   w-40 md:w-44 rounded-md">
+              {/* help */}
+              <h2 className="text-xl font-semibold text-white">help</h2>
+            </button>
           </div>
-        </div>
+        </section>
 
-        <div id="asdf" className=" p-2 ">
+        <div id="asdf" className=" p-2 md:mt-0 mt-4  ">
           {/* show time */}
           {/* moments .js  */}
-          <div className="text-center text-white">
+          <div className="text-center text-black border">
             <p className="text-sm font-semibold"> {time}</p>
             <p className="text-xl font-semibold"> {fullTime}</p>
           </div>
 
-          <div className=" h-56  rounded mt-4 w-full">
-            <div className="flex justify-center items-center h-full flex-col overflow-y-scroll gap-4  ">
-              <div className="overflow-x-auto rounded-box border  w-full bg-stone-300">
-                <table className="table  w-full">
+          <div className="w-full h-56 rounded   border ">
+            <div className="flex   flex-col overflow-y-scroll gap-4  h-full  p-2">
+              <div className="overflow-x-auto rounded-box border  w-full bg-stone-100">
+                <table className="table  ">
                   {/* head */}
                   <thead className="">
                     <tr>
@@ -302,25 +321,32 @@ const MeetingFunctionpage = () => {
                   <tbody>
                     {/* row 1 */}
 
-                    { scheduleData.filter((schedule) => {
-                      const now = new Date();
-                      const meetingTime = new Date(
-                        `${schedule.Date} ${schedule.Time}`
-                      )
-                      return meetingTime>now
-                    }) .map((schedule, index) => (
-                      <tr key={index}>
-                        <th>{index + 1}</th>
-                        <td>{schedule.Topic}</td>
-                        <td>{schedule.Date}</td>
-                        <td>{schedule.Time}</td>
-                        <td>{countDwon(schedule.Date, schedule.Time)}</td>
-                      </tr>
-                    
-                    ))}
+                    {scheduleData
+                      .filter((schedule) => {
+                        const now = new Date();
+                        const meetingTime = new Date(
+                          `${schedule.Date} ${schedule.Time}`
+                        );
+                        return meetingTime > now;
+                      })
+                      .map((schedule, index) => (
+                        <tr key={index}>
+                          <th>{index + 1}</th>
+                          <td>{schedule.Topic}</td>
+                          <td>{schedule.Date}</td>
+                          <td>{schedule.Time}</td>
+                          <td>{countDwon(schedule.Date, schedule.Time)}</td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>
+              {scheduleData.length === 0 && (
+                <span className="flex justify-center items-center w-full text-xl md:text-2xl font-semibold">
+                  {" "}
+                  No Schedule
+                </span>
+              )}
             </div>
           </div>
         </div>
@@ -342,7 +368,9 @@ const MeetingFunctionpage = () => {
             >
               Join Room
             </button>
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+              ✕
+            </button>
           </form>
         </div>
       </dialog>

@@ -11,7 +11,7 @@ function countDwon(date, time) {
   // sub opration
   const durationTime = moment.duration(meetimeTime.diff(now));
 
-  if (durationTime.asSeconds() <= 0) {
+  if (durationTime.asSeconds() <= 10) {
     return "Meeting started";
   }
 
