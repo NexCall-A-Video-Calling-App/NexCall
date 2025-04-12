@@ -18,7 +18,7 @@ const scaleVariants = {
 
 const Banner = () => {
   return (
-    <div className="container mx-auto flex flex-col items-center text-center pt-8 px-4">
+    <div id="banner" className="container mx-auto flex flex-col items-center text-center pt-8 px-4">
       {/* Animated Heading */}
       <motion.h1
         className="text-xl md:text-4xl lg:text-5xl font-bold text-gray-900 font-lexend leading-[1.4]"
