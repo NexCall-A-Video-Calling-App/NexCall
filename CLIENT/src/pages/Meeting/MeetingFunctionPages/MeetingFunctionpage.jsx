@@ -251,28 +251,37 @@ const MeetingFunctionpage = () => {
         </div>
       </section>
 
-      <dialog id="my_modal_3" className="modal">
-        <div className="modal-box">
-          <form method="dialog" className="flex gap-2 items-center">
-            <input
-              type="text"
-              value={joinRoomId}
-              onChange={(e) => setJoinRoomId(e.target.value)}
-              placeholder="Enter Room ID"
-              className="input"
-            />
-            <button
-              onClick={handleJoinRoom}
-              className="btn text-white bg-indigo-500 hover:bg-indigo-600 p-1 rounded text-sm"
-            >
-              Join Room
-            </button>
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
-              ✕
-            </button>
-          </form>
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+          <div className="bg-white w-full max-w-lg rounded-lg shadow-lg">
+            <div className="p-6 border-b">
+              <h1 className="text-xl font-bold text-center">Schedule Meeting</h1>
+            </div>
+            <form onSubmit={handleSubmit(onSubmit)} className="p-6 space-y-4">
+              <div>
+                <input {...register("Topic", { required: "Topic is required" })} className="w-full border rounded px-4 py-2" placeholder="Topic" />
+                {errors.Topic && <span className="text-red-500 text-sm">{errors.Topic.message}</span>}
+              </div>
+
+              <div>
+                <input type="date" {...register("Date", { required: "Date is required" })} className="w-full border rounded px-4 py-2" />
+                {errors.Date && <span className="text-red-500 text-sm">{errors.Date.message}</span>}
+              </div>
+
+              <div>
+                <input type="time" {...register("Time", { required: "Time is required" })} className="w-full border rounded px-4 py-2" />
+                {errors.Time && <span className="text-red-500 text-sm">{errors.Time.message}</span>}
+              </div>
+
+              <div className="flex justify-end gap-2">
+                <button type="button" onClick={() => setIsModalOpen(false)} className="px-4 py-2 border rounded hover:bg-gray-100">Cancel</button>
+                <button type="submit" className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">Submit</button>
+              </div>
+            </form>
+          </div>
         </div>
-      </dialog>
+      )}
     </div>
   );
 };
