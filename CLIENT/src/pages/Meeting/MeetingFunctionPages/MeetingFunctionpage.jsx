@@ -153,144 +153,43 @@ const MeetingFunctionpage = () => {
   // jai time a submit button click kora hobba oi time zoom id send korta hobba
 
   return (
-    <div className=" ">
+    <div className="container mx-auto ">
       <section
-        className="w-full   border border-white/20 grid lg:grid-cols-2  py-40 min-h-screen justify-center "
+        className="w-full   border border-white/20 grid md:grid-cols-2  py-40 min-h-screen justify-center "
       >
-        <section className="flex flex-col gap-4 w-full ">
-          <div className="flex gap-x-4 ">
+        {/* Left Panel */}
+        <section className="flex flex-col gap-6">
+          {/* Top Buttons */}
+          <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
             <button
               onClick={handleCreateRoom}
-              id="create"
-              className="flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md  ml-10 hover:cursor-pointer hover:bg-violet-400 transition delay-200 duration-100  w-40 md:w-44"
+              className="flex flex-col items-center justify-center bg-violet-800 hover:bg-violet-600 transition-all h-24 w-36 md:h-28 md:w-36 lg:h-28 lg:w-48 rounded-lg text-white"
             >
-              {/* meeting */}
-              <BsFillCameraReelsFill className="text-4xl text-white font-bold  " />
-              <span className="font-semibold text-white">New Meeting</span>
+              <BsFillCameraReelsFill className="text-3xl mb-1" />
+              <span className="font-medium">New Meeting</span>
             </button>
 
             <button
               onClick={() => document.getElementById("my_modal_3").showModal()}
-              className="flex flex-col items-center justify-center bg-indigo-700 md:h-24 h-20 rounded-md  w-40 md:w-44 "
+              className="flex flex-col items-center justify-center bg-indigo-700 hover:bg-indigo-500 transition-all h-24 w-36 md:h-28 md:w-36 lg:h-28 lg:w-48 rounded-lg text-white"
             >
-              <IoPersonAddSharp className="size-8 text-white" />
-              <span className="font-semibold text-white">Join</span>
+              <IoPersonAddSharp className="text-3xl mb-1" />
+              <span className="font-medium">Join</span>
             </button>
           </div>
 
-          {/* add schedule and help  */}
-
-          <div className="flex gap-x-4 px-10">
+          {/* Schedule & Help Buttons */}
+          <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
             <button
               onClick={() => setIsModalOpen(true)}
-              className=" flex flex-col items-center justify-center bg-blue-700 md:h-24 h-20 rounded-md  w-40 md:w-44"
+              className="flex flex-col items-center justify-center bg-blue-700 hover:bg-blue-500 transition-all h-24 w-36 md:h-28 md:w-36 lg:h-28 lg:w-48 rounded-lg text-white"
             >
-              {/* sehedule */}
-
-              <GiTimeTrap className="size-8 text-white" />
-
-              <span className="font-semibold text-white">Schedule</span>
+              <GiTimeTrap className="text-3xl mb-1" />
+              <span className="font-medium">Schedule</span>
             </button>
-            {/* modal  */}
-            <div
-              className={`${isModalOpen ? " visible" : " invisible"
-                } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300 `}
-            >
-              <div
-                className={`${isModalOpen
-                  ? " translate-y-[0px] opacity-100"
-                  : " translate-y-[-200px] opacity-0"
-                  } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8 `}
-              >
-                <button className=" flex items-end p-4 justify-between border-[#d1d1d1]  text-center w-full">
-                  <h1 className="text-[1.5rem] font-bold text-center w-full  flex justify-center">
-                    schedule
-                  </h1>
-                </button>
 
-                <div className="p-4  border-[#d1d1d1]">
-                  {/* inside this have info input box  */}
-                  {/* use react hook form */}
-                  <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="flex flex-col md:gap-3 gap-2"
-                  >
-                    <input
-                      {...register("Topic", { required: "Topic is requirerd" })}
-                      {...register("Topic", { required: "Topic is requirerd" })}
-                      className="border px-6 py-2 rounded focus:outline-blue-400"
-                      placeholder="Topic"
-                    />
-                    {errors.Topic && (
-                      <span className="text-red-500">
-                        <span className="text-red-500">
-                          This field is required
-                        </span>
-                      </span>
-                    )}
-
-                    <input
-                      type="date"
-                      {...register("Date", { required: "Date is required" })}
-                      className="border px-6 py-2 rounded focus:outline-blue-400"
-                      {...register("Date", { required: "Date is required" })}
-                      placeholder="Date"
-                    />
-                    {errors.Date && (
-                      <span className="text-red-500">
-                        <span className="text-red-500">
-                          This field is required
-                        </span>
-                      </span>
-                    )}
-                    <input
-                      type="time"
-                      {...register("Time", { required: "Time is requirred" })}
-                      className="border px-6 py-2 rounded focus:outline-blue-400"
-                      placeholder="Time"
-                    />
-                    {errors.Time && (
-                      <span className="text-red-500">
-                        {" "}
-                        <span className="text-red-500">
-                          This field is required
-                        </span>
-                      </span>
-                    )}
-
-                    {/* errors will return when field validation fails  */}
-                    {errors.exampleRequired && (
-                      <span className="text-red-500">
-                        This field is required
-                      </span>
-                    )}
-
-                    <div className="flex items-end justify-end gap-4 p-4 ">
-                      <button
-                        className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
-                        onClick={() => setIsModalOpen(false)}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
-
-                      //  work on false
-
-                      // onClick={() => setIsModalOpen(false)}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            <button className="flex flex-col items-center justify-center bg-lime-600 md:h-24 h-20   w-40 md:w-44 rounded-md">
-              {/* help */}
-              <h2 className="text-xl font-semibold text-white">help</h2>
+            <button className="flex flex-col items-center justify-center bg-lime-600 hover:bg-lime-500 transition-all h-24 w-36 md:h-28 md:w-36 lg:h-28 lg:w-48 rounded-lg text-white">
+              <h2 className="text-xl font-medium">Help</h2>
             </button>
           </div>
         </section>
