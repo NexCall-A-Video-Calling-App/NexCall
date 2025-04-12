@@ -130,6 +130,7 @@ const MeetingFunctionpage = () => {
     });
   };
 
+  
   const handleJoinRoom = () => {
     if (!joinRoomId) return; 
     socket.emit("JoinRoom", {
