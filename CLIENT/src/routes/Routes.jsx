@@ -52,17 +52,17 @@ const Routes = createBrowserRouter([
       // },
       {
         path: "/dashboard",
-        element: <Dashboard />
+        element: <PrivateRoute><Dashboard /></PrivateRoute>
       },
       {
         path: '/video-call',
-        element: <VideoCall />
+        element: <PrivateRoute><VideoCall /></PrivateRoute>
       }
     ],
   },
   {
     path: '/meeting',
-    element: <MeetingLayoutes></MeetingLayoutes>,
+    element: <PrivateRoute><MeetingLayoutes></MeetingLayoutes></PrivateRoute>,
     children: [
       {
         path: '/meeting',

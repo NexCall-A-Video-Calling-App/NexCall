@@ -15,7 +15,7 @@ function MeetingNavbar() {
     <div className="lg:flex">
       <li>
         <NavLink
-          to="/meeting"
+          to="/"
           end
           className={({ isActive }) =>
             `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
