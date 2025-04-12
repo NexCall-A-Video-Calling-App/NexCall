@@ -5,24 +5,22 @@ import {
   selectIsConnectedToRoom,
   selectLocalPeer,
   selectPeers,
-  selectPeerMetadata,
   selectPeerCount,
 } from "@100mslive/react-sdk";
+import toast from "react-hot-toast";
 import {
   FaMicrophone,
   FaMicrophoneSlash,
   FaVideo,
   FaVideoSlash,
   FaSignOutAlt,
-  FaUsers,
+  FaDesktop,
   FaComments,
   FaChalkboardTeacher,
-  FaDesktop,
-  FaHandPaper,
+  FaUsers,
 } from "react-icons/fa";
-import toast from "react-hot-toast";
 
-const VideoCallPage = ({ initialRoomId, onClose }) => {
+const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
   const hmsActions = useHMSActions();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const localPeer = useHMSStore(selectLocalPeer);
@@ -43,7 +41,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
     return () => {
       if (isConnected) hmsActions.leave().then(() => window.close());
     };
-  }, [initialRoomId, isConnected]);
+  }, [initialRoomId, isConnected, hmsActions]);
 
   useEffect(() => {
     if (localPeer?.videoTrack && localVideoRef.current) {
@@ -60,7 +58,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
       setRaisedHands(raised.map((peer) => ({ id: peer.id, name: peer.name })));
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  }, [hmsActions]);
 
   const joinRoom = async (roomId) => {
     try {
@@ -71,7 +69,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
       const { token } = await response.json();
 
       await hmsActions.join({
-        userName: `User-${Math.random().toString(36).substring(7)}`,
+        userName: userName || `User-${Math.random().toString(36).substring(7)}`,
         authToken: token,
         settings: { isAudioMuted: true, isVideoMuted: false },
         metaData: JSON.stringify({ handRaised: false }),
@@ -137,7 +135,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
     if (peer) {
       const meta = peer.metadata ? JSON.parse(peer.metadata) : {};
       meta.handRaised = false;
-      await hmsActions.updatePeerMetadata(meta, peerId);
+      await hmsActions.updatePeerMetadata(JSON.stringify(meta), peerId);
       toast.success(`Lowered hand of ${peer.name}`);
     }
   };
@@ -169,7 +167,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
           )}
 
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {localPeer && !peers.some((p) => p.isLocal) && (
+            {localPeer && (
               <div className="relative bg-white/10 rounded-xl overflow-hidden shadow-md backdrop-blur-sm h-[250px]">
                 <video
                   ref={localVideoRef}
@@ -183,28 +181,30 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
                 </p>
               </div>
             )}
-            {peers.map((peer) => (
-              <div
-                key={peer.id}
-                className="relative bg-white/10 rounded-xl overflow-hidden shadow-md backdrop-blur-sm h-[250px]"
-              >
-                <video
-                  ref={(ref) => {
-                    if (ref && peer.videoTrack) {
-                      hmsActions.attachVideo(peer.videoTrack, ref);
-                      videoRefs.current[peer.id] = ref;
-                    }
-                  }}
-                  autoPlay
-                  playsInline
-                  muted={peer.isLocal}
-                  className="w-full h-full object-cover"
-                />
-                <p className="absolute top-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
-                  {peer.name}
-                </p>
-              </div>
-            ))}
+            {peers
+              .filter((peer) => !peer.isLocal)
+              .map((peer) => (
+                <div
+                  key={peer.id}
+                  className="relative bg-white/10 rounded-xl overflow-hidden shadow-md backdrop-blur-sm h-[250px]"
+                >
+                  <video
+                    ref={(ref) => {
+                      if (ref && peer.videoTrack) {
+                        hmsActions.attachVideo(peer.videoTrack, ref);
+                        videoRefs.current[peer.id] = ref;
+                      }
+                    }}
+                    autoPlay
+                    playsInline
+                    muted
+                    className="w-full h-full object-cover"
+                  />
+                  <p className="absolute top-2 left-2 bg-black bg-opacity-50 text-white text-xs px-2 py-1 rounded">
+                    {peer.name}
+                  </p>
+                </div>
+              ))}
           </div>
 
           <div className="flex justify-center mt-6 gap-3 flex-wrap">
@@ -234,7 +234,6 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
       )}
     </div>
   );
-
 };
 
 export default VideoCallPage;
