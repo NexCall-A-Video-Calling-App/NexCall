@@ -77,8 +77,6 @@ const MeetingFunctionpage = () => {
 
       axios
         .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
-        .post("http://localhost:5000/schedule-collections", scheduleHandler)
-
         .then((res) => {
           if (res.data.insertedId) {
             toast.success("Schedule added successfully!");
