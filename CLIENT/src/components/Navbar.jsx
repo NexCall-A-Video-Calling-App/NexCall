@@ -68,18 +68,35 @@ const Navbar = () => {
         <ul className="menu menu-horizontal px-1 text-base">{links}</ul>
       </div>
       <div className="navbar-end">
-        {user ? (
-          <div className="indicator">
-            <Link to={"/meeting"}>
-              <img src={user?.photoURL} referrerPolicy="no-referrer" className="w-8 h-8 rounded-full" alt="" />
-            </Link>
-            <span className="badge badge-xs badge-primary indicator-item"></span>
-          </div>
-        ) : (
-          <Link to="/sign-up" className="btn">
-            SignUp
-          </Link>
-        )}
+        <div className="dropdown dropdown-end">
+          {
+            user ? (
+              <>
+                <div className="dropdown dropdown-end">
+                  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                    <div className="w-10 rounded-full">
+                      <img src={user?.photoURL} referrerPolicy="no-referrer" className="w-8 h-8 rounded-full" alt="" />
+                    </div>
+                  </div>
+                  <ul
+                    tabIndex={0}
+                    className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                    <li>
+                      <a className="justify-between">Profile</a>
+                    </li>
+                    <li><a>Dashboard</a></li>
+                    <li><a>Logout</a></li>
+                  </ul>
+                </div>
+              </>
+            ) : (
+              <Link to="/sign-up" className="btn">
+                SignUp
+              </Link>
+            )
+          }
+        </div>
+        
       </div>
     </div>
   );
