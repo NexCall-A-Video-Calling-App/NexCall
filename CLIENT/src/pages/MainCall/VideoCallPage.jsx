@@ -65,7 +65,7 @@ const VideoCallPage = ({ initialRoomId, onClose }) => {
   const joinRoom = async (roomId) => {
     try {
       const response = await fetch(
-        `https://nexcall.up.railway.app/token?roomId=${encodeURIComponent(roomId)}`
+        `http://localhost:5000/token?roomId=${encodeURIComponent(roomId)}`
       );
       if (!response.ok) throw new Error(`Failed to fetch token: ${response.statusText}`);
       const { token } = await response.json();

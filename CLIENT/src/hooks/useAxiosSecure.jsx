@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-    baseURL: 'https://nexcall.up.railway.app'
+    baseURL: 'http://localhost:5000'
 })
 
 const useAxiosSecure = () => {
