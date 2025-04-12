@@ -9,6 +9,6 @@
     background-position: center;
 }
 
-.scroll {
+html {
     scroll-behavior: smooth;
 }
