@@ -66,15 +66,8 @@ const MeetingFunctionpage = () => {
 
   const onSubmit = (data) => {
     const { Date, Time, Topic } = data;
-    console.log(Date, Time, Topic);
-    // gave condition
 
     if (Date && Time && Topic) {
-      console.log("true");
-
-      // send data to backend
-      // also store user email
-
       const scheduleHandler = {
         Date,
         Time,
@@ -84,24 +77,26 @@ const MeetingFunctionpage = () => {
 
       axios
         .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
-
         .then((res) => {
           if (res.data.insertedId) {
-            toast.success("done");
+            toast.success("Schedule added successfully!");
             refetch();
-            // instant add task
             reset();
             setIsModalOpen(false);
           } else {
-            toast.error("failed");
+            toast.error("Failed to add schedule. Please try again.");
           }
         })
-        .catch((error) => alert(error, "/schedule-collections"));
+        .catch((error) => {
+          console.error("Error while adding schedule:", error);
+          toast.error("Something went wrong. Please try again.");
+        });
     } else {
-      console.log("false");
+      toast.warning("Please fill in all the fields.");
       setIsModalOpen(false);
     }
   };
+
 
   // idea 1.count dwon time , show calender
   // after complete count dwon meeting delete from db
