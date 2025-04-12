@@ -117,7 +117,7 @@ const Dashboard = () => {
   const handleProfileClick = () => {
     setSpin(true);
     setTimeout(() => {
-      navigate('/userProfile');
+      navigate('/profile');
     }, 1500);
   };
 
@@ -338,7 +338,7 @@ const Dashboard = () => {
                     {/* Message Bubble Section */}
                     <div
                       className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-2xl relative ${isSender
-                        ? "bg-purple-500 hover:bg-purple-600 text-white rounded-br-none"
+                        ? "bg-purple-500 text-white rounded-br-none"
                         : "bg-gray-200 text-gray-900 rounded-bl-none"
                         }`}
                     >
