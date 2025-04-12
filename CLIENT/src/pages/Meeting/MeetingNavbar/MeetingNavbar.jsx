@@ -84,7 +84,7 @@ function MeetingNavbar() {
             <input
               type="text"
               placeholder="Search"
-              className="bg-transparent ml-2 outline-none text-white"
+              className="bg-transparent ml-2 outline-none text-black"
             />
           </div>
         </div>
