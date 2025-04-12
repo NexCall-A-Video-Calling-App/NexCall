@@ -83,7 +83,7 @@ const MeetingFunctionpage = () => {
       };
 
       axios
-        .post("http://localhost:5000/schedule-collections", scheduleHandler)
+        .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
 
         .then((res) => {
           if (res.data.insertedId) {
@@ -193,16 +193,14 @@ const MeetingFunctionpage = () => {
             </button>
             {/* modal  */}
             <div
-              className={`${
-                isModalOpen ? " visible" : " invisible"
-              } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300 `}
+              className={`${isModalOpen ? " visible" : " invisible"
+                } w-full h-screen fixed top-0 left-0 z-[200000000] bg-[#0000002a] transition-all duration-300 `}
             >
               <div
-                className={`${
-                  isModalOpen
-                    ? " translate-y-[0px] opacity-100"
-                    : " translate-y-[-200px] opacity-0"
-                } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8 `}
+                className={`${isModalOpen
+                  ? " translate-y-[0px] opacity-100"
+                  : " translate-y-[-200px] opacity-0"
+                  } w-[80%] sm:w-[90%] md:w-[40%] bg-[#fff] rounded-lg transition-all duration-300 mx-auto mt-8 `}
               >
                 <button className=" flex items-end p-4 justify-between border-[#d1d1d1]  text-center w-full">
                   <h1 className="text-[1.5rem] font-bold text-center w-full  flex justify-center">
@@ -278,9 +276,9 @@ const MeetingFunctionpage = () => {
                         type="submit"
                         className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
 
-                        //  work on false
+                      //  work on false
 
-                        // onClick={() => setIsModalOpen(false)}
+                      // onClick={() => setIsModalOpen(false)}
                       >
                         Submit
                       </button>

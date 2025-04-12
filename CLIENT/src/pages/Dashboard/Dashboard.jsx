@@ -281,10 +281,7 @@ const Dashboard = () => {
              onClick={handleVideoCall}
             className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
               <FaVideo />
-            </button>
-            <button className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
-              <FaPhoneAlt />
-            </button>
+            </button> 
             <button
               onClick={() => document.getElementById('my_modal_3').showModal()}
               className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
