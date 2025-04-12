@@ -194,61 +194,58 @@ const MeetingFunctionpage = () => {
           </div>
         </section>
 
-        <div id="asdf" className=" p-2 md:mt-0 mt-4  ">
-          {/* show time */}
-          {/* moments .js  */}
-          <div className="text-center text-black border">
-            <p className="text-sm font-semibold"> {time}</p>
-            <p className="text-xl font-semibold"> {fullTime}</p>
+        <div id="asdf" className="p-4 md:mt-0 mt-6 w-full">
+          {/* Time display */}
+          <div className="bg-white border rounded-lg p-4 shadow mb-6 text-center">
+            <p className="text-sm text-gray-500 font-medium">{time}</p>
+            <p className="text-2xl font-bold text-indigo-600">{fullTime}</p>
           </div>
 
-          <div className="w-full h-56 rounded   border ">
-            <div className="flex   flex-col overflow-y-scroll gap-4  h-full  p-2">
-              <div className="overflow-x-auto rounded-box border  w-full bg-stone-100">
-                <table className="table  ">
-                  {/* head */}
-                  <thead className="">
-                    <tr>
-                      <th>Serial</th>
-                      <th>Topic</th>
-                      <th>Date</th>
-                      <th>Time</th>
-                      <th>Countdwon</th>
-                    </tr>
-                  </thead>
-
-                  <tbody>
-                    {/* row 1 */}
-
-                    {scheduleData
-                      .filter((schedule) => {
-                        const now = new Date();
-                        const meetingTime = new Date(
-                          `${schedule.Date} ${schedule.Time}`
-                        );
-                        return meetingTime > now;
-                      })
-                      .map((schedule, index) => (
-                        <tr key={index}>
-                          <th>{index + 1}</th>
-                          <td>{schedule.Topic}</td>
-                          <td>{schedule.Date}</td>
-                          <td>{schedule.Time}</td>
-                          <td>{countDwon(schedule.Date, schedule.Time)}</td>
-                        </tr>
-                      ))}
-                  </tbody>
-                </table>
-              </div>
-              {scheduleData.length === 0 && (
-                <span className="flex justify-center items-center w-full text-xl md:text-2xl font-semibold">
-                  {" "}
-                  No Schedule
-                </span>
+          {/* Schedule Table */}
+          <div className="w-full max-h-64 rounded-lg border shadow bg-white overflow-hidden">
+            <div className="h-full overflow-y-auto p-2 space-y-4">
+              {scheduleData.length > 0 ? (
+                // Responsive horizontal scroll wrapper
+                <div className="w-full overflow-x-auto">
+                  <table className="min-w-full text-sm text-gray-700">
+                    <thead className="bg-indigo-100 text-gray-800 font-semibold">
+                      <tr>
+                        <th className="w-12 whitespace-nowrap px-2 py-2">Serial</th>
+                        <th className="whitespace-nowrap px-2 py-2">Topic</th>
+                        <th className="whitespace-nowrap px-2 py-2">Date</th>
+                        <th className="whitespace-nowrap px-2 py-2">Time</th>
+                        <th className="whitespace-nowrap px-2 py-2">Countdown</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {scheduleData
+                        .filter((schedule) => {
+                          const now = new Date();
+                          const meetingTime = new Date(`${schedule.Date} ${schedule.Time}`);
+                          return meetingTime > now;
+                        })
+                        .map((schedule, index) => (
+                          <tr key={index} className="hover:bg-gray-50 transition">
+                            <td className="w-12 font-medium px-2 py-2">{index + 1}</td>
+                            <td className="px-2 py-2">{schedule.Topic}</td>
+                            <td className="px-2 py-2">{schedule.Date}</td>
+                            <td className="px-2 py-2">{schedule.Time}</td>
+                            <td className="px-2 py-2">{countDwon(schedule.Date, schedule.Time)}</td>
+                          </tr>
+                        ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="flex justify-center items-center h-full text-xl text-gray-600 font-semibold">
+                  No Schedule Found
+                </div>
               )}
             </div>
           </div>
         </div>
+
+
       </section>
 
       {/* Modal */}
