@@ -87,6 +87,7 @@ const MeetingFunctionpage = () => {
           Topic,
           email: user?.email,
           roomID: roomId,
+   
         };
   
         axios
@@ -236,6 +237,11 @@ const MeetingFunctionpage = () => {
                           const now = new Date();
                           const meetingTime = new Date(`${schedule.Date} ${schedule.Time}`);
                           return meetingTime > now;
+                        })
+                        .sort((a, b) => {
+                          const meetingTimeA = new Date(`${a.Date} ${a.Time}`);
+                          const meetingTimeB = new Date(`${b.Date} ${b.Time}`);
+                          return meetingTimeA - meetingTimeB; // Sort by Date and Time (low to high)
                         })
                         .map((schedule, index) => (
                           <tr key={index} className="hover:bg-gray-50 transition">
