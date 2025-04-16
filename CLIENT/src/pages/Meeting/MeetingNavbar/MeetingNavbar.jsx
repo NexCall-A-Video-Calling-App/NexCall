@@ -6,6 +6,8 @@ import { SiGoogleclassroom } from "react-icons/si";
 import { Link, NavLink } from "react-router-dom";
 import UserMenu from "../../../components/UserMenu";
 import logo from "../../../assets/nclogo.png";
+import { IoSearchOutline } from "react-icons/io5";
+
 
 function MeetingNavbar() {
 

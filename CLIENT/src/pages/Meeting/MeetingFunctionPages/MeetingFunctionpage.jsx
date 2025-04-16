@@ -23,7 +23,6 @@ import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 
 import countDwon from "../../../hooks/CountDwon/countDwon";
 import { SocketContext } from "../../../provider/SocketProvider";
-import { LiaHandsHelpingSolid } from "react-icons/lia";
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -48,6 +47,7 @@ const MeetingFunctionpage = () => {
   console.log(scheduleData);
 
   const [joinRoomId, setJoinRoomId] = useState(""); // For joining a room
+  const [ roomId , setroomID ] = useState("");
 
   // LIVE TIME
   useEffect(() => {
@@ -65,49 +65,63 @@ const MeetingFunctionpage = () => {
   // Schedule button
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [ Scheduleroomid , setScheduleroomid ] = useState("");
+
   const onSubmit = (data) => {
+
     const { Date, Time, Topic } = data;
-
+  
     if (Date && Time && Topic) {
-      const scheduleHandler = {
-        Date,
-        Time,
-        Topic,
-        email: user?.email,
+      const userData = {
+        name: user?.displayName,
+        profilePic: user?.photoURL,
       };
-
-      axios
-        .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
-        .then((res) => {
-          if (res.data.insertedId) {
-            toast.success("Schedule added successfully!");
-            refetch();
-            reset();
-            setIsModalOpen(false);
-          } else {
-            toast.error("Failed to add schedule. Please try again.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error while adding schedule:", error);
-          toast.error("Something went wrong. Please try again.");
-        });
+  
+      socket.emit("createRoom", userData);
+  
+      // Handle once when the room is created
+      socket.once("RoomCreated", (roomId, name, timestamp) => {
+        const scheduleHandler = {
+          Date,
+          Time,
+          Topic,
+          email: user?.email,
+          roomID: roomId,
+        };
+  
+        axios
+          .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
+          .then((res) => {
+            if (res.data.insertedId) {
+              toast.success("Schedule added successfully!");
+              refetch();
+              reset();
+              setIsModalOpen(false);
+            } else {
+              toast.error("Failed to add schedule. Please try again.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error while adding schedule:", error);
+            toast.error("Something went wrong. Please try again.");
+          });
+      });
     } else {
       toast.warning("Please fill in all the fields.");
       setIsModalOpen(false);
     }
   };
-
-
+  
   // idea 1.count dwon time , show calender
   // after complete count dwon meeting delete from db
   // Navigate to Dashboard when currentRoom is set
-  useEffect(() => {
-    if (currentRoom) {
-      setLoading(false);
-      navigate("/dashboard");
-    }
-  }, [currentRoom, navigate, setLoading]);
+  // useEffect(() => {
+  //   if (currentRoom) {
+  //     setLoading(false);
+  //     navigate("/dashboard");
+  //   }
+  // }, [currentRoom, navigate, setLoading]);
+  // gave 
 
   const handleCreateRoom = () => { 
     const userData = {
@@ -117,6 +131,7 @@ const MeetingFunctionpage = () => {
     };
     socket.emit("createRoom", userData);
 
+  
     // Listen for RoomCreated event from server
     socket.on("RoomCreated", (roomId, name, timestamp) => {
       setCurrentRoom(roomId); // Set 100ms roomId as currentRoom
@@ -129,6 +144,7 @@ const MeetingFunctionpage = () => {
       toast.error(error);
       setLoading(false);
     });
+
   };
 
   
@@ -148,11 +164,7 @@ const MeetingFunctionpage = () => {
   // jai time a submit button click kora hobba oi time zoom id send korta hobba
 
   return (
-<<<<<<< HEAD
-    <div className=" container">
-=======
     <div className="container mx-auto ">
->>>>>>> b70012da8cfcbea1a2400c5c57c00cb8a2dc7945
       <section
         className="w-full border border-white/20 grid md:grid-cols-2 py-16 md:py-28 lg:py-40 justify-center"
       >
@@ -162,12 +174,7 @@ const MeetingFunctionpage = () => {
           <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
             <button
               onClick={handleCreateRoom}
-<<<<<<< HEAD
-              id="create"
-              className="flex flex-col items-center justify-center bg-violet-800 md:h-24 h-20  rounded-md  ml-10 hover:cursor-pointer hover:bg-violet-700 transition delay-200 duration-100  w-40 md:w-44"
-=======
               className="flex flex-col items-center justify-center bg-violet-800 hover:bg-violet-600 transition-all h-24 w-36 md:h-28 md:w-36 lg:h-28 lg:w-48 rounded-lg text-white"
->>>>>>> b70012da8cfcbea1a2400c5c57c00cb8a2dc7945
             >
               <BsFillCameraReelsFill className="text-3xl mb-1" />
               <span className="font-medium">New Meeting</span>
@@ -175,11 +182,7 @@ const MeetingFunctionpage = () => {
 
             <button
               onClick={() => document.getElementById("my_modal_3").showModal()}
-<<<<<<< HEAD
-              className="flex flex-col items-center justify-center hover:bg-indigo-600 bg-indigo-700 md:h-24 h-20 rounded-md  w-40 md:w-44 "
-=======
               className="flex flex-col items-center justify-center bg-indigo-700 hover:bg-indigo-500 transition-all h-24 w-36 md:h-28 md:w-36 lg:h-28 lg:w-48 rounded-lg text-white"
->>>>>>> b70012da8cfcbea1a2400c5c57c00cb8a2dc7945
             >
               <IoPersonAddSharp className="text-3xl mb-1" />
               <span className="font-medium">Join</span>
@@ -190,105 +193,14 @@ const MeetingFunctionpage = () => {
           <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
             <button
               onClick={() => setIsModalOpen(true)}
-<<<<<<< HEAD
-              className=" flex flex-col items-center justify-center hover:bg-blue-600 bg-blue-700 md:h-24 h-20 rounded-md  w-40 md:w-44"
-=======
               className="flex flex-col items-center justify-center bg-blue-700 hover:bg-blue-500 transition-all h-24 w-36 md:h-28 md:w-36 lg:h-28 lg:w-48 rounded-lg text-white"
->>>>>>> b70012da8cfcbea1a2400c5c57c00cb8a2dc7945
             >
               <GiTimeTrap className="text-3xl mb-1" />
               <span className="font-medium">Schedule</span>
             </button>
 
-<<<<<<< HEAD
-                <div className="p-4  border-[#d1d1d1]">
-                  {/* inside this have info input box  */}
-                  {/* use react hook form */}
-                  <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="flex flex-col md:gap-3 gap-2"
-                  >
-                    <input
-                      {...register("Topic", { required: "Topic is requirerd" })}
-                      {...register("Topic", { required: "Topic is requirerd" })}
-                      className="border px-6 py-2 rounded focus:outline-blue-400"
-                      placeholder="Topic"
-                    />
-                    {errors.Topic && (
-                      <span className="text-red-500">
-                        <span className="text-red-500">
-                          This field is required
-                        </span>
-                      </span>
-                    )}
-
-                    <input
-                      type="date"
-                      {...register("Date", { required: "Date is required" })}
-                      className="border px-6 py-2 rounded focus:outline-blue-400"
-                      {...register("Date", { required: "Date is required" })}
-                      placeholder="Date"
-                    />
-                    {errors.Date && (
-                      <span className="text-red-500">
-                        <span className="text-red-500">
-                          This field is required
-                        </span>
-                      </span>
-                    )}
-                    <input
-                      type="time"
-                      {...register("Time", { required: "Time is requirred" })}
-                      className="border px-6 py-2 rounded focus:outline-blue-400"
-                      placeholder="Time"
-                    />
-                    {errors.Time && (
-                      <span className="text-red-500">
-                        {" "}
-                        <span className="text-red-500">
-                          This field is required
-                        </span>
-                      </span>
-                    )}
-
-                    {/* errors will return when field validation fails  */}
-                    {errors.exampleRequired && (
-                      <span className="text-red-500">
-                        This field is required
-                      </span>
-                    )}
-
-                    <div className="flex items-end justify-end gap-4 p-4 ">
-                      <button
-                        className="py-2 px-4 hover:bg-gray-100 border border-[#d1d1d1] rounded-md outline-none text-[#353535]"
-                        onClick={() => setIsModalOpen(false)}
-                      >
-                        Cancel
-                      </button>
-                      <button
-                        type="submit"
-                        className="py-2 px-4 border border-[#d1d1d1] rounded-md outline-none bg-[#3B9DF8] text-[#fff]"
-
-                      //  work on false
-
-                      // onClick={() => setIsModalOpen(false)}
-                      >
-                        Submit
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-
-            <button className="flex flex-col items-center justify-center hover:bg-lime-500 bg-lime-600 md:h-24 h-20   w-40 md:w-44 rounded-md">
-              {/* help */}
-              {/* <LiaHandsHelpingSolid className="text-3xl text-white"/> */}
-              <h2 className="text-xl font-semibold text-white">help</h2>
-=======
             <button className="flex flex-col items-center justify-center bg-lime-600 hover:bg-lime-500 transition-all h-24 w-36 md:h-28 md:w-36 lg:h-28 lg:w-48 rounded-lg text-white">
               <h2 className="text-xl font-medium">Help</h2>
->>>>>>> b70012da8cfcbea1a2400c5c57c00cb8a2dc7945
             </button>
           </div>
         </section>
