@@ -1,66 +1,66 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { IoMdHome } from "react-icons/io";
-import { IoChatboxEllipses, IoContract } from "react-icons/io5";
+import { IoChatboxEllipses } from "react-icons/io5";
 import { MdContactMail } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
-import { IoSearchOutline } from "react-icons/io5";
+import { Link, NavLink } from "react-router-dom";
+import UserMenu from "../../../components/UserMenu";
+import logo from "../../../assets/nclogo.png";
 
 function MeetingNavbar() {
+
+  const baseStyle = "md:flex lg:flex-col md:gap-2 lg:gap-0 font-semibold";
+
   const links = (
     <div className="md:flex text-black">
       <li>
-        <Link to={'/meeting'} className="md:flex md:flex-col  md:gap-0  font-semibold">
+        <NavLink to={'/meeting'} className="md:flex md:flex-col  md:gap-0  font-semibold">
           Home <IoMdHome />
-        </Link>
+        </NavLink>
       </li>
 
       <li>
-        <Link to={'/meeting/chat-history'} className="md:flex md:flex-col  md:gap-0 font-semibold">
+        <NavLink to={'/meeting/chat-history'} className="md:flex md:flex-col  md:gap-0 font-semibold">
           Chat History <IoChatboxEllipses />
-        </Link>
+        </NavLink>
       </li>
 
       <li>
-        <Link className="md:flex md:flex-col  md:gap-0 font-semibold">
+        <NavLink className="md:flex md:flex-col  md:gap-0 font-semibold">
           Meeting <SiGoogleclassroom />
-        </Link>
+        </NavLink>
       </li>
 
       <li>
-        <Link className="md:flex md:flex-col  md:gap-0 font-semibold">
+        <NavLink className="md:flex md:flex-col  md:gap-0 font-semibold">
           Contact <MdContactMail />
-        </Link>
-      </li>
+        </NavLink>
+      </li> 
     </div>
   );
 
   return (
-    <div className="">
-      <div className="navbar  shadow-md w-full px-4 lg:px-12 md:px-10 sm:px-6 fixed top-0  border border-black/20 z-50 bg-white ">
+    <div className="bg-base-100 shadow-sm w-full fixed top-0 z-50 border-b">
       
-        <div className="navbar-start">
+      <div className="container mx-auto navbar px-2">
+        {/* Mobile menu (left side on small devices) */}
+        <div className="navbar-start lg:hidden">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className=" lg:hidden">
+            <div tabIndex={0} role="button" className="lg:hidden">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-black mt-4"
+                className="h-5 w-5"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
               >
-                {" "}
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth="2"
                   d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
+                />
               </svg>
-            </div>
-
-            <div className="lg:visible invisible text-black text-xl font-semibold">
-              Next Call
             </div>
             <ul
               tabIndex={0}
@@ -74,9 +74,13 @@ function MeetingNavbar() {
           <ul className="menu menu-horizontal px-1 text-base bg-white">{links}</ul>
         </div>
 
-        <div className="navbar-end ">
-          {/* implents search */}
-          {/* need color change */}
+        {/* Show logo in center for small devices */}
+        <div className="navbar-center lg:hidden">
+          <Link to="/" className="flex items-center font-semibold text-2xl -ml-5">
+            <img className="w-12 h-12 object-cover" src={logo} alt="NexCall Logo" />
+            <span >NexCall</span>
+          </Link>
+        </div>
 
           <div className="flex border border-black/10 items-center ml-2 shadow-sm p-1">
             <IoSearchOutline className="text-gray-500 ml-3 rounded" />
@@ -89,7 +93,7 @@ function MeetingNavbar() {
           </div>
         </div>
       </div>
-    </div>
+
   );
 }
 

@@ -36,10 +36,10 @@ const Routes = createBrowserRouter([
       },
       {
         path: "/forgot-password",
-        element:<ForgotPassword></ForgotPassword>,
+        element: <ForgotPassword></ForgotPassword>,
       },
       {
-        path: "/userProfile",
+        path: "/profile",
         element: <PrivateRoute>
           <ProfileDetails />
         </PrivateRoute>
@@ -52,17 +52,17 @@ const Routes = createBrowserRouter([
       // },
       {
         path: "/dashboard",
-        element: <Dashboard />
+        element: <PrivateRoute><Dashboard /></PrivateRoute>
       },
-      {
-        path: '/video-call',
-        element: <VideoCall />
-      }
+      // {
+      //   path: '/video-call',
+      //   element: <PrivateRoute><VideoCall /></PrivateRoute>
+      // }
     ],
   },
   {
     path: '/meeting',
-    element: <MeetingLayoutes></MeetingLayoutes>,
+    element: <PrivateRoute><MeetingLayoutes></MeetingLayoutes></PrivateRoute>,
     children: [
       {
         path: '/meeting',
@@ -71,6 +71,10 @@ const Routes = createBrowserRouter([
       {
         path: '/meeting/chat-history',
         element: <ChatHistory />
+      },
+      {
+        path: '/meeting/video-call',
+        element: <VideoCall />
       }
     ]
   }

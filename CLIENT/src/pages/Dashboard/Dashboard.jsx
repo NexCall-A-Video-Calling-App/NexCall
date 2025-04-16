@@ -34,7 +34,7 @@ const Dashboard = () => {
       setRoomUsers(users);
     });
 
-     // Handle incoming messages
+    // Handle incoming messages
     socket.on("receiveMessage", (msg) => {
       const decryptedMessage = {
         ...msg,
@@ -59,8 +59,8 @@ const Dashboard = () => {
       setLoading(false);
     });
 
-        // Fetch initial room users
-        socket.emit("getRoomUsers", currentRoom);
+    // Fetch initial room users
+    socket.emit("getRoomUsers", currentRoom);
 
     // Cleanup listeners
     return () => {
@@ -91,7 +91,7 @@ const Dashboard = () => {
 
   const otherUser = roomUsers.find(u => u.socketId !== UserId);
 
-    // Send message handler
+  // Send message handler
   const handleSend = (e) => {
     e.preventDefault();
     if (message.trim() && currentRoom) {
@@ -113,29 +113,45 @@ const Dashboard = () => {
     downloadMessagesAsPDF(currentRoom, messages)
   };
 
-   // Navigate to profile with spinner
+  // Navigate to profile with spinner
   const handleProfileClick = () => {
     setSpin(true);
     setTimeout(() => {
-      navigate('/userProfile');
+      navigate('/profile');
     }, 1500);
   };
 
-    // Open video call in a new window
-    const handleVideoCall = () => {
-      if (!currentRoom) {
-        toast.error("No room selected!");
-        return;
-      }
-      const videoCallWindow = window.open(
-        `/video-call?roomId=${encodeURIComponent(currentRoom)}`,
-        "_blank",
-        "width=800,height=600"
-      );
-      if (!videoCallWindow) {
-        toast.error("Please allow pop-ups for this site!");
-      }
-    };
+  // Open video call in a new window
+  // const handleVideoCall = () => {
+  //   if (!currentRoom) {
+  //     toast.error("No room selected!");
+  //     return;
+  //   }
+  //   const videoCallWindow = window.open(
+  //     `/meeting/video-call?roomId=${encodeURIComponent(currentRoom)}`,
+  //     "_blank",
+  //     "width=800,height=600"
+  //   );
+  //   if (!videoCallWindow) {
+  //     toast.error("Please allow pop-ups for this site!");
+  //   }
+  // };
+  const handleVideoCall = () => {
+    if (!currentRoom) {
+      toast.error("No room selected!");
+      return;
+    }
+    const encodedRoomId = encodeURIComponent(currentRoom);
+    const encodedUserName = encodeURIComponent(user?.displayName || "Anonymous");
+    const videoCallWindow = window.open(
+      `/meeting/video-call?roomId=${encodedRoomId}&userName=${encodedUserName}`,
+      "_blank",
+      "width=800,height=600"
+    );
+    if (!videoCallWindow) {
+      toast.error("Please allow pop-ups for this site!");
+    }
+  };
 
   const handleBackToDashboard = () => {
     setCurrentRoom(null);
@@ -254,7 +270,7 @@ const Dashboard = () => {
       {/* Main content */}
 
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
-       {/* Header */}
+        {/* Header */}
         <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
           <div className="flex items-center">
             <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
@@ -277,11 +293,11 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="flex gap-1 md:space-x-2">
-            <button 
-             onClick={handleVideoCall}
-            className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
+            <button
+              onClick={handleVideoCall}
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
               <FaVideo />
-            </button> 
+            </button>
             <button
               onClick={() => document.getElementById('my_modal_3').showModal()}
               className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
@@ -338,7 +354,7 @@ const Dashboard = () => {
                     {/* Message Bubble Section */}
                     <div
                       className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-2xl relative ${isSender
-                        ? "bg-purple-500 hover:bg-purple-600 text-white rounded-br-none"
+                        ? "bg-purple-500 text-white rounded-br-none"
                         : "bg-gray-200 text-gray-900 rounded-bl-none"
                         }`}
                     >
@@ -358,7 +374,7 @@ const Dashboard = () => {
 
         </div>
 
-           {/* Message input */}
+        {/* Message input */}
         <form
           onSubmit={handleSend}
           className="p-4 border-t bg-white flex items-center"
@@ -384,7 +400,7 @@ const Dashboard = () => {
           </form>
 
           <h3 className="font-bold text-lg flex items-center gap-2 mb-2">
-          Invite Code: {currentRoom}
+            Invite Code: {currentRoom}
             <button
               onClick={() => {
                 navigator.clipboard.writeText(currentRoom);
