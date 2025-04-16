@@ -225,6 +225,8 @@ const MeetingFunctionpage = () => {
                         <th className="whitespace-nowrap px-2 py-2">Topic</th>
                         <th className="whitespace-nowrap px-2 py-2">Date</th>
                         <th className="whitespace-nowrap px-2 py-2">Time</th>
+                        <th className="whitespace-nowrap px-2 py-2">Room ID</th>
+
                         <th className="whitespace-nowrap px-2 py-2">Countdown</th>
                       </tr>
                     </thead>
@@ -241,6 +243,8 @@ const MeetingFunctionpage = () => {
                             <td className="px-2 py-2">{schedule.Topic}</td>
                             <td className="px-2 py-2">{schedule.Date}</td>
                             <td className="px-2 py-2">{schedule.Time}</td>
+                            <td className="px-2 py-2">{schedule. roomID}</td>
+                            
                             <td className="px-2 py-2">{countDwon(schedule.Date, schedule.Time)}</td>
                           </tr>
                         ))}
