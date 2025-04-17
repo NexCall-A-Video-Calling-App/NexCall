@@ -6,62 +6,44 @@ import { SiGoogleclassroom } from "react-icons/si";
 import { Link, NavLink } from "react-router-dom";
 import UserMenu from "../../../components/UserMenu";
 import logo from "../../../assets/nclogo.png";
+import { IoSearchOutline } from "react-icons/io5";
+
 
 function MeetingNavbar() {
 
   const baseStyle = "md:flex lg:flex-col md:gap-2 lg:gap-0 font-semibold";
 
   const links = (
-    <div className="lg:flex">
+    <div className="md:flex text-black">
       <li>
-        <NavLink
-          to="/"
-          end
-          className={({ isActive }) =>
-            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
-          }
-        >
+        <NavLink to={'/meeting'} className="md:flex md:flex-col  md:gap-0  font-semibold">
           Home <IoMdHome />
         </NavLink>
       </li>
 
       <li>
-        <NavLink
-          to="/meeting/chat-history"
-          className={({ isActive }) =>
-            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
-          }
-        >
+        <NavLink to={'/meeting/chat-history'} className="md:flex md:flex-col  md:gap-0 font-semibold">
           Chat History <IoChatboxEllipses />
         </NavLink>
       </li>
 
-      {/* <li>
-        <NavLink
-          to={'/meeting/classroom'}
-          className={({ isActive }) =>
-            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
-          }
-        >
+      <li>
+        <NavLink className="md:flex md:flex-col  md:gap-0 font-semibold">
           Meeting <SiGoogleclassroom />
         </NavLink>
       </li>
 
       <li>
-        <NavLink
-          to={"/meeting/contact"}
-          className={({ isActive }) =>
-            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
-          }
-        >
+        <NavLink className="md:flex md:flex-col  md:gap-0 font-semibold">
           Contact <MdContactMail />
         </NavLink>
-      </li> */}
+      </li> 
     </div>
   );
 
   return (
     <div className="bg-base-100 shadow-sm w-full fixed top-0 z-50 border-b">
+      
       <div className="container mx-auto navbar px-2">
         {/* Mobile menu (left side on small devices) */}
         <div className="navbar-start lg:hidden">
@@ -84,24 +66,14 @@ function MeetingNavbar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-44 p-2 shadow"
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow md:mt-2 "
             >
               {links}
             </ul>
           </div>
         </div>
-
-        {/* Logo: always on the left */}
-        <div className="navbar-start hidden lg:flex">
-          <Link to="/" className="flex items-center font-semibold text-2xl">
-            <img className="w-12 h-12 object-cover" src={logo} alt="NexCall Logo" />
-            <span >NexCall</span>
-          </Link>
-        </div>
-
-        {/* Center links for large screens */}
-        <div className="hidden lg:flex lg:mx-auto">
-          <ul className="menu menu-horizontal px-1 text-base">{links}</ul>
+        <div className="navbar-center hidden lg:flex ">
+          <ul className="menu menu-horizontal px-1 text-base bg-white">{links}</ul>
         </div>
 
         {/* Show logo in center for small devices */}
@@ -112,12 +84,18 @@ function MeetingNavbar() {
           </Link>
         </div>
 
-        {/* User menu */}
-        <div className="navbar-end">
-          <UserMenu />
+          <div className="flex border border-black/10 items-center ml-2 shadow-sm p-1">
+            <IoSearchOutline className="text-gray-500 ml-3 rounded" />
+
+            <input
+              type="text"
+              placeholder="Search"
+              className="bg-transparent ml-2 outline-none text-black rounded"
+            />
+          </div>
         </div>
       </div>
-    </div>
+
   );
 }
 
