@@ -122,7 +122,7 @@ const MeetingFunctionpage = () => {
   //     navigate("/dashboard");
   //   }
   // }, [currentRoom, navigate, setLoading]);
-  // gave 
+  // comment this because after room create on schedule section go dashboard
 
   const handleCreateRoom = () => { 
     const userData = {
