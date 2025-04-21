@@ -4,6 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { MdUpgrade } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import { IoMdClose } from "react-icons/io";
 
 const ProfileDetails = () => {
   const { user, profileUpdate } = useAuth();
@@ -47,6 +48,18 @@ const ProfileDetails = () => {
     setIsEditing(!isEditing);
   };
 
+  const handleCancelEdit = () => {
+    if (user) {
+      setFormData({
+        displayName: user.displayName || "",
+        email: user.email || "",
+        photoURL: user.photoURL || "",
+      });
+    }
+    setIsEditing(false);
+  };
+
+
   const handleUpgradePlan = () => {
     toast("Upgrade feature is coming soon!", {
       icon: "🚀",
@@ -67,7 +80,7 @@ const ProfileDetails = () => {
           <img
             src={formData.photoURL || "https://i.ibb.co.com/5gDBVLDV/images.png"}
             alt="User Avatar"
-            className="w-24 h-24 rounded-full border-[3px] border-purple-200 object-cover shadow-md"
+            className="w-24 h-24 rounded-full border-[3px] border-purple-300 object-cover shadow-md"
           />
           <div>
             <h2 className="text-2xl font-bold text-gray-800">{formData.displayName || "User Name"}</h2>
@@ -142,10 +155,10 @@ const ProfileDetails = () => {
         </div>
 
         {/* Button */}
-        <div className="md:col-span-2">
+        <div className="md:col-span-2 flex justify-center items-center gap-4">
           <button
             onClick={handleToggleEdit}
-            className={`mx-auto flex items-center justify-center gap-2 px-6 py-3 rounded-full font-semibold transition duration-200 shadow-md ${isEditing
+            className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition duration-200 shadow-md ${isEditing
               ? "bg-purple-600 text-white hover:bg-purple-700"
               : "bg-purple-500 text-white hover:bg-purple-600"
               }`}
@@ -153,6 +166,15 @@ const ProfileDetails = () => {
             <FaEdit />
             {isEditing ? "Update Profile" : "Edit Profile"}
           </button>
+
+          {isEditing && (
+            <button
+              onClick={handleCancelEdit}
+              className="flex items-center gap-1 px-6 py-3 rounded-full bg-red-500 text-white hover:bg-red-600 transition duration-200 shadow-md font-  bold"
+            >
+              <IoMdClose size={21} /> Cancel Update
+            </button>
+          )}
         </div>
       </div>
     </div>
