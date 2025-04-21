@@ -365,11 +365,19 @@ async function run() {
         // stripe
         
         app.post('/create-payment-intent', async (req,res)=>{
+            // ammount pass like {}
+
             try{
+                const paymentIntent = await stripe.paymentIntents.create({
+                    amount:req.body.amount,
+                    currency:'usd'
+
+                })
+
 
             }catch(error){
                 res.status(500).json({error:error.messsage});
-                
+
             }
         })
 
