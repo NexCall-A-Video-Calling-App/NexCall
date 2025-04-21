@@ -366,18 +366,22 @@ async function run() {
         
         app.post('/create-payment-intent', async (req,res)=>{
             // ammount pass like {}
+            const {amount } = req.body;
 
             try{
-                const paymentIntent = await stripe.paymentIntents.create({
-                    amount:req.body.amount,
-                    currency:'usd'
+                const paymentIntent = await  stripe.paymentIntents.create({
+                   amount,
+                    currency:'usd',
+                    automatic_payment_methods:{
+                        enabled:true
+                    }
 
                 })
                 res.json({clientSecret:paymentIntent.client_secret})
 
 
             }catch(error){
-                res.status(500).json({error:error.messsage});
+                res.status(500).json({error:error.message});
 
             }
         })
