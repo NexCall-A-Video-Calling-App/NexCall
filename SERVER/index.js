@@ -365,7 +365,12 @@ async function run() {
         // stripe
         
         app.post('/create-payment-intent', async (req,res)=>{
-            
+            try{
+
+            }catch(error){
+                res.status(500).json({error:error.messsage});
+                
+            }
         })
 
 
