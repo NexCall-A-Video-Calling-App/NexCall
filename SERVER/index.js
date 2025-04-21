@@ -10,6 +10,7 @@ const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+const stripe = require('stripe')(process.env.STRIPE_SECRECT_KEY); /// add stripe key 
 
 app.use(express.json());
 app.use(cookieParser());
@@ -359,6 +360,15 @@ async function run() {
                 res.send({ message: "This message from schedule-collections get method" });
             }
         });
+
+
+        // stripe
+        
+        app.post('/create-payment-intent', async (req,res)=>{
+            
+        })
+
+
 
     } finally {
         // Ensures that the client will close when you finish/error
