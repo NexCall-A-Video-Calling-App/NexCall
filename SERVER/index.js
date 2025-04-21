@@ -373,6 +373,7 @@ async function run() {
                     currency:'usd'
 
                 })
+                res.json({clientSecret:paymentIntent.client_secret})
 
 
             }catch(error){
