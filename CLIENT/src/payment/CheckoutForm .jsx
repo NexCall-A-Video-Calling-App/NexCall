@@ -1,12 +1,12 @@
 
 
 import React from 'react'
-import{ useStripe} from '@stripe/react-stripe-js'
+import{ useElements, useStripe} from '@stripe/react-stripe-js'
 
 function CheckoutForm () {
 
     const stripe = useStripe();
-    const 
+    const elemenst = useElements();
  
 
 
