@@ -1,7 +1,7 @@
 
 
 import React from 'react'
-import{ useElements, useStripe} from '@stripe/react-stripe-js'
+import{ CardElement, useElements, useStripe} from '@stripe/react-stripe-js'
 
 function CheckoutForm () {
 
@@ -10,6 +10,17 @@ function CheckoutForm () {
 
     const [errorMessage, setErrorMessage] = useState(null);
 
+    // create payment 
+    // confrim
+
+
+    const handelSubmit = (event)=>{
+        event.preventDefault();
+
+
+
+    }
+
     
  
 
@@ -17,6 +28,13 @@ function CheckoutForm () {
 
   return (
     <div>
+        <form onSubmit={handelSubmit}>
+            <CardElement>
+                
+            </CardElement>
+
+
+        </form>
 
 
 
