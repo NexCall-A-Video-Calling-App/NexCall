@@ -377,7 +377,7 @@ async function run() {
                     }
 
                 })
-                res.json({clientSecret:paymentIntent.client_secret})
+                res.json({clientSecret:paymentIntent.client_secret,amount:paymentIntent.amount})
 
 
             }catch(error){
