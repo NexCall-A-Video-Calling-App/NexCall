@@ -365,7 +365,7 @@ async function run() {
         // stripe
         
         app.post('/create-payment-intent', async (req,res)=>{
-            // ammount pass like {}
+            // amount pass like {}
             const {amount } = req.body;
 
             try{
