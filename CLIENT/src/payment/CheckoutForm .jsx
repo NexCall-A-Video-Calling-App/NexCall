@@ -6,7 +6,7 @@ import{ CardElement, useElements, useStripe} from '@stripe/react-stripe-js'
 function CheckoutForm () {
 
     const stripe = useStripe();
-    const elemenst = useElements();
+    const element = useElements();
 
     const [errorMessage, setErrorMessage] = useState(null);
 
@@ -14,8 +14,20 @@ function CheckoutForm () {
     // confrim
 
 
-    const handelSubmit = (event)=>{
+    const handelSubmit =async (event)=>{
         event.preventDefault();
+
+        if(!stripe || !element){
+            return;
+        }
+
+        // create payment method 
+
+        const {error , paymentMethod } = await stripe.createPaymentMethod({
+            type:'card',
+            card:element.getElement(CardElement)
+        });
+
 
 
 
@@ -30,7 +42,7 @@ function CheckoutForm () {
     <div>
         <form onSubmit={handelSubmit}>
             <CardElement>
-                
+
             </CardElement>
 
 
