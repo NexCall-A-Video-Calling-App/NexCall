@@ -7,6 +7,10 @@ function CheckoutForm () {
 
     const stripe = useStripe();
     const elemenst = useElements();
+
+    const [errorMessage, setErrorMessage] = useState(null);
+
+    
  
 
 
