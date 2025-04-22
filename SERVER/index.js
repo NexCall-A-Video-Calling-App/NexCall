@@ -370,7 +370,7 @@ async function run() {
 
             try{
                 const paymentIntent = await  stripe.paymentIntents.create({
-                   amount,
+                   amount : Math.round(amount*100),
                     currency:'usd',
                     automatic_payment_methods:{
                         enabled:true

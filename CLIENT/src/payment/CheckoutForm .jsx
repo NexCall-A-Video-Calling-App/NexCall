@@ -28,6 +28,13 @@ function CheckoutForm () {
             card:element.getElement(CardElement)
         });
 
+        if(error)
+        {
+            console.log("error form checkout page",error);
+        }else{
+            console.log("paymnet done ",paymentMethod.id);
+        }
+
 
 
 
@@ -42,6 +49,9 @@ function CheckoutForm () {
     <div>
         <form onSubmit={handelSubmit}>
             <CardElement>
+                <button type='submit' disabled={!stripe}>
+                    Pay
+                </button>
 
             </CardElement>
 
