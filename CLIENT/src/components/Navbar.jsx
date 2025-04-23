@@ -33,6 +33,9 @@ const Navbar = () => {
       <li>
         <a href="#faq">FAQ</a>
       </li>
+      <li>
+        <a href="#pricing-plans">Pricing Plans</a>
+      </li>
     </>
   );
   return (
