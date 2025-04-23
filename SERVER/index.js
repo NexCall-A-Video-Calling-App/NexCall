@@ -396,7 +396,7 @@ async function run() {
             try{
                 const info = req.body;
 
-                const result = await paymentCollection.find().toArray();
+                const result = await paymentCollection.insertOne(info);
           
                 res.send(result);
 
@@ -407,6 +407,13 @@ async function run() {
             }
 
         })
+        // all payments
+        
+        app.get('/all-payments', async(req,res)=>{
+            const result = await paymentCollection.find().toArray();
+            res.send(result);
+        })
+
 
 
 
