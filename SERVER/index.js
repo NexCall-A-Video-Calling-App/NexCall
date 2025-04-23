@@ -371,7 +371,7 @@ async function run() {
 
             try{
                 const paymentIntent = await  stripe.paymentIntents.create({
-                   amount : req.body.amount*1000,
+                   amount : req.body.amount*100,
                     currency:req.body.currency || 'usd',
                     automatic_payment_methods:{
                         enabled:true
@@ -386,6 +386,8 @@ async function run() {
 
             }
         })
+        // create payment successed api 
+        
 
 
 

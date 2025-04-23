@@ -19,7 +19,7 @@ function CheckoutForm() {
     const fetchPaymentIntent = async () => {
       try {
         const response = await axios.post('http://localhost:5000/create-payment-intent', {
-          amount: 1000, // $10.00 in cents
+          amount: 10.0, // $10.00 in cents
           currency: 'usd'
         });
         setClientSecret(response.data.clientSecret);
