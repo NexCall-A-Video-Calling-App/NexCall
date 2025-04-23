@@ -403,7 +403,7 @@ async function run() {
 
             }catch(error)
             {
-                res.status(404).send({message: 'payment success problem'})
+                res.status(404).send({message: error.message})
             }
 
         })
@@ -416,6 +416,7 @@ async function run() {
             res.send(result);
           }catch(error)
           {
+            res.send({message:error.message})
 
           }
         })
