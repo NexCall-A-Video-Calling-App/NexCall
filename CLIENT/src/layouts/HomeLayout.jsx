@@ -5,6 +5,7 @@ import Features from '../pages/Home/Features';
 import About from '../pages/Home/About';
 import GetStarted from '../pages/Home/GettingStart';
 import FAQ from '../pages/Home/Faq';
+import PricingPlans from '../pages/PricingPlans/PricingPlans';
 
 const HomeLayout = () => {
     return (
@@ -12,9 +13,10 @@ const HomeLayout = () => {
             <Banner />
             <About />
             <Schedule />
-            <Features /> 
+            <Features />
             <GetStarted />
             <FAQ />
+            <PricingPlans />
         </div>
     );
 };
