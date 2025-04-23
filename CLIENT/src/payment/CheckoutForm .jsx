@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import useAuth from '../hooks/useAuth';
+import { Link } from 'react-router-dom';
 
 function CheckoutForm({price,name}) {
 
@@ -132,6 +133,12 @@ function CheckoutForm({price,name}) {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
           Payment successful! Thank you for your purchase.
+
+          <div className='mb-5'>
+            <Link>Home</Link>
+
+          </div>
+
 
 
           
