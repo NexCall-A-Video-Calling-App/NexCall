@@ -389,10 +389,17 @@ async function run() {
         // create payment successed api 
 
         app.post('/payment-success', async(req,res)=>{
-            
+
             const info = req.body;
             console.log(info);
             res.send(info);
+
+            try{
+
+            }catch(error)
+            {
+                
+            }
 
         })
 
