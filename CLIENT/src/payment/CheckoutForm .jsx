@@ -135,7 +135,7 @@ function CheckoutForm({price,name}) {
           Payment successful! Thank you for your purchase.
 
           <div className='mb-5'>
-            <Link>Home</Link>
+            <Link to={'/'}>Home</Link>
 
           </div>
 
