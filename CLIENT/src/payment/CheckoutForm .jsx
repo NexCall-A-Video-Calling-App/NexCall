@@ -133,7 +133,7 @@ function CheckoutForm({ price, name }) {
 
             <h3 className="border p-2  py-2 rounded-md">Your Package <span className="font-semibold">{ name}</span> </h3>
 
-            <h4 className=" border p-2 py-2 ">Price <span className="font-semibold">{price}$</span>
+            <h4 className=" border p-2 py-2  rounded-md">Price <span className="font-semibold">{price}$</span>
 
            
                
