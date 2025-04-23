@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
+import useAuth from '../hooks/useAuth';
 
 function CheckoutForm() {
+
+  const { user, userLogOut } = useAuth();
+
   const stripe = useStripe();
   const elements = useElements();
   const [error, setError] = useState(null);
@@ -14,7 +18,7 @@ function CheckoutForm() {
   useEffect(() => {
     const fetchPaymentIntent = async () => {
       try {
-        const response = await axios.post('/create-payment-intent', {
+        const response = await axios.post('http://localhost:5000/create-payment-intent', {
           amount: 1000, // $10.00 in cents
           currency: 'usd'
         });
@@ -24,12 +28,24 @@ function CheckoutForm() {
         console.error('Payment intent error:', err.response?.data || err.message);
       }
     };
-    
     fetchPaymentIntent();
+
+
+
+
+    
+
   }, []);
+  console.log(clientSecret);
 
   // Handle Payment Submission
   const handleSubmit = async (event) => {
+
+    console.log(clientSecret, " submit");
+
+
+    
+
     event.preventDefault();
     if (!stripe || !elements || !clientSecret) return;
 
@@ -43,7 +59,7 @@ function CheckoutForm() {
           payment_method: {
             card: elements.getElement(CardElement),
             billing_details: {
-              name: 'Customer Name',
+              name: user?.email,
               // Add more dynamic data as needed:
               // email: userEmail,
               // address: {

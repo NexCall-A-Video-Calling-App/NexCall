@@ -366,18 +366,19 @@ async function run() {
         
         app.post('/create-payment-intent', async (req,res)=>{
             // amount pass like {}
-            const {amount } = req.body;
+          
+            console.log("called payment")
 
             try{
                 const paymentIntent = await  stripe.paymentIntents.create({
-                   amount : Math.round(amount*100),
-                    currency:'usd',
+                   amount : req.body.amount*1000,
+                    currency:req.body.currency || 'usd',
                     automatic_payment_methods:{
                         enabled:true
                     }
 
                 })
-                res.json({clientSecret:paymentIntent.client_secret,amount:paymentIntent.amount})
+                res.json({clientSecret:paymentIntent.client_secret})
 
 
             }catch(error){

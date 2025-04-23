@@ -80,7 +80,7 @@ const PricingPlans = () => {
                                 ))}
                             </ul>
                         </div>
-                        <Link className="mt-6 bg-primary text-white py-2 rounded-xl hover:bg-primary/90 transition-all duration-300">
+                        <Link  to={'/payment'} state={plan.price} className="mt-6 bg-primary text-white py-2 rounded-xl hover:bg-primary/90 transition-all duration-300">
                             {plan.buttonText}
                         </Link>
                     </div>
