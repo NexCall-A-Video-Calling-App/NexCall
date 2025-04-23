@@ -119,7 +119,7 @@ function CheckoutForm({ price, name }) {
               </h2>
 
               <div className="mb-5 flex justify-center">
-                <Link to={"/"} className="btn mt-4">
+                <Link to={"/"} className="btn mt-4 px-10 py-2 border hover:shadow hover:shadow-slate-950">
                   Home
                 </Link>
               </div>
