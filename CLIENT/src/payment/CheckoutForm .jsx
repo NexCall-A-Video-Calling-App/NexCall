@@ -27,7 +27,7 @@ function CheckoutForm({ price, name }) {
         const response = await axiosSecure.post(
           "http://localhost:5000/create-payment-intent",
           {
-            amount: price,
+            amount: price | 1,
             currency: "usd",
           }
         );
@@ -78,7 +78,7 @@ function CheckoutForm({ price, name }) {
       setid(paymentIntent.id);
 
       await axios
-        .post("https://nexcall.up.railway.app/payment-success", {
+        .post("http://localhost:5000/payment-success", {
           email: user.email,
           plan: name,
           price: price,
