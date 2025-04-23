@@ -17,7 +17,7 @@ function PaymentPage() {
 
   const location = useLocation();
 
-  const {price} = location.state || {};
+  const {price,name} = location.state || {};
 
 
 
@@ -26,7 +26,7 @@ function PaymentPage() {
 
         <Elements stripe={stripePromise}>
             
-            <CheckoutForm price={price}/>
+            <CheckoutForm price={price} name={name}/>
 
         </Elements>
        

@@ -6,7 +6,9 @@ import useAuth from '../hooks/useAuth';
 function CheckoutForm({price,name}) {
 
   const { user, userLogOut } = useAuth();
-  console.log(price*100, ' price');
+
+  console.log(price, ' price',name,"name");
+
 
 
 
@@ -16,6 +18,7 @@ function CheckoutForm({price,name}) {
   const [loading, setLoading] = useState(false);
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [clientSecret, setClientSecret] = useState('');
+  const [ id , setid ] = useState("");
 
   // Fetch Payment Intent from Backend
   useEffect(() => {
@@ -77,12 +80,14 @@ function CheckoutForm({price,name}) {
       if (stripeError) {
         throw stripeError;
       }
+      setid(paymentIntent.id);
 
       await axios.post('http://localhost:5000/payment-success',{
         email:user.email,
         plan:name,
         price:price,
-        name:user?.name
+        name:user?.name,
+        id:paymentIntent.id
 
 
 
@@ -112,10 +117,25 @@ function CheckoutForm({price,name}) {
     <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
       {paymentSuccess ? (
         <div className="p-4 text-center bg-green-50 rounded-lg text-green-700">
+
+          <div className='flex flex-col gap-y-2'>
+
+            <p>Plan {name}</p>
+            <p>Price {price}</p>
+            <p>Email {user?.email}</p>
+            <p className='mb-4'>TransactionID  {id} </p>
+
+          </div>
+
+
           <svg className="w-6 h-6 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
           </svg>
           Payment successful! Thank you for your purchase.
+
+
+          
+
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
