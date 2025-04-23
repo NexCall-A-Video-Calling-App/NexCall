@@ -15,6 +15,7 @@ import MeetingFunctionpage from "../pages/Meeting/MeetingFunctionPages/MeetingFu
 import ChatHistory from "../pages/ChatHistory/ChatHistory";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import VideoCall from "../pages/Video/VideoCall";
+import PaymentPage from "../payment/PaymentPage";
 
 const Routes = createBrowserRouter([
   {
@@ -77,6 +78,11 @@ const Routes = createBrowserRouter([
         element: <VideoCall />
       }
     ]
+  },
+  // payment
+  {
+    path:'/payment',
+    element: <PaymentPage/>
   }
 ]);
 

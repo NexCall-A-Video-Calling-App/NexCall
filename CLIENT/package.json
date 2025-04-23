@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@100mslive/react-sdk": "^0.10.33",
+    "@stripe/react-stripe-js": "^3.6.0",
+    "@stripe/stripe-js": "^7.1.0",
     "@tanstack/react-query": "^5.71.1",
     "axios": "^1.8.4",
     "crypto-js": "^4.2.0",
