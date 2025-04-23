@@ -138,7 +138,7 @@ function CheckoutForm({ price, name }) {
            
                
             </h4>
-            <h4 className="border p-2 py-2">Your Email <span className="font-semibold">{user?.email}</span> </h4>
+            <h4 className="border p-2 py-2 rounded-md">Your Email <span className="font-semibold">{user?.email}</span> </h4>
           </div>
 
 
