@@ -410,8 +410,14 @@ async function run() {
         // all payments
         
         app.get('/all-payments', async(req,res)=>{
+
+          try{
             const result = await paymentCollection.find().toArray();
             res.send(result);
+          }catch(error)
+          {
+
+          }
         })
 
 
