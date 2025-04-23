@@ -78,7 +78,8 @@ function CheckoutForm({price,name}) {
         throw stripeError;
       }
 
-      await axios.post('http://localhost:5000/payment-success',{email:user.email,
+      await axios.post('http://localhost:5000/payment-success',{
+        email:user.email,
         plan:name,
         price:price,
         name:user?.name
@@ -86,6 +87,9 @@ function CheckoutForm({price,name}) {
 
 
 
+      })
+      .then((res)=>{
+        console.log(res.data)
       })
 
 
