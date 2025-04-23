@@ -131,9 +131,9 @@ function CheckoutForm({ price, name }) {
           
           <div className="mb-6 p-2 flex gap-y-2 flex-col">
 
-            <h3 className="border p-2  py-2">Your Package <span className="font-semibold">{ name}</span> </h3>
+            <h3 className="border p-2  py-2 rounded-md">Your Package <span className="font-semibold">{ name}</span> </h3>
 
-            <h4 className=" border ">Price <span className="font-semibold">{price}$</span>
+            <h4 className=" border p-2 py-2 ">Price <span className="font-semibold">{price}$</span>
 
            
                
