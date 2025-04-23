@@ -398,7 +398,7 @@ async function run() {
 
                 const result = await paymentCollection.find().toArray();
           
-                res.send(info);
+                res.send(result);
 
 
             }catch(error)
