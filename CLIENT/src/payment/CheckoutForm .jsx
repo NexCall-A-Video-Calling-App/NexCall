@@ -129,8 +129,16 @@ function CheckoutForm({ price, name }) {
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
           
-          <div>
-            <h3>Your Package <span className="font-semibold">{ name}</span> </h3>
+          <div className="mb-6 p-2 flex gap-y-2 flex-col">
+
+            <h3 className="border p-2  py-2">Your Package <span className="font-semibold">{ name}</span> </h3>
+
+            <h4 className=" border ">Price <span className="font-semibold">{price}$</span>
+
+           
+               
+            </h4>
+            <h4 className="border p-2 py-2">Your Email <span className="font-semibold">{user?.email}</span> </h4>
           </div>
 
 
