@@ -26,7 +26,7 @@ function PaymentPage() {
 
         <Elements stripe={stripePromise}>
             
-            <CheckoutForm />
+            <CheckoutForm price={price}/>
 
         </Elements>
        

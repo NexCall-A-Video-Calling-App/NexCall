@@ -7,7 +7,7 @@ const PricingPlans = () => {
     const pricingPlans = [
         {
             name: "Basic",
-            price: "Free",
+            price:0.00,
             buttonText: "Get Started",
             features: [
                 "1:1 Video Call (Max 40 mins per call)",
@@ -23,7 +23,7 @@ const PricingPlans = () => {
         },
         {
             name: "Premium",
-            price: "$15/month",
+            price: 15.00,
             buttonText: "Upgrade to Premium",
             features: [
                 "1:1 Video Call (Max 1 hour 20 mins per calls)",
@@ -39,7 +39,7 @@ const PricingPlans = () => {
         },
         {
             name: "Diamond",
-            price: "$30/month",
+            price: 30.00,
             buttonText: "Go Diamond",
             features: [
                 "All Premium Features",
@@ -70,9 +70,10 @@ const PricingPlans = () => {
                     >
                         <div>
                             <h3 className="text-xl font-semibold mb-2 text-center">{plan.name}</h3>
-                            <p className="text-2xl font-bold text-center mb-4">{plan.price}</p>
+                            <p className="text-2xl font-bold text-center mb-4">${plan.price}/month</p>
                             <ul className="space-y-2 text-sm">
                                 {plan.features.map((feature, idx) => (
+
                                     <li key={idx} className="flex items-start">
                                         <span className="text-primary mr-2 mt-0.5">✔</span>
                                         <span>{feature}</span>
@@ -80,7 +81,7 @@ const PricingPlans = () => {
                                 ))}
                             </ul>
                         </div>
-                        <Link  to={'/payment'} state={{price:plan.price}} className="mt-6 bg-primary text-white py-2 rounded-xl hover:bg-primary/90 transition-all duration-300">
+                        <Link  to={'/payment'} state={{price:plan.price,name:plan.name}} className="mt-6 bg-primary text-white py-2 rounded-xl hover:bg-primary/90 transition-all duration-300">
                             {plan.buttonText}
                         </Link>
                     </div>

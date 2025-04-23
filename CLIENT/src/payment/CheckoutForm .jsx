@@ -3,9 +3,12 @@ import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
 import axios from 'axios';
 import useAuth from '../hooks/useAuth';
 
-function CheckoutForm() {
+function CheckoutForm({price,name}) {
 
   const { user, userLogOut } = useAuth();
+  console.log(price*100, ' price');
+
+
 
   const stripe = useStripe();
   const elements = useElements();
@@ -19,7 +22,7 @@ function CheckoutForm() {
     const fetchPaymentIntent = async () => {
       try {
         const response = await axios.post('http://localhost:5000/create-payment-intent', {
-          amount: 10.0, // $10.00 in cents
+          amount: price, 
           currency: 'usd'
         });
         setClientSecret(response.data.clientSecret);
@@ -74,6 +77,19 @@ function CheckoutForm() {
       if (stripeError) {
         throw stripeError;
       }
+
+      await axios.post('http://localhost:5000/payment-success',{email:user.email,
+        plan:name,
+        price:price,
+        name:user?.name
+
+
+
+
+      })
+
+
+
 
       setPaymentSuccess(true);
       console.log('Payment succeeded:', paymentIntent);
