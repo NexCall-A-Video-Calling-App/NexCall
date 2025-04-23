@@ -3,11 +3,14 @@ import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
 import { Link } from "react-router-dom";
+import useAxiosSecure from "../hooks/useAxiosSecure";
 
 function CheckoutForm({ price, name }) {
   const { user, userLogOut } = useAuth();
 
   console.log(price, " price", name, "name");
+  const axiosSecure = useAxiosSecure(); 
+
 
   const stripe = useStripe();
   const elements = useElements();
@@ -21,7 +24,7 @@ function CheckoutForm({ price, name }) {
   useEffect(() => {
     const fetchPaymentIntent = async () => {
       try {
-        const response = await axios.post(
+        const response = await axiosSecure.post(
           "http://localhost:5000/create-payment-intent",
           {
             amount: price,
@@ -30,6 +33,7 @@ function CheckoutForm({ price, name }) {
         );
         setClientSecret(response.data.clientSecret);
       } catch (err) {
+        console.log(err.code);
         setError("Failed to initialize payment");
         console.error(
           "Payment intent error:",
@@ -74,7 +78,7 @@ function CheckoutForm({ price, name }) {
       setid(paymentIntent.id);
 
       await axios
-        .post("http://localhost:5000/payment-success", {
+        .post("https://nexcall.up.railway.app/payment-success", {
           email: user.email,
           plan: name,
           price: price,
@@ -99,23 +103,23 @@ function CheckoutForm({ price, name }) {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md">
+    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10 border ">
       {paymentSuccess ? (
-        <div className="p-4 text-left bg-green-50 rounded-lg">
+        <div className="p-4 text-left flex justify-center items-center rounded-lg  ">
           <div className="flex flex-col gap-y-2">
             <p>Plan {name}</p>
             <p>Price {price}</p>
             <p>Email {user?.email}</p>
             <p className="mb-4">TransactionID {id} </p>
 
-            <div className="flex justify-center">
-              <h2 className="font-semibold">
+            <div className="flex justify-center flex-col">
+              <h2 className="font-semibold text-green-500">
                 {" "}
                 Payment successful! Thank you for your purchase.
               </h2>
 
-              <div className="mb-5">
-                <Link to={"/"} className="btn ">
+              <div className="mb-5 flex justify-center">
+                <Link to={"/"} className="btn mt-4">
                   Home
                 </Link>
               </div>
@@ -124,7 +128,15 @@ function CheckoutForm({ price, name }) {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
+          
+          <div>
+            <h3>Your Package <span className="font-semibold">{ name}</span> </h3>
+          </div>
+
+
+
           <div className="p-3 border border-gray-300 rounded-md">
+          
             <CardElement
               options={{
                 style: {
@@ -181,7 +193,7 @@ function CheckoutForm({ price, name }) {
                 Processing...
               </span>
             ) : (
-              `Pay $ ${price}.00`
+              `Pay`
               //   convert to dynamic
             )}
           </button>
