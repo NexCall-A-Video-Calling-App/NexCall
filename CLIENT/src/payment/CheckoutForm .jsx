@@ -107,10 +107,11 @@ function CheckoutForm({ price, name }) {
       {paymentSuccess ? (
         <div className="p-4 text-left flex justify-center items-center rounded-lg  ">
           <div className="flex flex-col gap-y-2">
-            <p>Plan {name}</p>
-            <p>Price {price}</p>
-            <p>Email {user?.email}</p>
-            <p className="mb-4">TransactionID {id} </p>
+            <p>Plan <span className="font-semibold">{name}</span> </p>
+            <p>Price <span className="font-semibold">{price}$</span> </p>
+            <p>Email<span className="font-semibold"> {user?.email}</span> </p>
+            <p className="mb-4">TransactionID <span className="font-semibold">
+               {id}</span> </p>
 
             <div className="flex justify-center flex-col">
               <h2 className="font-semibold text-green-500">
