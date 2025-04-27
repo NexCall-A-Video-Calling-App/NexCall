@@ -36,7 +36,7 @@ The platform enables users to:
 - **100ms SDK** and **ZegoCloud** as experimental integrations for future scalability.
 - **React Hooks** (`useState`, `useEffect`, `useContext`, `useNavigate`, `useLocation`) for state and side effect management.
 - **React Router** for SPA routing. 
-- **Animation Libraries**: **Lottie React**, **React Awesome Reveal**, **React Super Responsive Table** for better UI/UX.
+- **Animation Libraries**: **Lottie React**, **React Awesome Reveal**, **Framer Motion** for better UI/UX.
 
 ---
 
@@ -84,9 +84,7 @@ The platform enables users to:
 ---
 
 ## 🚀 Live Link
-- **Coming Soon**
-
-_(Deployment and hosting on Firebase and Vercel are planned. Will update link after live release.)_
+- # [📞 NexCall](https://assignment-11-1f30f.web.app/) 
 
 ---
 
