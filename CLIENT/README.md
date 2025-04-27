@@ -1,4 +1,4 @@
-# 📞 NexCall: A Secure Video Calling & Messaging Platform
+# [📞 NexCall: A Secure Communication Platform](https://assignment-11-1f30f.web.app/) 
 
 ## 🗏️ Description
 **NexCall** is a next-generation, full-stack **secure video communication platform** built to empower real-time collaboration. Designed for professionals, educators, healthcare providers, and remote teams, NexCall brings together seamless **one-on-one and group video calling**, **screen sharing**, **instant messaging**, and **chat history management** in a web-based environment.
@@ -24,18 +24,18 @@ The platform enables users to:
 ## ⚙️ Technologies Used
 - **React.js** for building the user interface.
 - **Firebase Authentication** for secure login and registration.
-- **Firebase Hosting** and **Vercel** for deployment.
+- **Firebase Hosting** and **Railway.com** for deployment.
 - **MongoDB** for scalable, document-based database management.
 - **Node.js** and **Express.js** for backend server and API development.
 - **Socket.io** for real-time communication (signaling, messaging).
 - **WebRTC** for peer-to-peer video/audio and screen sharing.
 - **DaisyUI** and **Tailwind CSS** for rapid, beautiful styling.
-- **Swiper** for dynamic sliders and carousels.
+- **React Toastify** for dynamic toast alerts and Notification.
 - **Crypto.js** for chat data security and encryption.
+- **JS PDF** for making the chats in pdf format
 - **100ms SDK** and **ZegoCloud** as experimental integrations for future scalability.
 - **React Hooks** (`useState`, `useEffect`, `useContext`, `useNavigate`, `useLocation`) for state and side effect management.
-- **React Router** for SPA routing.
-- **SweetAlert** for toast notifications.
+- **React Router** for SPA routing. 
 - **Animation Libraries**: **Lottie React**, **React Awesome Reveal**, **React Super Responsive Table** for better UI/UX.
 
 ---
