@@ -92,21 +92,12 @@ The platform enables users to:
 ### Socket.io:
 - Manages the signaling process needed by WebRTC.
 - Handles real-time chat messaging.
-- Provides robust reconnection handling for unstable networks.
+- Provides robust reconnection handling for unstable networks. 
 
-## 📦 Server Repository
-- [👉 NexCall Server Code](https://github.com/NexCall-A-Video-Calling-App/NexCall/tree/main/SERVER)
-
-## 🚀 Live Links
-- **Client Side**: _Coming soon_
-- **Server Side**: [NexCall Server on GitHub](https://github.com/NexCall-A-Video-Calling-App/NexCall/tree/main/SERVER)
-
----
-
-## 🚀 Live Link
-- # [📞 NexCall](https://assignment-11-1f30f.web.app/)
----
-
+## 👉 Live Links 
+- **📦 Server Side**: [NexCall Server on GitHub](https://github.com/NexCall-A-Video-Calling-App/NexCall/tree/main/SERVER)
+- **🚀 Live Site**: [📞 NexCall](https://assignment-11-1f30f.web.app/)
+ 
 ## 🔧 Development Practices
 - **GitHub Commits**: Maintained organized commit structure with clear messages for each feature or fix.
 - **Environment Variables**: Used `.env` files to secure sensitive information like API keys and Database URIs.
