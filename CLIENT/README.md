@@ -122,6 +122,81 @@ The platform enables users to:
 
 ---
 
+## 🛠️ How to Initialize
+
+Follow these steps to download and set up the project locally:
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/NexCall-A-Video-Calling-App/NexCall.git
+```
+
+### 2. Navigate to the Client Directory
+
+```bash
+cd NexCall/CLIENT
+```
+
+### 3. Install Dependencies
+
+```bash
+npm install
+```
+
+This will install all the necessary frontend dependencies like:
+
+- @100mslive/react-sdk
+- @tanstack/react-query
+- axios
+- crypto-js
+- firebase
+- framer-motion
+- jspdf
+- localforage
+- lottie-react
+- match-sorter
+- moment
+- react
+- react-dom
+- react-hook-form
+- react-hot-toast
+- react-icons
+- react-router-dom
+- socket.io-client
+- sort-by
+
+### 4. Set Up Environment Variables
+
+Create a `.env` file inside the `CLIENT` folder with the following variables:
+
+```env
+VITE_API_URL=your_server_api_url
+VITE_FIREBASE_API_KEY=your_firebase_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_firebase_auth_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+VITE_FIREBASE_APP_ID=your_firebase_app_id
+VITE_SOCKET_URL=your_socket_io_server_url
+```
+
+> ⚡ Replace `your_...` placeholders with your actual project credentials.
+
+### 5. Run the Development Server
+
+```bash
+npm run dev
+```
+
+Your app will be live at:
+
+```
+http://localhost:5173
+```
+
+> ✅ Make sure your [Server Side](https://github.com/NexCall-A-Video-Calling-App/NexCall/tree/main/SERVER) is also running for full functionality (auth, chat, calling, etc.).
+
 ## 📈 Future Improvements
 - **Meeting Scheduling**: Allow users to schedule meetings and send invites.
 - **Meeting Recording**: Record and download meeting sessions.
