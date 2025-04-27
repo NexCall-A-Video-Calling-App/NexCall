@@ -1,4 +1,4 @@
-# [📞 NexCall: A Secure Communication Platform](https://assignment-11-1f30f.web.app/) 
+# [📞 NexCall: A Secure Communication Platform](https://nexcall-1425e.web.app/) 
 
 ## 🗏️ Description
 **NexCall** is a next-generation, full-stack **secure video communication platform** built to empower real-time collaboration. Designed for professionals, educators, healthcare providers, and remote teams, NexCall brings together seamless **one-on-one and group video calling**, **screen sharing**, **instant messaging**, and **chat history management** in a web-based environment.
@@ -96,7 +96,7 @@ The platform enables users to:
 
 ## 👉 Live Links 
 - **📦 Server Side**: [NexCall Server on GitHub](https://github.com/NexCall-A-Video-Calling-App/NexCall/tree/main/SERVER)
-- **🚀 Live Site**: [📞 NexCall](https://assignment-11-1f30f.web.app/)
+- **🚀 Live Site**: [📞 NexCall](https://nexcall-1425e.web.app/)
  
 ## 🔧 Development Practices
 - **GitHub Commits**: Maintained organized commit structure with clear messages for each feature or fix.
