@@ -104,7 +104,7 @@ The platform enables users to:
 - **Error Handling**: Implemented friendly toast notifications and modals for user feedback instead of alerts.
 - **Hosting Strategy**: 
   - **Client Side**: Firebase Hosting.
-  - **Server Side**: Vercel Hosting.
+  - **Server Side**: Railway API Hosting.
 - **WebRTC Signaling**: Efficient socket connection design for room joining, call offering, answering, and ICE candidate exchanges.
 - **Code Modularity**: Divided components for easy maintenance, scalability, and testing.
 - **Future Scalability**:
