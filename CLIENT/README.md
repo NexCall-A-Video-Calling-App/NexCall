@@ -131,6 +131,14 @@ The platform enables users to:
 
 ---
 
+## 👥 Contributors
+- [Md. Golam Sarwar Shaykot](https://github.com/gs-shaykot)
+- [Md. Masud Rana](https://github.com/masud2005)
+- [Md. Rasel Mia](https://github.com/raselworshop)
+- [Sakib Fakir](https://github.com/SakibFakir69)
+- [Sumona Yeasmin](https://github.com/SumonaYeasmin)
+
+
 # 🌟 Conclusion
 **NexCall** isn't just a video calling tool — it's a **comprehensive virtual collaboration platform** for the future of remote work, learning, and telehealth.  
 With real-time communication, scalability, and security at its core, NexCall is ready to grow with the evolving needs of its users.
