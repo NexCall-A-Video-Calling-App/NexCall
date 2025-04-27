@@ -81,11 +81,30 @@ The platform enables users to:
     - Chat encryption via Crypto.js.
     - Automatic reconnection handling with socket.io in case of network drops.
 
+## 🔥 Why WebRTC & Socket.io?
+
+### WebRTC:
+- Enables direct peer-to-peer communication.
+- Reduces server load and improves real-time performance.
+- Supports high-quality video/audio with low latency.
+- Native support in most modern browsers.
+
+### Socket.io:
+- Manages the signaling process needed by WebRTC.
+- Handles real-time chat messaging.
+- Provides robust reconnection handling for unstable networks.
+
+## 📦 Server Repository
+- [👉 NexCall Server Code](https://github.com/NexCall-A-Video-Calling-App/NexCall/tree/main/SERVER)
+
+## 🚀 Live Links
+- **Client Side**: _Coming soon_
+- **Server Side**: [NexCall Server on GitHub](https://github.com/NexCall-A-Video-Calling-App/NexCall/tree/main/SERVER)
+
 ---
 
 ## 🚀 Live Link
-- # [📞 NexCall](https://assignment-11-1f30f.web.app/) 
-
+- # [📞 NexCall](https://assignment-11-1f30f.web.app/)
 ---
 
 ## 🔧 Development Practices
