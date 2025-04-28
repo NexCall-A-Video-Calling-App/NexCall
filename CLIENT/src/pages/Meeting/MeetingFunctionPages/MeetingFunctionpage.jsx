@@ -163,6 +163,7 @@ const MeetingFunctionpage = () => {
   };
 
   // jai time a submit button click kora hobba oi time zoom id send korta hobba
+  ///  meeting time - now === 1 -> send data a components -> then send email
 
   return (
     <div className="container mx-auto ">
@@ -236,11 +237,17 @@ const MeetingFunctionpage = () => {
                         .filter((schedule) => {
                           const now = new Date();
                           const meetingTime = new Date(`${schedule.Date} ${schedule.Time}`);
+
+                         
+
+
+
                           return meetingTime > now;
                         })
                         .sort((a, b) => {
                           const meetingTimeA = new Date(`${a.Date} ${a.Time}`);
                           const meetingTimeB = new Date(`${b.Date} ${b.Time}`);
+                          /// if (nowtime-meetingtime ar gap ===1) send email
                           return meetingTimeA - meetingTimeB; // Sort by Date and Time (low to high)
                         })
                         .map((schedule, index) => (
