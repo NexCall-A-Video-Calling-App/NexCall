@@ -80,14 +80,7 @@ HMS_APP_SECRET="Original product credential here"
 HMS_MANAGEMENT_TOKEN="Original product credential here" 
 APP_ACCESS_KEY="Original product credential here"
 ```
-
-Example:
-```env
-PORT=5000
-MONGO_URI=mongodb+srv://username:password@cluster0.mongodb.net/nexcall
-JWT_SECRET=supersecretkey123
-CLIENT_URL=http://localhost:5173
-```
+ 
 
 ### 5. Start the Server
 ```bash
