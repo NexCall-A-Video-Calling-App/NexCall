@@ -72,10 +72,13 @@ npm install
 ### 4. Create a `.env` File
 Create a `.env` file in the `SERVER` folder and add the following environment variables:
 ```env
-PORT=your_desired_port
-MONGO_URI=your_mongodb_connection_uri
-JWT_SECRET=your_jwt_secret_key
-CLIENT_URL=your_frontend_url
+db_user="Original product credential here"
+db_pass="Original product credential here"
+jwt_Secret="Original product credential here" 
+HMS_TEMPLATE_ID="Original product credential here"
+HMS_APP_SECRET="Original product credential here"
+HMS_MANAGEMENT_TOKEN="Original product credential here" 
+APP_ACCESS_KEY="Original product credential here"
 ```
 
 Example:
