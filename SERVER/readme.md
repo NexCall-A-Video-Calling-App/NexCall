@@ -94,8 +94,9 @@ nodemon index.js
 
 ---
 
-## 🚀 Live Server Repository
-- [👉 NexCall Server on GitHub](https://github.com/NexCall-A-Video-Calling-App/NexCall/tree/main/SERVER)
+## 👉 Live Links 
+- **📦 CLIENT Side**: [NexCall Server on GitHub](https://github.com/NexCall-A-Video-Calling-App/NexCall/tree/main/CLIENT)
+- **🚀 Live Site**: [📞 NexCall](https://nexcall-1425e.web.app/)
 
 
 ## 👥 Contributors
