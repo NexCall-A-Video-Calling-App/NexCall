@@ -47,7 +47,7 @@ const MeetingFunctionpage = () => {
   console.log(scheduleData);
 
   const [joinRoomId, setJoinRoomId] = useState(""); // For joining a room
-  const [ roomId , setroomID ] = useState("");
+
 
   // LIVE TIME
   useEffect(() => {
@@ -122,7 +122,7 @@ const MeetingFunctionpage = () => {
   //     navigate("/dashboard");
   //   }
   // }, [currentRoom, navigate, setLoading]);
-  // gave 
+  // comment this because after room create on schedule section go dashboard
 
   const handleCreateRoom = () => { 
     const userData = {
