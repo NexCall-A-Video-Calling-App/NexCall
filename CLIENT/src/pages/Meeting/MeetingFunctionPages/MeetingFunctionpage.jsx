@@ -23,6 +23,7 @@ import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 
 import countDwon from "../../../hooks/CountDwon/countDwon";
 import { SocketContext } from "../../../provider/SocketProvider";
+import checkAndSendEmail from '../../../hooks/email/CheckAndEmail'
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -237,6 +238,7 @@ const MeetingFunctionpage = () => {
                         .filter((schedule) => {
                           const now = new Date();
                           const meetingTime = new Date(`${schedule.Date} ${schedule.Time}`);
+                          checkAndSendEmail(schedule);
 
                          
 
