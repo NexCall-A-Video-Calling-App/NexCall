@@ -59,6 +59,11 @@ const Routes = createBrowserRouter([
       //   path: '/video-call',
       //   element: <PrivateRoute><VideoCall /></PrivateRoute>
       // }
+      // payment
+      {
+        path: '/payment',
+        element: <PaymentPage />
+      }
     ],
   },
   {
@@ -76,14 +81,10 @@ const Routes = createBrowserRouter([
       {
         path: '/meeting/video-call',
         element: <VideoCall />
-      }
+      },
+      
     ]
   },
-  // payment
-  {
-    path:'/payment',
-    element: <PaymentPage/>
-  }
 ]);
 
 export default Routes;
