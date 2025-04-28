@@ -213,8 +213,8 @@ async function run() {
     try {
         const usersCollections = client.db("NexCall").collection('users');
         const messagesCollection = client.db("NexCall").collection('messages');
-        const scheduleCollection = client.db("NextCall").collection("schedule");
-        const paymentCollection = client.db("NextCall").collection("payments");
+        const scheduleCollection = client.db("NexCall").collection("schedule");
+        const paymentCollection = client.db("NexCall").collection("payments");
 
         // JWT AUTH ENDPOINTS
         app.post('/jwt', async (req, res) => {
