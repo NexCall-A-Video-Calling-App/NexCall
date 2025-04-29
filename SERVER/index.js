@@ -41,8 +41,8 @@ async function run() {
     app.use('/auth', require('./routes/authRoutes'));
     app.use('/users', require('./routes/userRoutes')(usersCollection));
     app.use('/', require('./routes/messageRoutes')(messagesCollection));
-    app.use('/schedule', require('./routes/scheduleRoutes')(scheduleCollection));
-    app.use('/payments', require('./routes/paymentRoutes')(paymentCollection));
+    app.use('/', require('./routes/scheduleRoutes')(scheduleCollection));
+    app.use('/', require('./routes/paymentRoutes')(paymentCollection));
     app.use('/', require('./routes/tokenRoutes'));
 
     // Root route
