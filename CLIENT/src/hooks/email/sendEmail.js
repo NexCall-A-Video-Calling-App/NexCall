@@ -1,25 +1,22 @@
 
 
 
-const sendEmail = (schedule)=>{
 
-    // use web3forms
-
-    const  formData = {
-        access_key:"c9772aaf-2a17-49f6-92db-8373d78f892d",
-        subject:"Meeting Reminder",
-        from_name:"NexCall",
-        name:schedule.Topic,
-        email:schedule.email,
-        message: `Reminder: Meeting "${schedule.Topic}" is at ${schedule.Time} on ${schedule.Date}.`,
-
-
-
-    }
-
-
-
-}
+const sendEmail = (meeting) => {
+    fetch('http://localhost:5000/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            email: meeting.email, 
+            subject: "Meeting Reminder",
+            message: `Reminder for meeting ${meeting.Topic} at ${meeting.Time} on ${meeting.Date}.`,
+        }),
+    })
+    .then((res) => res.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error('Error:', error));
+};
 
 
 
+export default sendEmail;

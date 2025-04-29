@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 5000;
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const stripe = require('stripe')(process.env.STRIPE_SECRECT_KEY); /// add stripe key 
+const nodemailer = require('nodemailer');
 
 app.use(express.json());
 app.use(cookieParser());
@@ -420,6 +421,35 @@ async function run() {
 
           }
         })
+
+
+
+        // mail
+
+
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'nexcall123@gmail.com',  // Your Gmail or business email
+                pass: 'nexcall123@#99',     // Not your email password! Use Gmail App Password
+            },
+        });
+        
+        app.post('/send-email', async (req, res) => {
+            const { email, subject, message } = req.body;
+            try {
+                await transporter.sendMail({
+                    from: 'nexcall123@gmail.com',
+                    to: email,               
+                    subject,
+                    text: message,
+                });
+                res.status(200).send('Email sent successfully!');
+            } catch (error) {
+                console.error(error);
+                res.status(500).send('Failed to send email.');
+            }
+        });
 
 
 

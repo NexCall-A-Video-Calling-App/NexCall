@@ -23,7 +23,7 @@ import useScheduleData from "../../../hooks/schedule_data/useScheduleData";
 
 import countDwon from "../../../hooks/CountDwon/countDwon";
 import { SocketContext } from "../../../provider/SocketProvider";
-import checkAndSendEmail from '../../../hooks/email/CheckAndEmail'
+
 
 const MeetingFunctionpage = () => {
   // main function go under navbar
@@ -45,7 +45,7 @@ const MeetingFunctionpage = () => {
   const navigate = useNavigate();
 
   const { isLoading, isError, refetch, scheduleData } = useScheduleData();
-  console.log(scheduleData);
+
 
   const [joinRoomId, setJoinRoomId] = useState(""); // For joining a room
 
@@ -238,7 +238,8 @@ const MeetingFunctionpage = () => {
                         .filter((schedule) => {
                           const now = new Date();
                           const meetingTime = new Date(`${schedule.Date} ${schedule.Time}`);
-                          checkAndSendEmail(schedule);
+
+                         
 
                          
 
