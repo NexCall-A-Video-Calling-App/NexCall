@@ -15,6 +15,7 @@ import MeetingFunctionpage from "../pages/Meeting/MeetingFunctionPages/MeetingFu
 import ChatHistory from "../pages/ChatHistory/ChatHistory";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import VideoCall from "../pages/Video/VideoCall";
+import PaymentPage from "../payment/PaymentPage";
 
 const Routes = createBrowserRouter([
   {
@@ -58,6 +59,11 @@ const Routes = createBrowserRouter([
       //   path: '/video-call',
       //   element: <PrivateRoute><VideoCall /></PrivateRoute>
       // }
+      // payment
+      {
+        path: '/payment',
+        element: <PaymentPage />
+      }
     ],
   },
   {
@@ -75,9 +81,10 @@ const Routes = createBrowserRouter([
       {
         path: '/meeting/video-call',
         element: <VideoCall />
-      }
+      },
+      
     ]
-  }
+  },
 ]);
 
 export default Routes;

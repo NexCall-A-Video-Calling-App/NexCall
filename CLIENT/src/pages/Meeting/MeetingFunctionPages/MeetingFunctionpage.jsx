@@ -48,6 +48,7 @@ const MeetingFunctionpage = () => {
 
   const [joinRoomId, setJoinRoomId] = useState(""); // For joining a room
 
+
   // LIVE TIME
   useEffect(() => {
     // use effect work when side effect like api calling
@@ -64,49 +65,64 @@ const MeetingFunctionpage = () => {
   // Schedule button
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const [ Scheduleroomid , setScheduleroomid ] = useState("");
+
   const onSubmit = (data) => {
+
     const { Date, Time, Topic } = data;
-
+  
     if (Date && Time && Topic) {
-      const scheduleHandler = {
-        Date,
-        Time,
-        Topic,
-        email: user?.email,
+      const userData = {
+        name: user?.displayName,
+        profilePic: user?.photoURL,
       };
-
-      axios
-        .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
-        .then((res) => {
-          if (res.data.insertedId) {
-            toast.success("Schedule added successfully!");
-            refetch();
-            reset();
-            setIsModalOpen(false);
-          } else {
-            toast.error("Failed to add schedule. Please try again.");
-          }
-        })
-        .catch((error) => {
-          console.error("Error while adding schedule:", error);
-          toast.error("Something went wrong. Please try again.");
-        });
+  
+      socket.emit("createRoom", userData);
+  
+      // Handle once when the room is created
+      socket.once("RoomCreated", (roomId, name, timestamp) => {
+        const scheduleHandler = {
+          Date,
+          Time,
+          Topic,
+          email: user?.email,
+          roomID: roomId,
+   
+        };
+  
+        axios
+          .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
+          .then((res) => {
+            if (res.data.insertedId) {
+              toast.success("Schedule added successfully!");
+              refetch();
+              reset();
+              setIsModalOpen(false);
+            } else {
+              toast.error("Failed to add schedule. Please try again.");
+            }
+          })
+          .catch((error) => {
+            console.error("Error while adding schedule:", error);
+            toast.error("Something went wrong. Please try again.");
+          });
+      });
     } else {
       toast.warning("Please fill in all the fields.");
       setIsModalOpen(false);
     }
   };
-
-
+  
   // idea 1.count dwon time , show calender
   // after complete count dwon meeting delete from db
   // Navigate to Dashboard when currentRoom is set
-  useEffect(() => {
-    if (currentRoom) {
-      setLoading(false);
-      navigate("/dashboard");
-    }
-  }, [currentRoom, navigate, setLoading]);
+  // useEffect(() => {
+  //   if (currentRoom) {
+  //     setLoading(false);
+  //     navigate("/dashboard");
+  //   }
+  // }, [currentRoom, navigate, setLoading]);
+  // comment this because after room create on schedule section go dashboard
 
   const handleCreateRoom = () => { 
     const userData = {
@@ -116,6 +132,7 @@ const MeetingFunctionpage = () => {
     };
     socket.emit("createRoom", userData);
 
+  
     // Listen for RoomCreated event from server
     socket.on("RoomCreated", (roomId, name, timestamp) => {
       setCurrentRoom(roomId); // Set 100ms roomId as currentRoom
@@ -128,6 +145,7 @@ const MeetingFunctionpage = () => {
       toast.error(error);
       setLoading(false);
     });
+
   };
 
   
@@ -208,6 +226,8 @@ const MeetingFunctionpage = () => {
                         <th className="whitespace-nowrap px-2 py-2">Topic</th>
                         <th className="whitespace-nowrap px-2 py-2">Date</th>
                         <th className="whitespace-nowrap px-2 py-2">Time</th>
+                        <th className="whitespace-nowrap px-2 py-2">Room ID</th>
+
                         <th className="whitespace-nowrap px-2 py-2">Countdown</th>
                       </tr>
                     </thead>
@@ -218,12 +238,19 @@ const MeetingFunctionpage = () => {
                           const meetingTime = new Date(`${schedule.Date} ${schedule.Time}`);
                           return meetingTime > now;
                         })
+                        .sort((a, b) => {
+                          const meetingTimeA = new Date(`${a.Date} ${a.Time}`);
+                          const meetingTimeB = new Date(`${b.Date} ${b.Time}`);
+                          return meetingTimeA - meetingTimeB; // Sort by Date and Time (low to high)
+                        })
                         .map((schedule, index) => (
                           <tr key={index} className="hover:bg-gray-50 transition">
                             <td className="w-12 font-medium px-2 py-2">{index + 1}</td>
                             <td className="px-2 py-2">{schedule.Topic}</td>
                             <td className="px-2 py-2">{schedule.Date}</td>
                             <td className="px-2 py-2">{schedule.Time}</td>
+                            <td className="px-2 py-2">{schedule. roomID}</td>
+                            
                             <td className="px-2 py-2">{countDwon(schedule.Date, schedule.Time)}</td>
                           </tr>
                         ))}

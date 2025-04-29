@@ -36,27 +36,6 @@ function MeetingNavbar() {
         </NavLink>
       </li>
 
-      {/* <li>
-        <NavLink
-          to={'/meeting/classroom'}
-          className={({ isActive }) =>
-            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
-          }
-        >
-          Meeting <SiGoogleclassroom />
-        </NavLink>
-      </li>
-
-      <li>
-        <NavLink
-          to={"/meeting/contact"}
-          className={({ isActive }) =>
-            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
-          }
-        >
-          Contact <MdContactMail />
-        </NavLink>
-      </li> */}
     </div>
   );
 
