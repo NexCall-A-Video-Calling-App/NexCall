@@ -9,7 +9,7 @@ import {
   QueryClientProvider,
 
 } from '@tanstack/react-query'
-import CheckAndEmail from './hooks/email/CheckAndEmail.jsx'
+
 import toast, { Toaster } from 'react-hot-toast'
 import { SocketProvider } from './provider/SocketProvider.jsx'
 import { HMSRoomProvider } from '@100mslive/react-sdk'
@@ -26,7 +26,6 @@ createRoot(document.getElementById('root')).render(
       <SocketProvider>
         <HMSRoomProvider>
         <QueryClientProvider client={queryClient}>
-           <CheckAndEmail/>
           <RouterProvider router={Routes} />
           <Toaster />
         </QueryClientProvider>

@@ -1,3 +1,4 @@
+// hmsActions
 import { useEffect, useRef, useState } from "react";
 import {
   useHMSActions,
@@ -21,7 +22,7 @@ import {
 } from "react-icons/fa";
 
 const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
-  
+  console.log(initialRoomId);
   const hmsActions = useHMSActions();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const localPeer = useHMSStore(selectLocalPeer);
@@ -61,13 +62,15 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
     return () => clearInterval(interval);
   }, [hmsActions]);
 
-  const joinRoom = async (roomId) => { 
+  const joinRoom = async (roomId) => {
+    console.log(roomId);
     try {
       const response = await fetch(
-        `http://localhost:5000/token?roomId=${encodeURIComponent(roomId)}`
+        `http://localhost:5000/api/token?roomId=${encodeURIComponent(roomId)}`
       );
       if (!response.ok) throw new Error(`Failed to fetch token: ${response.statusText}`);
       const { token } = await response.json();
+      console.log("token: ", token);
       await hmsActions.join({
         userName: userName || `User-${Math.random().toString(36).substring(7)}`,
         authToken: token,
@@ -143,7 +146,7 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
   };
 
   return (
-    <div className="space-y-4 flex flex-col items-center justify-center min-h-screen p-4 text-white">
+    <div className="space-y-4 flex flex-col items-center justify-center min-h-screen p-4 text-white bg-[#151515]">
       {error && <div className="text-red-300 font-semibold">{error}</div>}
       {!isConnected && <p className="text-lg animate-pulse">Connecting...</p>}
       {isConnected && (
@@ -210,25 +213,25 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
           </div>
 
           <div className="flex justify-center mt-6 gap-3 flex-wrap">
-            <button onClick={toggleAudio} className="bg-[#8659d3] hover:bg-[#7744cc] p-3 rounded-full shadow-md">
+            <button onClick={toggleAudio} className="bg-gray-800 text-white p-2 text-xl ">
               {isAudioMuted ? <FaMicrophoneSlash /> : <FaMicrophone />}
             </button>
-            <button onClick={toggleVideo} className="bg-[#8659d3] hover:bg-[#7744cc] p-3 rounded-full shadow-md">
+            <button onClick={toggleVideo} className="bg-gray-800 text-white p-2 text-xl ">
               {isVideoMuted ? <FaVideoSlash /> : <FaVideo />}
             </button>
-            <button onClick={leaveRoom} className="bg-red-600 hover:bg-red-700 p-3 rounded-full shadow-md">
+            <button onClick={leaveRoom} className="bg-gray-800 text-white p-2 text-xl ">
               <FaSignOutAlt />
             </button>
-            <button onClick={raiseHand} className="bg-yellow-500 hover:bg-yellow-600 p-3 rounded-full shadow-md">
+            <button onClick={raiseHand} className="bg-gray-800 text-white p-2 text-xl ">
               ✋
             </button>
-            <button onClick={toggleScreenShare} className="bg-green-600 hover:bg-green-700 p-3 rounded-full shadow-md">
+            <button onClick={toggleScreenShare} className="bg-gray-800 text-white p-2 text-xl ">
               <FaDesktop />
             </button>
-            <button onClick={openChat} className="bg-[#9333ea] hover:bg-[#7e2cd4] p-3 rounded-full shadow-md">
+            <button onClick={openChat} className="bg-gray-800 text-white p-2 text-xl ">
               <FaComments />
             </button>
-            <button onClick={muteAll} className="bg-black hover:bg-gray-800 p-3 rounded-full shadow-md">
+            <button onClick={muteAll} className="bg-gray-800 text-white p-2 text-xl ">
               <FaChalkboardTeacher />
             </button>
           </div>

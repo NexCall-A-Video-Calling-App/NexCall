@@ -176,19 +176,21 @@ const Dashboard = () => {
     <div className="flex h-screen bg-gray-100 relative -mt-16">
       {/* Sidebar */}
       <div
-        className={`fixed md:static top-0 left-0 h-full w-64 bg-gray-50 p-3 border-r shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
+        className={`fixed md:static top-0 left-0 h-full w-64 bg-[#0f131c] p-3 border-r border-[#1f2937] shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 flex flex-col`}
       >
         {/* Sidebar Content */}
         <div className="flex-1 overflow-y-auto p-1">
-          <h2 className="text-xl font-bold text-gray-700 mb-3">Users</h2>
-          <input
-            id="searchUser"
-            onChange={(e) => setSearchUser(e.target.value)}
-            type="text"
-            placeholder="Search users"
-            className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
-          />
+          <div className="border-b border-[#1f2937] mb-2">
+            <input
+              id="searchUser"
+              onChange={(e) => setSearchUser(e.target.value)}
+              type="text"
+              placeholder="Search users"
+              className="w-full p-2 mb-4 border rounded-lg bg-[#0f131c] text-white focus:outline-none focus:ring-1 focus:ring-purple-500"
+            />
+          </div>
+          <h2 className="text-xl font-bold mb-3 text-white">Users</h2>
           <div className="space-y-2">
             {roomUsers
               .filter((userFilter) =>
@@ -197,11 +199,14 @@ const Dashboard = () => {
               .map((userinRoom, idx) => (
                 <div
                   key={idx}
-                  className="p-2 bg-white rounded-md shadow-sm hover:bg-purple-100 transition-colors"
+                  className="p-2 bg-[#12161f]  rounded-md shadow-sm hover:border hover:border-purple-500 transition-colors"
                 >
-                  <h1 className="text-gray-800 text-sm font-medium">
-                    {idx + 1}. {userinRoom.name}
-                  </h1>
+                  <div className="flex gap-2 items-center">
+                    <img src={userinRoom.profilePic} alt="" className="w-6 h-6 rounded-full" />
+                    <h1 className="text-white text-sm font-medium">
+                      {idx + 1}. {userinRoom.name}
+                    </h1>
+                  </div>
                 </div>
               ))}
           </div>
@@ -267,11 +272,9 @@ const Dashboard = () => {
 
 
       {/* Chat Window */}
-      {/* Main content */}
-
-      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
+      <div className="bg-[#0f131c] flex-1 flex flex-col min-h-screen overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
+        <div className="flex items-center justify-between p-4 border-b border-[#1f2937] shadow-md">
           <div className="flex items-center">
             <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
               <FaEllipsisV />
@@ -282,7 +285,7 @@ const Dashboard = () => {
               className="w-10 h-10 rounded-full"
             />
             <div className="ml-1 md:ml-2">
-              <p className="font-semibold text-sm md:text-base">
+              <p className="font-semibold text-sm md:text-base text-white">
                 {roomUsers.length === 2
                   ? roomUsers.find(u => u.socketId !== UserId)?.name || "Unknown User"
                   : roomUsers.length > 2
@@ -314,7 +317,7 @@ const Dashboard = () => {
         </div>
 
         {/* Messages Section */}
-        <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
+        <div className="flex-1 p-4 overflow-y-auto ">
           <div className="mb-4 space-y-1">
             {messages.map((msg, index) => {
               const isSender = msg.sender === UserId;
@@ -353,9 +356,9 @@ const Dashboard = () => {
 
                     {/* Message Bubble Section */}
                     <div
-                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-2xl relative ${isSender
-                        ? "bg-purple-500 text-white rounded-br-none"
-                        : "bg-gray-200 text-gray-900 rounded-bl-none"
+                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-md relative ${isSender
+                        ? "bg-purple-500 text-white  "
+                        : "bg-[#1f2937] text-white "
                         }`}
                     >
                       <p className="text-sm md:text-base break-words">{msg.message}</p>
@@ -377,14 +380,14 @@ const Dashboard = () => {
         {/* Message input */}
         <form
           onSubmit={handleSend}
-          className="p-4 border-t bg-white flex items-center"
+          className="p-4 border-t flex items-center"
         >
           <input
             onChange={(e) => setMessage(e.target.value)}
             value={message}
             type="text"
             placeholder="Type a message..."
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
+            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500  bg-[#111827] text-white"
           />
           <button className="ml-2 p-2 text-2xl bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
             <IoIosSend />
@@ -394,12 +397,12 @@ const Dashboard = () => {
 
       {/* Modal for Invite Code */}
       <dialog id="my_modal_3" className="modal">
-        <div className="modal-box relative p-10">
+        <div className="modal-box relative p-10 !bg-[#1f2937]">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-white">✕</button>
           </form>
 
-          <h3 className="font-bold text-lg flex items-center gap-2 mb-2">
+          <h3 className="font-bold text-lg flex items-center gap-2 mb-2 text-white">
             Invite Code: {currentRoom}
             <button
               onClick={() => {
@@ -413,13 +416,13 @@ const Dashboard = () => {
             </button>
           </h3>
 
-          <div className="text-sm text-gray-500 mt-4 space-y-1">
+          <div className="text-sm mt-4 space-y-1 text-white">
             <p>
-              <span className="font-semibold text-gray-600">Created At:</span>{" "}
+              <span className="font-semibold ">Created At:</span>{" "}
               {new Date(createdAt).toLocaleString()}
             </p>
             <p>
-              <span className="font-semibold text-gray-600">Creator:</span> {creator}
+              <span className="font-semibold ">Creator:</span> {creator}
             </p>
           </div>
         </div>

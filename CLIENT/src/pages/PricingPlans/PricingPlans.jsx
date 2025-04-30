@@ -61,7 +61,7 @@ const PricingPlans = () => {
 
     return (
         <div className="bg-[#151515]">
-            <div id='pricing-plans' className="py-10 container mx-auto md:w-11/12">
+            <div id='pricing-plans' className="py-10">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                         Our{" "}
