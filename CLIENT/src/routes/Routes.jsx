@@ -86,10 +86,7 @@ const Routes = createBrowserRouter([
       
     ]
   },
-  {
-    path:"/check",
-    element: <CheckAndEmail/>
-  }
+ 
 ]);
 
 export default Routes;

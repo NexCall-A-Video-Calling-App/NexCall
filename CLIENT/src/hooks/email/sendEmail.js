@@ -3,6 +3,8 @@
 
 
 const sendEmail = (meeting) => {
+    console.log(meeting);
+
     fetch('http://localhost:5000/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -12,7 +14,7 @@ const sendEmail = (meeting) => {
             message: `Reminder for meeting ${meeting.Topic} at ${meeting.Time} on ${meeting.Date}.`,
         }),
     })
-    .then((res) => res.text())
+    .then((res) => console.log(res))
     .then((result) => console.log(result))
     .catch((error) => console.error('Error:', error));
 };

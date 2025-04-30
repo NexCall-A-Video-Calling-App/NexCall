@@ -3,6 +3,8 @@ import useScheduleData from '../schedule_data/useScheduleData';
 import sendEmail from './sendEmail';
 
 function CheckAndEmail() {
+  console.log("CheckAndEmail component mounted");
+
   const { isLoading, isError, refetch, scheduleData } = useScheduleData();
   console.log(scheduleData);
   
@@ -19,6 +21,8 @@ function CheckAndEmail() {
     }) || [];
   };
 
+  
+
   const meetingsOneHourLeft = filterMeetingsOneHourLeft();
 
   useEffect(() => {
@@ -33,22 +37,31 @@ function CheckAndEmail() {
     }
   }, [meetingsOneHourLeft]);  // Only re-run effect if meetingsOneHourLeft changes
 
-  return (
-    <div>
-      <h2>Meetings in 1 hour</h2>
-      <ul>
-        {meetingsOneHourLeft.length > 0 ? (
-          meetingsOneHourLeft.map((schedule, index) => (
-            <li key={index}>
-              <strong>{schedule.Topic}</strong> - {schedule.Date} at {schedule.Time}
-            </li>
-          ))
-        ) : (
-          <p>No meetings in 1 hour</p>
-        )}
-      </ul>
-    </div>
-  );
+  // return (
+  //   <div>
+  //     <h2>Meetings in 1 hour</h2>
+  //     <ul>
+  //       {meetingsOneHourLeft.length > 0 ? (
+  //         meetingsOneHourLeft.map((schedule, index) => (
+  //           <li key={index}>
+  //             <strong>{schedule.Topic}</strong> - {schedule.Date} at {schedule.Time}
+  //           </li>
+  //         ))
+  //       ) : (
+  //         <p>No meetings in 1 hour</p>
+  //       )}
+  //     </ul>
+  //   </div>
+  // );
+
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      refetch(); 
+    }, 60000); 
+  
+    return () => clearInterval(interval);
+  }, []);
 }
 
 export default CheckAndEmail;

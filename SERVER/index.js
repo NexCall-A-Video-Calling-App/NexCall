@@ -1,38 +1,214 @@
 require('dotenv').config();
 const express = require('express');
-const http = require('http');
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const { Server } = require('socket.io');
-const { connectMongo } = require('./db');
-const { initSocket } = require('./socket');
+const axios = require('axios');
+const { v4: uuidv4 } = require('uuid');
 const app = express();
+const http = require('http');
+const { Server } = require('socket.io');
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const stripe = require('stripe')(process.env.STRIPE_SECRECT_KEY); /// add stripe key 
-
-// Middleware
+const nodemailer= require("nodemailer")
 app.use(express.json());
 app.use(cookieParser());
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app', 'http://localhost:5000'],
-  credentials: true
+    origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app', 'https://nexcall.up.railway.app'],
+    credentials: true
 }));
 
-// Setup Socket.io
 const io = new Server(server, {
-  cors: {
-    origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app', 'http://localhost:5000'],
-    methods: ['GET', 'POST'],
-    credentials: true
-  }
+    cors: {
+        origin: ['http://localhost:5173', 'https://nexcall-1425e.web.app', 'https://nexcall.up.railway.app'],
+        methods: ['GET', 'POST'],
+        credentials: true
+    }
 });
 
-initSocket(io);
+const roomUsers = {};
+const roomCodeToIdMap = {}; // New mapping for roomCode to room_id
 
-// Start app after DB connection
+io.on("connection", (socket) => {
+    console.log("Connected ID:", socket.id);
+
+    // Create Room
+    socket.on("createRoom", async (userData) => {
+        try {
+            // 100ms room create 
+            const roomResponse = await axios.post(
+                "https://api.100ms.live/v2/rooms",
+                {
+                    name: `room-${socket.id}-${Date.now()}`,
+                    description: "Dynamic room for NexCall",
+                    template_id: process.env.HMS_TEMPLATE_ID,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${process.env.HMS_MANAGEMENT_TOKEN}`,
+                    },
+                }
+            );
+            const roomId = roomResponse.data.id; // 100ms room id 
+
+            // Generate room code
+            const roomCodeResponse = await axios.post(
+                `https://api.100ms.live/v2/room-codes/room/${roomId}`,
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${process.env.HMS_MANAGEMENT_TOKEN}`,
+                        "Content-Type": "application/json",
+                    },
+                }
+            );
+
+            const roomCode = roomCodeResponse.data.data.find(code => code.enabled)?.code;
+            console.log("Room Code:", roomCode);
+
+            // Store mapping of roomCode to roomId
+            roomCodeToIdMap[roomCode] = roomId;
+
+            socket.join(roomCode);
+            roomUsers[roomCode] = [{ socketId: socket.id, ...userData }];
+            const { name, timestamp } = userData;
+            socket.emit("RoomCreated", roomCode, name, timestamp);
+            console.log("Room Created: ", roomCode);
+
+        } catch (error) {
+            console.error("Error creating 100ms room:", error);
+            socket.emit("RoomCreationError", "Failed to create room");
+        }
+    });
+
+    // Join Room 
+    socket.on("JoinRoom", async ({ roomId, userData }) => {
+        try {
+            // roomId here is actually the roomCode
+            const actualRoomId = roomCodeToIdMap[roomId]; // Get the actual room_id
+
+            if (!actualRoomId) {
+                socket.emit("RoomJoinError", "Invalid room code");
+                return;
+            }
+
+            // Check if the room exists in 100ms
+            const roomResponse = await axios.get(
+                `https://api.100ms.live/v2/rooms/${actualRoomId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${process.env.HMS_MANAGEMENT_TOKEN}`,
+                    },
+                }
+            );
+
+            if (!roomResponse.data.id) {
+                socket.emit("RoomJoinError", "Room not found");
+                return;
+            }
+
+            socket.join(roomId); // Join the socket room using roomCode
+            if (!roomUsers[roomId]) {
+                roomUsers[roomId] = [];
+            }
+            roomUsers[roomId].push({ socketId: socket.id, ...userData });
+            socket.emit("RoomJoined", roomId);
+            io.to(roomId).emit("updatedRoomUser", roomUsers[roomId]);
+        } catch (error) {
+            console.error("Error joining room:", error);
+            socket.emit("RoomJoinError", "Failed to join room");
+        }
+    });
+
+    socket.on("getRoomUsers", (roomId) => {
+        if (roomUsers[roomId]) {
+            socket.emit("updatedRoomUser", roomUsers[roomId]);
+        } else {
+            socket.emit("updatedRoomUser", []);
+        }
+    });
+
+    // Send Message
+    socket.on("sentMessage", async ({ room, message, senderName, senderEmail, photo, receiverName }) => {
+        const messageData = {
+            room,
+            message,
+            photo,
+            senderName,
+            senderEmail,
+            receiverName,
+            timestamp: new Date()
+        };
+        io.to(room).emit("receiveMessage", { sender: socket.id, senderName, photo, message });
+
+        const messagesCollection = client.db("NexCall").collection('messages');
+        await messagesCollection.insertOne(messageData);
+    });
+
+    // Handle Disconnect
+    socket.on("disconnect", () => {
+        for (const roomId in roomUsers) {
+            roomUsers[roomId] = roomUsers[roomId].filter(user => user.socketId !== socket.id);
+            if (roomUsers[roomId].length === 0) {
+                delete roomUsers[roomId];
+                delete roomCodeToIdMap[roomId]; // Clean up mapping
+            }
+            io.to(roomId).emit("updatedRoomUser", roomUsers[roomId]);
+        }
+        console.log(`Disconnected user ID: ${socket.id}`);
+    });
+});
+
+// 100ms token generate 
+app.get('/token', async (req, res) => {
+    try {
+        const { roomId } = req.query;
+        if (!roomId) {
+            return res.status(400).json({ error: "Room ID is required" });
+        }
+
+        // Map roomCode to actual room_id if necessary
+        const actualRoomId = roomCodeToIdMap[roomId] || roomId;
+
+        const tokenId = uuidv4();
+        const payload = {
+            access_key: process.env.APP_ACCESS_KEY,
+            room_id: actualRoomId,
+            user_id: `user-${Math.random().toString(36).substring(7)}`,
+            role: "host",
+            jwtid: tokenId,
+        };
+
+        const token = jwt.sign(payload, process.env.HMS_APP_SECRET, {
+            expiresIn: "24h",
+            algorithm: "HS256",
+            jwtid: tokenId,
+        });
+        console.log("Generated token:", token);
+        res.json({ token });
+    } catch (error) {
+        console.error("Error generating token:", error);
+        res.status(500).json({ error: "Failed to generate token" });
+    }
+});
+
+app.get('/', (req, res) => {
+    res.send("NEXCALL SERVER RUNNING");
+});
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.mvhtan2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
+
+const client = new MongoClient(uri, {
+    serverApi: {
+        version: ServerApiVersion.v1,
+        strict: true,
+        deprecationErrors: true,
+    }
+});
+
 async function run() {
     try {
         const usersCollections = client.db("NexCall").collection('users');
@@ -244,6 +420,32 @@ async function run() {
 
           }
         })
+        
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'nexcall55@gmail.com',  // Your Gmail or business email
+                pass: 'emyx fmrx gycb ctyx'
+            },
+        });
+        
+        app.post('/send-email', async (req, res) => {
+            console.log("called");
+            const { email, subject, message } = req.body;
+            try {
+                await transporter.sendMail({
+                    from: 'nexcall55@gmail.com',
+                    to: email,               
+                    subject,
+                    text: message,
+                });
+                console.log("send")
+                res.status(200).send('Email sent successfully!');
+            } catch (error) {
+                console.error(error);
+                res.status(500).send('Failed to send email.');
+            }
+        });
 
 
 
@@ -255,4 +457,8 @@ async function run() {
     }
 }
 
-run();
+run().catch(console.dir);
+
+server.listen(5000, () => {
+    console.log(`Server running using Socket.io on http://localhost:${PORT}`);
+});
