@@ -11,7 +11,7 @@ const Banner = () => {
         <section className="relative py-14 px-8 mx-auto mb-8">
           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-12">
             <div className="lg:w-1/2 text-left">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6 ">
+              <h1 className="text-2xl md:text-6xl font-bold mb-6 ">
                 Crystal-Clear Video Calls,
                 <br />
                 <span className="animated-gradient-text">Anytime, Anywhere!</span>

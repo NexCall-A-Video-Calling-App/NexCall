@@ -5,39 +5,39 @@ const GetStarted = () => {
   const [email, setEmail] = useState("");
   return (
     <div className="bg-[#151515]">
-      <section className="py-20 px-8 max-w-7xl mx-auto">
-        <div className="bg-gray-900 bg-opacity-70 rounded-2xl p-12 relative overflow-hidden">
+      <section className="py-10 sm:py-16 md:py-20 px-4 sm:px-6 md:px-8 max-w-7xl mx-auto">
+        <div className="bg-gray-900 bg-opacity-70 rounded-2xl p-6 sm:p-8 md:p-12 relative overflow-hidden">
           <div className="absolute inset-0 bg-[url('https://readdy.ai/api/search-image?query=abstract%20technology%20pattern%20with%20flowing%20blue%20and%20purple%20light%20trails%20on%20dark%20background%2C%20digital%20network%20concept%2C%20futuristic%20minimal%20design&width=1200&height=600&seq=cta1&orientation=landscape')] bg-cover bg-center opacity-20"></div>
           <div className="relative z-10 max-w-3xl mx-auto text-center text-white">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4 sm:mb-6">
               Ready to transform your application with real-time communication?
             </h2>
-            <p className="text-xl text-gray-300 mb-8">
+            <p className="text-base sm:text-lg md:text-xl text-gray-300 mb-6 sm:mb-8">
               Get started for free today and join thousands of developers
               building the future of communication.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-              <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-3 rounded-full text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+              <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-4 sm:px-6 py-2 sm:py-3 rounded-full text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap text-sm sm:text-base">
                 Start Free Trial
               </button>
-              <button className="border border-gray-600 px-6 py-3 rounded-full text-white font-medium hover:border-[#32c6fc] transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+              <button className="border border-gray-600 px-4 sm:px-6 py-2 sm:py-3 rounded-full text-white font-medium hover:border-[#32c6fc] transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap text-sm sm:text-base">
                 Contact Sales
               </button>
             </div>
             <div className="max-w-md mx-auto">
-              <div className="flex">
+              <div className="flex flex-col sm:flex-row">
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 bg-gray-800 border-none rounded-l-full px-6 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#32c6fc]"
+                  className="flex-1 bg-gray-800 border-none rounded-t-full sm:rounded-l-full sm:rounded-r-none px-4 sm:px-6 py-2 sm:py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#32c6fc] w-full"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] rounded-r-full px-6 py-3 text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+                <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] rounded-b-full sm:rounded-r-full sm:rounded-l-none px-4 sm:px-6 py-2 sm:py-3 text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap text-sm sm:text-base">
                   Subscribe
                 </button>
               </div>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-xs sm:text-sm text-gray-500 mt-2">
                 Subscribe to our newsletter for developer tips and updates
               </p>
             </div>

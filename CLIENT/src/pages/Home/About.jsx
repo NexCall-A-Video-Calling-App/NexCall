@@ -5,7 +5,7 @@ import aboutNexImg from '../../assets/aboutNex.png'
 const About = () => {
   return (
     <div className="bg-[#151515] text-white">
-      <div id="about" className="container mx-auto py-8 flex flex-col md:flex-row items-center overflow-hidden">
+      <div id="about" className="container w-11/12 lg:w-auto mx-auto py-8 flex flex-col md:flex-row items-center overflow-hidden">
         {/* About Us Section */}
         <section className="py-16 pb-0 container mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">

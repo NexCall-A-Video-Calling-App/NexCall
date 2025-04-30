@@ -21,7 +21,7 @@ import {
 } from "react-icons/fa";
 
 const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
-  console.log(initialRoomId);
+  
   const hmsActions = useHMSActions();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const localPeer = useHMSStore(selectLocalPeer);
