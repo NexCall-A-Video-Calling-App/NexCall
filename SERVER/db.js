@@ -4,6 +4,7 @@ const client = new MongoClient(`mongodb+srv://${process.env.db_user}:${process.e
   serverApi: ServerApiVersion.v1
 });
 
+
 let usersCollection, messagesCollection, scheduleCollection, paymentCollection;
 
 async function connectMongo() {
