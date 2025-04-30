@@ -29,11 +29,11 @@ const GetStarted = () => {
                 <input
                   type="email"
                   placeholder="Enter your email"
-                  className="flex-1 bg-gray-800 border-none rounded-t-full sm:rounded-l-full sm:rounded-r-none px-4 sm:px-6 py-2 sm:py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#32c6fc] w-full"
+                  className="mb-2 md:mb-0 flex-1 bg-gray-800 border-none rounded-md sm:rounded-l-full sm:rounded-r-none px-4 sm:px-6 py-2 sm:py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#32c6fc] w-full"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] rounded-b-full sm:rounded-r-full sm:rounded-l-none px-4 sm:px-6 py-2 sm:py-3 text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap text-sm sm:text-base">
+                <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3]  rounded-md  sm:rounded-r-full sm:rounded-l-none px-4 sm:px-6 py-2 sm:py-3 text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap text-sm sm:text-base">
                   Subscribe
                 </button>
               </div>

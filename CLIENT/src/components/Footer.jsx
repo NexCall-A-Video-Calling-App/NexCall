@@ -1,15 +1,20 @@
 import React from "react";
 import { FaTwitter, FaFacebookF, FaLinkedinIn, FaYoutube, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { Link } from 'react-router-dom';
+import logo from "../assets/logo.png";
 const Footer = () => {
   return (
     <footer className="py-16 px-8 border-t border-gray-800 bg-[#151515]">
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           <div className="col-span-2">
-            <div className="text-2xl font-bold bg-gradient-to-r from-[#32c6fc] to-[#8659d3] bg-clip-text text-transparent mb-4">
-              NexCall
-            </div>
+            <Link to="/" className="flex items-center font-semibold text-2xl">
+              <img className="w-6 h-6 object-cover mr-2" src={logo} alt="NexCall Logo" />
+              <div className="text-2xl font-bold bg-gradient-to-r from-[#32c6fc] to-[#8659d3] bg-clip-text text-transparent">
+                NexCall
+              </div>
+            </Link>
             <p className="text-gray-400 mb-4 max-w-xs">
               Empowering developers to build the future of real-time
               communication.
