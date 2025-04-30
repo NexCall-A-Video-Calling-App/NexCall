@@ -2,14 +2,11 @@ import React from "react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { Outlet, useLocation } from "react-router-dom";
-import CheckAndEmail from "../hooks/email/CheckAndEmail";
 
 const MainLayout = () => {
   const location = useLocation();
   return (
     <div>
-     
-
       {location.pathname !== '/dashboard' && <Navbar />}
 
       <main className='mt-16 min-h-[calc(100vh-323px)]'>

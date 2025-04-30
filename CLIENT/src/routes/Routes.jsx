@@ -16,7 +16,6 @@ import ChatHistory from "../pages/ChatHistory/ChatHistory";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import VideoCall from "../pages/Video/VideoCall";
 import PaymentPage from "../payment/PaymentPage";
-import CheckAndEmail from "../hooks/email/CheckAndEmail";
 
 const Routes = createBrowserRouter([
   {
@@ -86,7 +85,6 @@ const Routes = createBrowserRouter([
       
     ]
   },
- 
 ]);
 
 export default Routes;

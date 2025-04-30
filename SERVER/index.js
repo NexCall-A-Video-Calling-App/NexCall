@@ -43,7 +43,7 @@ async function run() {
     app.use('/', require('./routes/messageRoutes')(messagesCollection));
     app.use('/schedule', require('./routes/scheduleRoutes')(scheduleCollection));
     app.use('/payments', require('./routes/paymentRoutes')(paymentCollection));
-    app.use('/', require('./routes/tokenRoutes'));
+    app.use('/api', require('./routes/tokenRoutes'));
 
     // Root route
     app.get('/', (req, res) => res.send("NEXCALL SERVER RUNNING"));
