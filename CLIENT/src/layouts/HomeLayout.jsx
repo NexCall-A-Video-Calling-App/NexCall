@@ -1,22 +1,24 @@
 import React from 'react';
-import Banner from '../pages/Home/Banner';
-import Schedule from '../pages/Home/Schedule';
+import Banner from '../pages/Home/Banner'; 
 import Features from '../pages/Home/Features';
-import About from '../pages/Home/About';
-import GetStarted from '../pages/Home/GettingStart';
+import About from '../pages/Home/About'; 
 import FAQ from '../pages/Home/Faq';
 import PricingPlans from '../pages/PricingPlans/PricingPlans';
+import HowItWorks from '../pages/Home/HowItWorks';
+import WhyToChoose from '../pages/Home/WhyToChoose';
+import GetStarted from '../pages/Home/GettingStart';
 
 const HomeLayout = () => {
     return (
-        <div className='container mx-auto'>
+        <div>
             <Banner />
             <About />
-            <Schedule />
             <Features />
-            <GetStarted />
+            <HowItWorks />
+            <WhyToChoose /> 
             <FAQ />
             <PricingPlans />
+            <GetStarted/>
         </div>
     );
 };
