@@ -4,49 +4,46 @@ import aboutNexImg from '../../assets/aboutNex.png'
 
 const About = () => {
   return (
-    <div id="about" className="container mx-auto px-4 py-8 flex flex-col md:flex-row items-center overflow-hidden">
-      {/* Left Text Section */}
-      <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="md:w-1/2 text-center md:text-left"
-      >
-        <h2 className="text-3xl font-bold text-gray-900">
-          About <span className="text-purple-600">NexCall</span>
-        </h2>
-        <p className="text-gray-600 mt-4 leading-relaxed">
-          We're on a mission to make communication effortless. Since our
-          founding in 2021, NexCall has quickly become the go-to platform
-          for professional, reliable, and secure video conferencing solutions.
-        </p>
-
-        {/* Stats */}
-        <div className="flex gap-8 mt-6 justify-center md:justify-start">
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900">2M+</h3>
-            <p className="text-gray-600">Active Users</p>
+    <div className="bg-[#151515] text-white">
+      <div id="about" className="container mx-auto py-8 flex flex-col md:flex-row items-center overflow-hidden">
+        {/* About Us Section */}
+        <section className="py-16 pb-0 container mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold mb-6">
+                About{" "}
+                <span className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] bg-clip-text text-transparent">
+                  NexCall
+                </span>
+              </h2>
+              <p className="text-gray-300 mb-8">
+                We're revolutionizing the way people connect through video calls.
+                Our platform provides crystal-clear communication, making remote
+                interactions feel more personal and engaging than ever before.
+              </p>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="bg-gray-900 bg-opacity-60 p-4 rounded-xl">
+                  <div className="text-2xl font-bold text-[#32c6fc] mb-2">
+                    24M+
+                  </div>
+                  <p className="text-gray-400">Active Users</p>
+                </div>
+                <div className="bg-gray-900 bg-opacity-60 p-4 rounded-xl">
+                  <div className="text-2xl font-bold text-[#8659d3] mb-2">
+                    150+
+                  </div>
+                  <p className="text-gray-400">Countries</p>
+                </div>
+              </div>
+            </div>
+            <div className="relative">
+              <div
+                className="w-full h-[400px] bg-[url('https://readdy.ai/api/search-image?query=modern%20office%20team%20collaborating%20through%20video%20conference%20call%2C%20showing%20multiple%20screens%20with%20diverse%20participants%2C%20professional%20setting%20with%20blue%20accent%20lighting&width=600&height=800&seq=about1&orientation=portrait')] bg-cover bg-center rounded-xl">
+              </div>
+            </div>
           </div>
-          <div>
-            <h3 className="text-2xl font-bold text-gray-900">150+</h3>
-            <p className="text-gray-600">Countries</p>
-          </div>
-        </div>
-      </motion.div>
-
-      {/* Right Image Section */}
-      <motion.div
-        initial={{ opacity: 0, x: 50 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6 }}
-        className="md:w-1/2 mt-10 md:mt-0"
-      >
-        <img
-          src={aboutNexImg}
-          alt="About NexCall"
-          className="rounded-lg "
-        />
-      </motion.div>
+        </section>
+      </div>
     </div>
   );
 };

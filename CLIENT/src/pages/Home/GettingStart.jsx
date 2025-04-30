@@ -1,47 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 const GetStarted = () => {
+  const [email, setEmail] = useState("");
   return (
-
-    <div className="container w-11/12 mx-auto">
-      <div className="relative bg-primary rounded-2xl px-4 py-8 sm:px-8 sm:py-12 flex flex-col items-center justify-center text-center max-w-5xl mx-auto overflow-hidden">
-        {/* Corner Decorations */}
-        <div className="absolute top-0 right-0 w-16 sm:w-24 h-12 sm:h-16 bg-[#a887df] rounded-tr-2xl rounded-bl-2xl"></div>
-        <div className="absolute bottom-0 left-0 w-24 sm:w-36 h-12 sm:h-16 bg-[#a887df] rounded-bl-2xl rounded-tr-2xl"></div>
-        {/* Heading */}
-        <h2 className="text-white text-2xl sm:text-3xl md:text-4xl font-bold mb-4 font-lexend">Get started!</h2>
-        {/* Description */}
-        <p className="text-gray-300 mb-6 max-w-md sm:max-w-lg md:max-w-xl text-sm sm:text-base">
-          Utilize digital calendars or scheduling apps to keep track of your appointments,
-          deadlines, and events. These tools often offer reminders and can sync across
-          multiple devices, ensuring you stay on top of your schedule.
-        </p>
-        {/* Button */}
-        <button className="btn bg-white text-black px-5 py-2 text-sm sm:px-6 sm:text-base">Sign up</button>
-        {/* Avatars */}
-        <div className="absolute left-4 sm:left-6 top-4 sm:top-6">
-          <div className="avatar">
-            <div className="w-12 sm:w-16 rounded-full border-2 border-white">
-              <img src="https://i.ibb.co.com/yQ6HV8R/r2.jpg" />
+    <div className="bg-[#151515]">
+      <section className="py-20 px-8 max-w-7xl mx-auto">
+        <div className="bg-gray-900 bg-opacity-70 rounded-2xl p-12 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[url('https://readdy.ai/api/search-image?query=abstract%20technology%20pattern%20with%20flowing%20blue%20and%20purple%20light%20trails%20on%20dark%20background%2C%20digital%20network%20concept%2C%20futuristic%20minimal%20design&width=1200&height=600&seq=cta1&orientation=landscape')] bg-cover bg-center opacity-20"></div>
+          <div className="relative z-10 max-w-3xl mx-auto text-center text-white">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">
+              Ready to transform your application with real-time communication?
+            </h2>
+            <p className="text-xl text-gray-300 mb-8">
+              Get started for free today and join thousands of developers
+              building the future of communication.
+            </p>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+              <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-3 rounded-full text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+                Start Free Trial
+              </button>
+              <button className="border border-gray-600 px-6 py-3 rounded-full text-white font-medium hover:border-[#32c6fc] transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+                Contact Sales
+              </button>
+            </div>
+            <div className="max-w-md mx-auto">
+              <div className="flex">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 bg-gray-800 border-none rounded-l-full px-6 py-3 text-white focus:outline-none focus:ring-2 focus:ring-[#32c6fc]"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] rounded-r-full px-6 py-3 text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+                  Subscribe
+                </button>
+              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                Subscribe to our newsletter for developer tips and updates
+              </p>
             </div>
           </div>
         </div>
-        <div className="absolute right-4 sm:right-6 top-16 sm:top-20 hidden sm:block">
-          <div className="avatar">
-            <div className="w-12 sm:w-16 rounded-full border-2 border-white">
-              <img src="https://i.ibb.co.com/105gv6j/r1.jpg" />
-            </div>
-          </div>
-        </div>
-        <div className="absolute bottom-4 sm:bottom-6 left-24 sm:left-40 hidden sm:block">
-          <div className="avatar">
-            <div className="w-12 sm:w-16 rounded-full border-2 border-white">
-              <img src="https://i.ibb.co.com/qjrMBmf/r4.jpg" />
-            </div>
-          </div>
-        </div>
-      </div>
+      </section>
     </div>
   );
 };

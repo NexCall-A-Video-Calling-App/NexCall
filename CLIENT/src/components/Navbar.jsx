@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/nclogo.png";
+import logo from "../assets/logo.png";
 import useAuth from "../hooks/useAuth";
 import { MdOutlineVoiceChat } from "react-icons/md";
 import toast from "react-hot-toast";
@@ -21,33 +21,34 @@ const Navbar = () => {
 
   const links = (
     <>
-      <li>
+      <li className="text-gray-300">
         <a href="#banner">Home</a>
       </li>
-      <li>
+      <li className="text-gray-300">
         <a href="#about">About Us</a>
       </li>
-      <li>
+      <li className="text-gray-300">
         <a href="#features">Features</a>
       </li>
-      <li>
+      <li className="text-gray-300">
         <a href="#faq">FAQ</a>
       </li>
-      <li>
+      <li className="text-gray-300">
         <a href="#pricing-plans">Pricing Plans</a>
       </li>
     </>
   );
+
   return (
-    <div className="bg-base-100 shadow-sm w-full fixed top-0 z-50 border-b">
+    <div className="bg-[#151515] shadow-sm w-full fixed top-0 z-50">
       <div className="container mx-auto navbar px-2">
         {/* Mobile menu (left side on small devices) */}
         <div className="navbar-start lg:hidden">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="lg:hidden">
-              <svg
+              <svg 
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-5 w-5 text-gray-300"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -72,8 +73,10 @@ const Navbar = () => {
         {/* Logo: always on the left */}
         <div className="navbar-start hidden lg:flex">
           <Link to="/" className="flex items-center font-semibold text-2xl">
-            <img className="w-12 h-12 object-cover" src={logo} alt="NexCall Logo" />
-            <span >NexCall</span>
+            <img className="w-6 h-6 object-cover mr-2" src={logo} alt="NexCall Logo" />
+            <div className="text-2xl font-bold bg-gradient-to-r from-[#32c6fc] to-[#8659d3] bg-clip-text text-transparent">
+              NexCall
+            </div>
           </Link>
         </div>
 
@@ -85,8 +88,10 @@ const Navbar = () => {
         {/* Show logo in center for small devices */}
         <div className="navbar-center lg:hidden">
           <Link to="/" className="flex items-center font-semibold text-2xl -ml-5">
-            <img className="w-12 h-12 object-cover" src={logo} alt="NexCall Logo" />
-            <span >NexCall</span>
+            <img className="w-8 h-8 object-cover mr-2" src={logo} alt="NexCall Logo" />
+            <div className="text-2xl font-bold bg-gradient-to-r from-[#32c6fc] to-[#8659d3] bg-clip-text text-transparent">
+              NexCall
+            </div>
           </Link>
         </div>
 
