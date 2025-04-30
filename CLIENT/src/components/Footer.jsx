@@ -1,65 +1,117 @@
 import React from "react";
-import { FaTwitter, FaFacebookF, FaLinkedinIn, FaYoutube } from "react-icons/fa";
-
+import { FaTwitter, FaFacebookF, FaLinkedinIn, FaYoutube, FaGithub } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 const Footer = () => {
   return (
-    <footer className="bg-gray-100 border-t border-gray-300 py-8 px-4 w-full overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Left Section: Logo & Description */}
-        <div>
-          <h2 className="text-2xl font-bold text-gray-900 flex items-center">
-            <span className="mr-2">📅</span> NexCall
-          </h2>
-          <p className="text-gray-600 text-sm mt-2">
-            Say hello to Appointopia, the innovative schedule app designed to simplify your life and make scheduling a breeze!
-          </p>
-          {/* Social Icons */}
-          <div className="flex space-x-4 mt-4 text-gray-700">
-            <FaTwitter className="cursor-pointer hover:text-blue-500" />
-            <FaFacebookF className="cursor-pointer hover:text-blue-700" />
-            <FaLinkedinIn className="cursor-pointer hover:text-blue-600" />
-            <FaYoutube className="cursor-pointer hover:text-red-500" />
+    <footer className="py-16 px-8 border-t border-gray-800 bg-[#151515]">
+      <div className="max-w-7xl mx-auto">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+          <div className="col-span-2">
+            <div className="text-2xl font-bold bg-gradient-to-r from-[#32c6fc] to-[#8659d3] bg-clip-text text-transparent mb-4">
+              NexCall
+            </div>
+            <p className="text-gray-400 mb-4 max-w-xs">
+              Empowering developers to build the future of real-time
+              communication.
+            </p>
+            <div className="text-white flex gap-3 text-xl">
+              <FaXTwitter />
+              <FaGithub />
+              <FaLinkedinIn />
+              <FaYoutube />
+            </div>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">
+              Products
+            </h3>
+            <ul className="space-y-2">
+              {[
+                "Video SDK",
+                "Voice SDK",
+                "Chat SDK",
+                "Whiteboard",
+                "Analytics",
+              ].map((item) => (
+                <li key={item}>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white text-sm cursor-pointer"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">
+              Resources
+            </h3>
+            <ul className="space-y-2">
+              {[
+                "Documentation",
+                "API Reference",
+                "Sample Apps",
+                "Blog",
+                "Community",
+              ].map((item) => (
+                <li key={item}>
+                  <a
+                    href="#"
+                    className="text-gray-400 hover:text-white text-sm cursor-pointer"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <h3 className="text-sm font-semibold uppercase tracking-wider mb-4">
+              Company
+            </h3>
+            <ul className="space-y-2">
+              {["About Us", "Careers", "Contact", "Press", "Legal"].map(
+                (item) => (
+                  <li key={item}>
+                    <a
+                      href="#"
+                      className="text-gray-400 hover:text-white text-sm cursor-pointer"
+                    >
+                      {item}
+                    </a>
+                  </li>
+                ),
+              )}
+            </ul>
           </div>
         </div>
-
-        {/* Navigation Links */}
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">Product</h3>
-          <ul className="mt-2 space-y-1 text-gray-600">
-            <li className="hover:text-purple-600 cursor-pointer">Features</li>
-            <li className="hover:text-purple-600 cursor-pointer">Pricing</li>
-          </ul>
+        <div className="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+          <p className="text-gray-500 text-sm">
+            © 2025 NexCall. All rights reserved.
+          </p>
+          <div className="flex space-x-6 mt-4 md:mt-0">
+            <a
+              href="#"
+              className="text-gray-500 hover:text-white text-sm cursor-pointer"
+            >
+              Privacy Policy
+            </a>
+            <a
+              href="#"
+              className="text-gray-500 hover:text-white text-sm cursor-pointer"
+            >
+              Terms of Service
+            </a>
+            <a
+              href="#"
+              className="text-gray-500 hover:text-white text-sm cursor-pointer"
+            >
+              Cookie Policy
+            </a>
+          </div>
         </div>
-
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">Resource</h3>
-          <ul className="mt-2 space-y-1 text-gray-600">
-            <li className="hover:text-purple-600 cursor-pointer">Blog</li>
-            <li className="hover:text-purple-600 cursor-pointer">User Guides</li>
-            <li className="hover:text-purple-600 cursor-pointer">Webinars</li>
-          </ul>
-        </div>
-
-        <div>
-          <h3 className="text-lg font-semibold text-gray-900">About Us</h3>
-          <ul className="mt-2 space-y-1 text-gray-600">
-            <li className="hover:text-purple-600 cursor-pointer">About us</li>
-            <li className="hover:text-purple-600 cursor-pointer">Contact us</li>
-          </ul>
-        </div>
-
-      </div>
-
-      {/* Bottom Section */}
-      <div className="mt-6 flex flex-col md:flex-row justify-between items-center text-gray-600 text-sm border-t pt-4">
-        <p>© 2022 Brand, NexCall.</p>
-        <ul className="flex space-x-4 mt-2 md:mt-0">
-          <li className="hover:text-purple-600 cursor-pointer">Privacy</li>
-          <li className="hover:text-purple-600 cursor-pointer">Terms</li>
-          <li className="hover:text-purple-600 cursor-pointer">Sitemap</li>
-        </ul>
-      </div>
       </div>
     </footer>
   );

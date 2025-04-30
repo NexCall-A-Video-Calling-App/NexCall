@@ -65,20 +65,20 @@ const MeetingFunctionpage = () => {
   // Schedule button
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [ Scheduleroomid , setScheduleroomid ] = useState("");
+  const [Scheduleroomid, setScheduleroomid] = useState("");
 
   const onSubmit = (data) => {
 
     const { Date, Time, Topic } = data;
-  
+
     if (Date && Time && Topic) {
       const userData = {
         name: user?.displayName,
         profilePic: user?.photoURL,
       };
-  
+
       socket.emit("createRoom", userData);
-  
+
       // Handle once when the room is created
       socket.once("RoomCreated", (roomId, name, timestamp) => {
         const scheduleHandler = {
@@ -87,11 +87,11 @@ const MeetingFunctionpage = () => {
           Topic,
           email: user?.email,
           roomID: roomId,
-   
+
         };
-  
+
         axios
-          .post("https://nexcall.up.railway.app/schedule-collections", scheduleHandler)
+          .post("http://localhost:5000/schedule-collections", scheduleHandler)
           .then((res) => {
             if (res.data.insertedId) {
               toast.success("Schedule added successfully!");
@@ -112,7 +112,7 @@ const MeetingFunctionpage = () => {
       setIsModalOpen(false);
     }
   };
-  
+
   // idea 1.count dwon time , show calender
   // after complete count dwon meeting delete from db
   // Navigate to Dashboard when currentRoom is set
@@ -124,7 +124,7 @@ const MeetingFunctionpage = () => {
   // }, [currentRoom, navigate, setLoading]);
   // comment this because after room create on schedule section go dashboard
 
-  const handleCreateRoom = () => { 
+  const handleCreateRoom = () => {
     const userData = {
       name: user?.displayName,
       profilePic: user?.photoURL,
@@ -132,7 +132,7 @@ const MeetingFunctionpage = () => {
     };
     socket.emit("createRoom", userData);
 
-  
+
     // Listen for RoomCreated event from server
     socket.on("RoomCreated", (roomId, name, timestamp) => {
       setCurrentRoom(roomId); // Set 100ms roomId as currentRoom
@@ -148,9 +148,9 @@ const MeetingFunctionpage = () => {
 
   };
 
-  
+
   const handleJoinRoom = () => {
-    if (!joinRoomId) return; 
+    if (!joinRoomId) return;
     socket.emit("JoinRoom", {
       roomId: joinRoomId,
       userData: {
@@ -249,8 +249,8 @@ const MeetingFunctionpage = () => {
                             <td className="px-2 py-2">{schedule.Topic}</td>
                             <td className="px-2 py-2">{schedule.Date}</td>
                             <td className="px-2 py-2">{schedule.Time}</td>
-                            <td className="px-2 py-2">{schedule. roomID}</td>
-                            
+                            <td className="px-2 py-2">{schedule.roomID}</td>
+
                             <td className="px-2 py-2">{countDwon(schedule.Date, schedule.Time)}</td>
                           </tr>
                         ))}

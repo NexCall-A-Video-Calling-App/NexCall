@@ -21,6 +21,7 @@ import {
 } from "react-icons/fa";
 
 const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
+  
   const hmsActions = useHMSActions();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const localPeer = useHMSStore(selectLocalPeer);
@@ -60,14 +61,13 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
     return () => clearInterval(interval);
   }, [hmsActions]);
 
-  const joinRoom = async (roomId) => {
+  const joinRoom = async (roomId) => { 
     try {
       const response = await fetch(
-        `https://nexcall.up.railway.app/token?roomId=${encodeURIComponent(roomId)}`
+        `http://localhost:5000/token?roomId=${encodeURIComponent(roomId)}`
       );
       if (!response.ok) throw new Error(`Failed to fetch token: ${response.statusText}`);
       const { token } = await response.json();
-
       await hmsActions.join({
         userName: userName || `User-${Math.random().toString(36).substring(7)}`,
         authToken: token,
@@ -75,6 +75,7 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
         metaData: JSON.stringify({ handRaised: false }),
       });
       setError("");
+
     } catch (error) {
       console.error("Error joining room:", error);
       setError("Failed to join room: " + error.message);
