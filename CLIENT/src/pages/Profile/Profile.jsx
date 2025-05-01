@@ -5,15 +5,21 @@ import { MdUpgrade } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { IoMdClose } from "react-icons/io";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
+import usePlan from "../../hooks/usePlan";
 
 const ProfileDetails = () => {
   const { user, profileUpdate } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  const axiosSecure = useAxiosSecure();
   const [formData, setFormData] = useState({
     displayName: "",
     email: "",
     photoURL: "",
   });
+  const [plan] = usePlan();
+  // console.log(plan);
+
 
   useEffect(() => {
     if (user) {
@@ -30,7 +36,8 @@ const ProfileDetails = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleToggleEdit = async () => {
+  const handleToggleEdit = async (e) => {
+    e.preventDefault();
     if (isEditing) {
       if (!formData.displayName.trim()) {
         toast.error("Name cannot be empty!");
@@ -39,7 +46,19 @@ const ProfileDetails = () => {
 
       try {
         await profileUpdate(formData.displayName, formData.photoURL);
-        toast.success("Profile updated successfully!");
+        // Update user profile
+        const profileInfo = {
+          name: formData.displayName,
+          photo: formData.photoURL || user?.photoURL,
+        }
+
+        const res = await axiosSecure.patch(`/users/${user?.email}`, profileInfo)
+        console.log(res.data);
+        if (res.data.modifiedCount > 0) {
+          // console.log('Profile Updated Successfully');
+          toast.success('Profile Updated Successfully');
+          // window.location.reload();
+        }
       } catch (error) {
         console.error("Error updating profile:", error);
         toast.error("Failed to update profile. Please try again.");
@@ -59,19 +78,6 @@ const ProfileDetails = () => {
     setIsEditing(false);
   };
 
-
-  const handleUpgradePlan = () => {
-    toast("Upgrade feature is coming soon!", {
-      icon: "🚀",
-      style: {
-        borderRadius: '8px',
-        background: '#333',
-        color: '#fff',
-      },
-    });
-  };
-
-
   return (
     <div className="bg-[#151515] py-10 px-2">
       <div className="max-w-3xl mx-auto p-8 shadow-md rounded-2xl border border-gray-500">
@@ -85,23 +91,21 @@ const ProfileDetails = () => {
             />
             <div>
               <h2 className="text-2xl font-bold text-gray-300">{formData.displayName || "User Name"}</h2>
-              <p className="text-sm text-gray-800 bg-[#32c6fc] rounded-full text-center border border-gray-950">{user?.plan || "Basic Plan"}</p>
+              <p className="text-sm font-semibold text-gray-800 bg-[#32c6fc] rounded-full text-center border border-gray-950 px-4">{plan}</p>
             </div>
           </div>
 
-          <button onClick={handleUpgradePlan}>
-            <Link
-              // to="/pricing"
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#32c6fc]  rounded-full hover:bg-[#32c6fcd0] transition duration-300 shadow-md"
-            >
-              <MdUpgrade className="text-xl" />
-              Upgrade Plan
-            </Link>
-          </button>
+          <Link
+            to="/#our-plans"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#32c6fc]  rounded-full hover:bg-[#32c6fcd0] transition duration-300 shadow-md font-semibold"
+          >
+            <MdUpgrade className="text-xl" />
+            Upgrade Plan
+          </Link>
         </div>
 
         {/* Profile Form */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Full Name */}
           <div>
             <label htmlFor="displayName" className="block text-sm font-medium text-gray-600 mb-1">
@@ -177,7 +181,7 @@ const ProfileDetails = () => {
               </button>
             )}
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );

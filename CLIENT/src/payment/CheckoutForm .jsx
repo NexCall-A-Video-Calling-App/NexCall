@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
-function CheckoutForm({ price, name }) {
+function CheckoutForm() {
   const { user, userLogOut } = useAuth();
-
-  console.log(price, " price", name, "name");
-  const axiosSecure = useAxiosSecure(); 
+  const location = useLocation();
+  // console.log(location?.state?.plan);
+  const price = location?.state?.price;
+  const plan = location?.state?.plan;
+  // console.log(price, " price", name, "name");
+  const axiosSecure = useAxiosSecure();
 
 
   const stripe = useStripe();
@@ -77,14 +80,13 @@ function CheckoutForm({ price, name }) {
       }
       setid(paymentIntent.id);
 
-      await axios
-        .post("http://localhost:5000/payment-success", {
-          email: user.email,
-          plan: name,
-          price: price,
-          name: user?.name,
-          id: paymentIntent.id,
-        })
+      await axios.post("http://localhost:5000/payment-success", {
+        email: user.email,
+        plan: plan,
+        price: price,
+        name: user?.name,
+        id: paymentIntent.id,
+      })
         .then((res) => {
           console.log(res.data);
         })
@@ -94,6 +96,9 @@ function CheckoutForm({ price, name }) {
 
       setPaymentSuccess(true);
       console.log("Payment succeeded:", paymentIntent);
+
+      await axiosSecure.patch(`/users/plan/${user?.email}`, { plan });
+
     } catch (err) {
       setError(err.message || "Payment failed");
       console.error("Payment error:", err);
@@ -103,112 +108,112 @@ function CheckoutForm({ price, name }) {
   };
 
   return (
-    <div className="max-w-md mx-auto p-6 bg-white rounded-lg shadow-md mt-10 border ">
-      {paymentSuccess ? (
-        <div className="p-4 text-left flex justify-center items-center rounded-lg  ">
-          <div className="flex flex-col gap-y-2">
-            <p>Plan <span className="font-semibold">{name}</span> </p>
-            <p>Price <span className="font-semibold">{price}$</span> </p>
-            <p>Email<span className="font-semibold"> {user?.email}</span> </p>
-            <p className="mb-4">TransactionID <span className="font-semibold">
-               {id}</span> </p>
-
-            <div className="flex justify-center flex-col">
-              <h2 className="font-semibold text-green-500">
-                {" "}
-                Payment successful! Thank you for your purchase.
-              </h2>
-
-              <div className="mb-5 flex justify-center">
-                <Link to={"/"} className="btn mt-4 px-10 py-2 border hover:shadow hover:shadow-slate-950">
-                  Home
-                </Link>
-              </div>
+    <div className="py-10">
+      <div className="max-w-md mx-auto  px-6 py-8 bg-gray-900 text-white rounded-2xl shadow-lg border border-gray-700">
+        {paymentSuccess ? (
+          <div className="space-y-2 text-center">
+              <h2 className="text-2xl font-semibold animated-gradient-text">Payment Successful</h2>
+            <p className="  text-gray-300">
+              <span className="font-semibold">Plan:</span> {plan}
+            </p>
+            <p className="  text-gray-300">
+              <span className="font-semibold">Price:</span> ${price}
+            </p>
+            <p className="  text-gray-300">
+              <span className="font-semibold">Email:</span> {user?.email}
+            </p>
+            <p className="  text-gray-300">
+              <span className="font-semibold">Transaction ID:</span> {id}
+            </p>
+            <div className="pt-3">
+              <Link
+                to="/"
+                className="w-full bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-gray-100 font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap "
+              >
+                Go to Home
+              </Link>
             </div>
           </div>
-        </div>
-      ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          
-          <div className="mb-6 p-2 flex gap-y-2 flex-col">
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="space-y-2">
+              <div className="flex justify-between">
+                <div className="">
+                  <span className="text-gray-300">Plan:</span> <span className="font-semibold">{plan}</span>
+                </div>
+                <div className="">
+                  <span className="text-gray-300">Price:</span> <span className="font-semibold">${price}</span>
+                </div>
+              </div>
+              {/* <div className="p-3 bg-gray-800 rounded-md">
+                <span className="text-gray-300">Your Email:</span> <span className="font-semibold">{user?.email}</span>
+              </div> */}
+            </div>
 
-            <h3 className="border p-2  py-2 rounded-md">Your Package <span className="font-semibold">{ name}</span> </h3>
-
-            <h4 className=" border p-2 py-2  rounded-md">Price <span className="font-semibold">{price}$</span>
-
-           
-               
-            </h4>
-            <h4 className="border p-2 py-2 rounded-md">Your Email <span className="font-semibold">{user?.email}</span> </h4>
-          </div>
-
-
-
-          <div className="p-3 border border-gray-300 rounded-md">
-          
-            <CardElement
-              options={{
-                style: {
-                  base: {
-                    fontSize: "16px",
-                    color: "#424770",
-                    "::placeholder": {
-                      color: "#aab7c4",
+            <div className="p-4 bg-gray-800 rounded-md">
+              <CardElement
+                options={{
+                  style: {
+                    base: {
+                      fontSize: "16px",
+                      color: "#ffffff",
+                      "::placeholder": {
+                        color: "#cbd5e1",
+                      },
+                    },
+                    invalid: {
+                      color: "#f87171",
                     },
                   },
-                  invalid: {
-                    color: "#ff5252",
-                  },
-                },
-              }}
-            />
-          </div>
+                }}
+              />
+            </div>
 
-          {error && (
-            <div className="p-3 text-red-600 bg-red-50 rounded-md">{error}</div>
-          )}
-
-          <button
-            type="submit"
-            disabled={!stripe || loading}
-            className={`w-full py-3 px-4 rounded-md text-white font-medium ${
-              !stripe || loading
-                ? "bg-indigo-300 cursor-not-allowed"
-                : "bg-indigo-600 hover:bg-indigo-700"
-            } transition-colors`}
-          >
-            {loading ? (
-              <span className="flex items-center justify-center">
-                <svg
-                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                >
-                  <circle
-                    className="opacity-25"
-                    cx="12"
-                    cy="12"
-                    r="10"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                  ></circle>
-                  <path
-                    className="opacity-75"
-                    fill="currentColor"
-                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                  ></path>
-                </svg>
-                Processing...
-              </span>
-            ) : (
-              `Pay`
-              //   convert to dynamic
+            {error && (
+              <div className="bg-red-600 bg-opacity-20 text-red-400 p-3 rounded-md">{error}</div>
             )}
-          </button>
-        </form>
-      )}
+
+            <button
+              type="submit"
+              disabled={!stripe || loading}
+              className={`w-full bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap ${!stripe || loading
+                ? "bg-indigo-400 cursor-not-allowed"
+                : "bg-indigo-600 hover:bg-indigo-700"
+                }`}
+            >
+              {loading ? (
+                <span className="flex justify-center items-center">
+                  <svg
+                    className="animate-spin h-5 w-5 mr-2 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Processing...
+                </span>
+              ) : (
+                "Pay Now"
+              )}
+            </button>
+          </form>
+        )}
+      </div>
     </div>
+
   );
 }
 

@@ -6,6 +6,8 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import useImageUpload from "../../hooks/useImageUpload";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../../hooks/useAxiosPublic"
+import SocialLogin from "../../components/SocialLogin";
 
 
 const SignUp = () => {
@@ -13,7 +15,7 @@ const SignUp = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
     const { uploadImage } = useImageUpload();
-
+    const axiosPublic = useAxiosPublic();
 
     // Sign Up
     const onSubmit = async (data) => {
@@ -31,33 +33,32 @@ const SignUp = () => {
         createUser(data.email, data.password)
             .then((result) => {
                 // console.log(result.user);
-                toast.success("User created successfully.");
-                profileUpdate(data.name, photoURL)
-                console.log(data.name, photoURL);
-                navigate('/meeting')
-                reset();
+
+                const userInfo = {
+                    name: data.name,
+                    email: data.email,
+                    photo: photoURL,
+                    plan: "Basic"
+                }
+
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            toast.success(`Welcome, ${data.name}! Your account has been created.`);
+                            profileUpdate(data.name, photoURL);
+                            // navigate(location?.state ? location?.state : '/');
+                            navigate('/meeting')
+                            reset();
+                        }
+                    })
             })
             .catch((error) => {
                 // console.log(error.message);
-                toast.error(error.message);
+                toast.error(`Error: ${error.code || 'Something went wrong. Please try again.'}`);
             })
 
     };
 
-    // Google Sign In
-    const signInWithGoogle = () => {
-        console.log("Google Sign In");
-        loginWithGoogle()
-            .then((result) => {
-                // console.log(result.user);
-                toast.success("User created successfully.");
-                navigate('/meeting')
-            })
-            .catch((error) => {
-                // console.log(error.message);
-                toast.error(error.message);
-            })
-    }
 
     return (
         <div className="flex justify-center items-center bg-gray-50 py-10 px-2">
@@ -139,12 +140,8 @@ const SignUp = () => {
 
                         {/* Google Sign In */}
                         <div className="text-center my-2 text-gray-500">OR</div>
-                        <button onClick={signInWithGoogle} className="w-full flex items-center justify-center bg-red-500 text-white py-2 rounded-lg mb-2 hover:bg-red-600">
-                            <span className="mr-2">
-                                <FaGoogle />
-                            </span>
-                            Sign up with Google
-                        </button>
+                        <SocialLogin />
+
                         <p className="text-center text-gray-600 mt-4">
                             Already have an account? <Link to="/sign-in"><span className="text-purple-600 cursor-pointer font-semibold">Sign in</span></Link>
                         </p>
