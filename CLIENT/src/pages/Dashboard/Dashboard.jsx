@@ -356,9 +356,9 @@ const Dashboard = () => {
 
                     {/* Message Bubble Section */}
                     <div
-                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-md relative ${isSender
-                        ? "bg-purple-500 text-white  "
-                        : "bg-[#1f2937] text-white "
+                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-xl relative ${isSender
+                        ? "bg-gradient-to-bl from-[#32c6fc] to-[#8659d3] text-white rounded-br-none"
+                        : "bg-gray-800 text-gray-100 rounded-bl-none "
                         }`}
                     >
                       <p className="text-sm md:text-base break-words">{msg.message}</p>
