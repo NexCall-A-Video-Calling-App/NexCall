@@ -6,6 +6,7 @@ import { AuthContext } from "../../provider/AuthProvider";
 import { Link, useNavigate } from "react-router-dom";
 import useImageUpload from "../../hooks/useImageUpload";
 import toast from "react-hot-toast";
+import useAxiosPublic from "../../hooks/useAxiosPublic"
 
 
 const SignUp = () => {
@@ -13,7 +14,7 @@ const SignUp = () => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm();
     const navigate = useNavigate();
     const { uploadImage } = useImageUpload();
-
+    const axiosPublic = useAxiosPublic();
 
     // Sign Up
     const onSubmit = async (data) => {
@@ -31,15 +32,28 @@ const SignUp = () => {
         createUser(data.email, data.password)
             .then((result) => {
                 // console.log(result.user);
-                toast.success("User created successfully.");
-                profileUpdate(data.name, photoURL)
-                console.log(data.name, photoURL);
-                navigate('/meeting')
-                reset();
+
+                const userInfo = {
+                    name: data.name,
+                    email: data.email,
+                    photo: photoURL,
+                    plan: "Basic"
+                }
+
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            toast.success(`Welcome, ${data.name}! Your account has been created.`);
+                            profileUpdate(data.name, photoURL);
+                            // navigate(location?.state ? location?.state : '/');
+                            navigate('/meeting')
+                            reset();
+                        }
+                    })
             })
             .catch((error) => {
                 // console.log(error.message);
-                toast.error(error.message);
+                toast.error(`Error: ${error.code || 'Something went wrong. Please try again.'}`);
             })
 
     };
