@@ -21,7 +21,7 @@ const ChatHistory = () => {
     });
 
     return (
-        <div className="bg-[#151515]">
+        <div className="bg-[#151515] min-h-screen">
             <div className="container mx-auto p-4 rounded-lg mt-4 w-full overflow-y-auto">
                 <h2 className="text-2xl font-bold text-gray-300 mb-6 border-b border-gray-500 pb-2">📜 Your Chat History</h2>
 
@@ -96,9 +96,9 @@ const ChatHistory = () => {
 
                                             {/* Message Bubble */}
                                             <div
-                                                className={`${isSender ? "mr-2" : "ml-2"} p-3 rounded-2xl relative ${isSender
+                                                className={`${isSender ? "mr-2" : "ml-2"} p-3 rounded-xl relative ${isSender
                                                     ? "bg-gradient-to-bl from-[#32c6fc] to-[#8659d3] text-white rounded-br-none"
-                                                    : "bg-gray-800 text-gray-200 rounded-bl-none"
+                                                    : "bg-gray-800 text-gray-100 rounded-bl-none "
                                                     }`}
                                             >
                                                 <p className="text-sm md:text-base break-words">{decryptedMessage}</p>

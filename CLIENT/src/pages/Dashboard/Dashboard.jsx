@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { FaEllipsisV, FaVideo, FaPhoneAlt } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
-import { IoIosSend, IoMdInformationCircleOutline } from "react-icons/io";
+import { IoIosSend, IoMdInformationCircleOutline, IoMdMenu } from "react-icons/io";
 import { RiChatDownloadLine } from "react-icons/ri";
 import { encryptMessage, decryptMessage } from "../../utilities/encryptDecrypt";
 import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
@@ -187,7 +187,7 @@ const Dashboard = () => {
               onChange={(e) => setSearchUser(e.target.value)}
               type="text"
               placeholder="Search users"
-              className="w-full p-2 mb-4 border rounded-lg bg-[#0f131c] text-white focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full p-2 mb-4 border border-gray-400 rounded-lg bg-[#0f131c] text-white focus:outline-none focus:ring-1 focus:ring-[#32c6fc]"
             />
           </div>
           <h2 className="text-xl font-bold mb-3 text-white">Users</h2>
@@ -199,7 +199,7 @@ const Dashboard = () => {
               .map((userinRoom, idx) => (
                 <div
                   key={idx}
-                  className="p-2 bg-[#12161f]  rounded-md shadow-sm hover:border hover:border-purple-500 transition-colors"
+                  className="p-2 bg-[#12161f]  rounded-md shadow-sm hover:bg-gray-800 border border-gray-800"
                 >
                   <div className="flex gap-2 items-center">
                     <img src={userinRoom.profilePic} alt="" className="w-6 h-6 rounded-full" />
@@ -217,7 +217,7 @@ const Dashboard = () => {
           {/* Back to Dashboard */}
           <Link
             onClick={handleBackToDashboard}
-            className="w-full border text-white bg-purple-500 flex justify-center items-center gap-2 mt-4 p-2 rounded-lg hover:bg-purple-600 transition-colors"
+            className=" w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap border border-gray-500"
           >
             <MdOutlineArrowBackIosNew /> Back to Dashboard
           </Link>
@@ -227,7 +227,7 @@ const Dashboard = () => {
             <div
               tabIndex={0}
               role="button"
-              className="border w-full flex justify-center items-center gap-2 p-2 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+              className="border border-gray-500 w-full flex justify-center items-center gap-2 p-2 text-gray-200 rounded-lg hover:bg-gray-800 transition-colors"
             >
               <img
                 src={user?.photoURL}
@@ -239,12 +239,12 @@ const Dashboard = () => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-300 rounded-box z-50 w-52 p-2 shadow-lg mt-2"
+              className="dropdown-content menu bg-gray-800 rounded-box z-50 w-52 p-2 shadow-lg mt-2 border border-gray-800 mb-2"
             >
               <li>
                 <button
                   onClick={handleProfileClick}
-                  className="btn btn-sm w-full mb-2"
+                  className="btn btn-sm w-full bg-gray-950 text-gray-300 border border-gray-800 mb-2"
                 >
                   Profile
                 </button>
@@ -255,7 +255,7 @@ const Dashboard = () => {
                     <Spinner />
                   </div>
                 ) : (
-                  <button onClick={handleLogOut} className="btn btn-sm w-full">
+                  <button onClick={handleLogOut} className="btn btn-sm w-full bg-gray-950 text-gray-300 border border-gray-800">
                     Log out
                   </button>
                 )}
@@ -276,8 +276,8 @@ const Dashboard = () => {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[#1f2937] shadow-md">
           <div className="flex items-center">
-            <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
-              <FaEllipsisV />
+            <button className="md:hidden text-2xl md:p-2 text-gray-200 mr-2" onClick={toggleSidebar}>
+              <IoMdMenu />
             </button>
             <img
               src={roomUsers.find((u) => u.socketId !== socket.id)?.profilePic || "https://i.ibb.co.com/5gDBVLDV/images.png"}
@@ -298,18 +298,18 @@ const Dashboard = () => {
           <div className="flex gap-1 md:space-x-2">
             <button
               onClick={handleVideoCall}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-50 text-gray-300 text-sm  md:text-xl hover:">
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-50 text-gray-300 text-xl md:border border-gray-800 rounded hover:">
               <FaVideo />
             </button>
             <button
               onClick={() => document.getElementById('my_modal_3').showModal()}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-sm md:text-xl hover:"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-xl md:border border-gray-800 rounded hover:"
             >
               <IoMdInformationCircleOutline />
             </button>
             <button
               onClick={handleDownloadMessagesAsPDF}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-sm md:text-xl hover:"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-xl md:border border-gray-800 rounded hover:"
             >
               <RiChatDownloadLine />
             </button>
@@ -356,9 +356,9 @@ const Dashboard = () => {
 
                     {/* Message Bubble Section */}
                     <div
-                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-md relative ${isSender
-                        ? "bg-purple-500 text-white  "
-                        : "bg-[#1f2937] text-white "
+                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-xl relative ${isSender
+                        ? "bg-gradient-to-bl from-[#32c6fc] to-[#8659d3] text-white rounded-br-none"
+                        : "bg-gray-800 text-gray-100 rounded-bl-none "
                         }`}
                     >
                       <p className="text-sm md:text-base break-words">{msg.message}</p>
@@ -380,16 +380,17 @@ const Dashboard = () => {
         {/* Message input */}
         <form
           onSubmit={handleSend}
-          className="p-4 border-t flex items-center"
+          className="p-4 border-t border-gray-700 flex items-center"
         >
           <input
             onChange={(e) => setMessage(e.target.value)}
             value={message}
             type="text"
             placeholder="Type a message..."
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500  bg-[#111827] text-white"
+            className="w-full p-2 border border-gray-500 rounded-lg bg-[#0f131c] focus:outline-none focus:ring-1 focus:ring-[#32c6fc] text-white"
           />
-          <button className="ml-2 p-2 text-2xl bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
+          
+          <button className="ml-2 p-2 text-2xl bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
             <IoIosSend />
           </button>
         </form>
