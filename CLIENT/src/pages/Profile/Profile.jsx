@@ -73,108 +73,110 @@ const ProfileDetails = () => {
 
 
   return (
-    <div className="max-w-3xl mx-auto mt-28 mb-12 p-8 bg-white shadow-md rounded-2xl border border-gray-200">
-      {/* Profile Header */}
-      <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
-        <div className="flex items-center gap-5">
-          <img
-            src={formData.photoURL || "https://i.ibb.co.com/5gDBVLDV/images.png"}
-            alt="User Avatar"
-            className="w-24 h-24 rounded-full border-[3px] border-purple-300 object-cover shadow-md"
-          />
-          <div>
-            <h2 className="text-2xl font-bold text-gray-800">{formData.displayName || "User Name"}</h2>
-            <p className="text-sm text-gray-500 bg-green-200 rounded-full text-center border">{user?.plan || "Basic Plan"}</p>
+    <div className="bg-[#151515] py-10 px-2">
+      <div className="max-w-3xl mx-auto p-8 shadow-md rounded-2xl border border-gray-500">
+        {/* Profile Header */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8">
+          <div className="flex items-center gap-5">
+            <img
+              src={formData.photoURL || "https://i.ibb.co.com/5gDBVLDV/images.png"}
+              alt="User Avatar"
+              className="w-24 h-24 rounded-full border-[2px] border-purple-500 object-cover shadow-md"
+            />
+            <div>
+              <h2 className="text-2xl font-bold text-gray-300">{formData.displayName || "User Name"}</h2>
+              <p className="text-sm text-gray-800 bg-[#32c6fc] rounded-full text-center border border-gray-950">{user?.plan || "Basic Plan"}</p>
+            </div>
           </div>
-        </div>
 
-        <button onClick={handleUpgradePlan}>
-          <Link
-            // to="/pricing"
-            className="flex items-center gap-2 px-5 py-2.5 bg-green-500 text-white rounded-full hover:bg-green-600 transition duration-200 shadow-md"
-          >
-            <MdUpgrade className="text-xl" />
-            Upgrade Plan
-          </Link>
-        </button>
-      </div>
-
-      {/* Profile Form */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Full Name */}
-        <div>
-          <label htmlFor="displayName" className="block text-sm font-medium text-gray-600 mb-1">
-            Full Name
-          </label>
-          <input
-            id="displayName"
-            type="text"
-            name="displayName"
-            value={formData.displayName}
-            onChange={handleChange}
-            disabled={!isEditing}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none transition ${isEditing
-              ? "bg-white border-purple-400 focus:ring-2 focus:ring-purple-300"
-              : "bg-gray-100 border-gray-300 cursor-not-allowed"
-              }`}
-          />
-        </div>
-
-        {/* Email */}
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-1">
-            Email
-          </label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            value={formData.email}
-            disabled
-            className="w-full px-4 py-2 border rounded-lg bg-gray-100 border-gray-300 cursor-not-allowed"
-          />
-        </div>
-
-        {/* Photo URL */}
-        <div className="md:col-span-2">
-          <label htmlFor="photoURL" className="block text-sm font-medium text-gray-600 mb-1">
-            Photo URL
-          </label>
-          <input
-            id="photoURL"
-            type="text"
-            name="photoURL"
-            value={formData.photoURL}
-            onChange={handleChange}
-            disabled={!isEditing}
-            className={`w-full px-4 py-2 border rounded-lg focus:outline-none transition ${isEditing
-              ? "bg-white border-purple-400 focus:ring-2 focus:ring-purple-300"
-              : "bg-gray-100 border-gray-300 cursor-not-allowed"
-              }`}
-          />
-        </div>
-
-        {/* Button */}
-        <div className="md:col-span-2 flex justify-center items-center gap-4">
-          <button
-            onClick={handleToggleEdit}
-            className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition duration-200 shadow-md ${isEditing
-              ? "bg-purple-600 text-white hover:bg-purple-700"
-              : "bg-purple-500 text-white hover:bg-purple-600"
-              }`}
-          >
-            <FaEdit />
-            {isEditing ? "Update Profile" : "Edit Profile"}
-          </button>
-
-          {isEditing && (
-            <button
-              onClick={handleCancelEdit}
-              className="flex items-center gap-1 px-6 py-3 rounded-full bg-red-500 text-white hover:bg-red-600 transition duration-200 shadow-md font-  bold"
+          <button onClick={handleUpgradePlan}>
+            <Link
+              // to="/pricing"
+              className="flex items-center gap-2 px-5 py-2.5 bg-[#32c6fc]  rounded-full hover:bg-[#32c6fcd0] transition duration-300 shadow-md"
             >
-              <IoMdClose size={21} /> Cancel Update
+              <MdUpgrade className="text-xl" />
+              Upgrade Plan
+            </Link>
+          </button>
+        </div>
+
+        {/* Profile Form */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Full Name */}
+          <div>
+            <label htmlFor="displayName" className="block text-sm font-medium text-gray-600 mb-1">
+              Full Name
+            </label>
+            <input
+              id="displayName"
+              type="text"
+              name="displayName"
+              value={formData.displayName}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none transition ${isEditing
+                ? "bg-white border-purple-400 focus:ring-2 focus:ring-purple-300"
+                : "bg-gray-700 border-gray-500 cursor-not-allowed text-gray-400"
+                }`}
+            />
+          </div>
+
+          {/* Email */}
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-1">
+              Email
+            </label>
+            <input
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
+              disabled
+              className="w-full px-4 py-2 border rounded-lg bg-gray-700 border-gray-500 cursor-not-allowed text-gray-400"
+            />
+          </div>
+
+          {/* Photo URL */}
+          <div className="md:col-span-2">
+            <label htmlFor="photoURL" className="block text-sm font-medium text-gray-600 mb-1">
+              Photo URL
+            </label>
+            <input
+              id="photoURL"
+              type="text"
+              name="photoURL"
+              value={formData.photoURL}
+              onChange={handleChange}
+              disabled={!isEditing}
+              className={`w-full px-4 py-2 border rounded-lg focus:outline-none transition ${isEditing
+                ? "bg-white border-purple-400 focus:ring-2 focus:ring-purple-300"
+                : "bg-gray-700 border-gray-500 cursor-not-allowed text-gray-400"
+                }`}
+            />
+          </div>
+
+          {/* Button */}
+          <div className="md:col-span-2 flex justify-center items-center gap-4">
+            <button
+              onClick={handleToggleEdit}
+              className={`flex items-center gap-2 px-6 py-3 rounded-full font-semibold transition duration-200 shadow-md ${isEditing
+                ? "bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap"
+                : "bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap"
+                }`}
+            >
+              <FaEdit />
+              {isEditing ? "Update Profile" : "Edit Profile"}
             </button>
-          )}
+
+            {isEditing && (
+              <button
+                onClick={handleCancelEdit}
+                className="flex items-center gap-1 px-6 py-3 rounded-full bg-red-500 text-white hover:bg-red-600 transition duration-200 shadow-md font-  bold"
+              >
+                <IoMdClose size={21} /> Cancel Update
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </div>
@@ -182,3 +184,5 @@ const ProfileDetails = () => {
 };
 
 export default ProfileDetails;
+
+

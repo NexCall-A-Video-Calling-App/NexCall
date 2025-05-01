@@ -5,7 +5,7 @@ import { MdContactMail } from "react-icons/md";
 import { SiGoogleclassroom } from "react-icons/si";
 import { Link, NavLink } from "react-router-dom";
 import UserMenu from "../../../components/UserMenu";
-import logo from "../../../assets/nclogo.png";
+import logo from "../../../assets/logo.png";
 
 function MeetingNavbar() {
 
@@ -18,7 +18,7 @@ function MeetingNavbar() {
           to="/"
           end
           className={({ isActive }) =>
-            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
+            `${baseStyle} ${isActive ? "text-[#32c6fc]" : "text-gray-300"}`
           }
         >
           Home <IoMdHome />
@@ -29,7 +29,7 @@ function MeetingNavbar() {
         <NavLink
           to="/meeting/chat-history"
           className={({ isActive }) =>
-            `${baseStyle} ${isActive ? "text-primary" : "text-gray-600"}`
+            `${baseStyle} ${isActive ? "text-[#32c6fc]" : "text-gray-300"}`
           }
         >
           Chat History <IoChatboxEllipses />
@@ -40,12 +40,12 @@ function MeetingNavbar() {
   );
 
   return (
-    <div className="bg-base-100 shadow-sm w-full fixed top-0 z-50 border-b">
+    <div className="bg-[#151515] shadow-sm w-full fixed top-0 z-50 border-b border-gray-800">
       <div className="container mx-auto navbar px-2">
         {/* Mobile menu (left side on small devices) */}
         <div className="navbar-start lg:hidden">
           <div className="dropdown">
-            <div tabIndex={0} role="button" className="lg:hidden">
+            <div tabIndex={0} role="button" className="lg:hidden text-gray-300">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5"
@@ -63,7 +63,7 @@ function MeetingNavbar() {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-44 p-2 shadow"
+              className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-44 p-2 shadow bg-gray-800"
             >
               {links}
             </ul>
@@ -73,8 +73,10 @@ function MeetingNavbar() {
         {/* Logo: always on the left */}
         <div className="navbar-start hidden lg:flex">
           <Link to="/" className="flex items-center font-semibold text-2xl">
-            <img className="w-12 h-12 object-cover" src={logo} alt="NexCall Logo" />
-            <span >NexCall</span>
+            <img className="w-6 h-6 object-cover mr-2" src={logo} alt="NexCall Logo" />
+            <div className="text-2xl font-bold bg-gradient-to-r from-[#32c6fc] to-[#8659d3] bg-clip-text text-transparent">
+              NexCall
+            </div>
           </Link>
         </div>
 
@@ -86,8 +88,10 @@ function MeetingNavbar() {
         {/* Show logo in center for small devices */}
         <div className="navbar-center lg:hidden">
           <Link to="/" className="flex items-center font-semibold text-2xl -ml-5">
-            <img className="w-12 h-12 object-cover" src={logo} alt="NexCall Logo" />
-            <span >NexCall</span>
+            <img className="w-8 h-8 object-cover mr-2" src={logo} alt="NexCall Logo" />
+            <div className="text-2xl font-bold bg-gradient-to-r from-[#32c6fc] to-[#8659d3] bg-clip-text text-transparent">
+              NexCall
+            </div>
           </Link>
         </div>
 
@@ -101,3 +105,5 @@ function MeetingNavbar() {
 }
 
 export default MeetingNavbar;
+
+

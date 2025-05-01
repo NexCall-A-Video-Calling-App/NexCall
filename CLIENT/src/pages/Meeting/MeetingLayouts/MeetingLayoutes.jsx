@@ -5,9 +5,9 @@ import { Outlet } from 'react-router-dom'
 
 function MeetingLayoutes() {
   return (
-    <div>
+    <div >
       <MeetingNavbar />
-      <div className='mt-20'>
+      <div className='mt-16 lg:mt-20'>
         <Outlet />
       </div>
     </div>

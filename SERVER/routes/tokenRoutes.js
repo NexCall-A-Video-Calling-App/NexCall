@@ -28,8 +28,7 @@ router.get('/token', async (req, res) => {
       expiresIn: "24h",
       algorithm: "HS256",
       jwtid: tokenId,
-    });
-    console.log("Token: ",token)
+    }); 
     res.json({ token });
   } catch (error) {
     console.error("Error generating token:", error);
