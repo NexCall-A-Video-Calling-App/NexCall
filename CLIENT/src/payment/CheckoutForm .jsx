@@ -111,26 +111,28 @@ function CheckoutForm() {
     <div className="py-10">
       <div className="max-w-md mx-auto  px-6 py-8 bg-gray-900 text-white rounded-2xl shadow-lg border border-gray-700">
         {paymentSuccess ? (
-          <div className="text-center space-y-4">
-            <h2 className="text-xl font-semibold text-green-400">Payment Successful</h2>
-            <p>
+          <div className="space-y-2 text-center">
+              <h2 className="text-2xl font-semibold animated-gradient-text">Payment Successful</h2>
+            <p className="  text-gray-300">
               <span className="font-semibold">Plan:</span> {plan}
             </p>
-            <p>
+            <p className="  text-gray-300">
               <span className="font-semibold">Price:</span> ${price}
             </p>
-            <p>
+            <p className="  text-gray-300">
               <span className="font-semibold">Email:</span> {user?.email}
             </p>
-            <p>
+            <p className="  text-gray-300">
               <span className="font-semibold">Transaction ID:</span> {id}
             </p>
-            <Link
-              to="/"
-              className="inline-block mt-4 px-6 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-md text-white font-medium transition-all duration-200"
-            >
-              Go to Home
-            </Link>
+            <div className="pt-3">
+              <Link
+                to="/"
+                className="w-full bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-gray-100 font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap "
+              >
+                Go to Home
+              </Link>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="space-y-6">
