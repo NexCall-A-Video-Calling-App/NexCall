@@ -380,16 +380,17 @@ const Dashboard = () => {
         {/* Message input */}
         <form
           onSubmit={handleSend}
-          className="p-4 border-t flex items-center"
+          className="p-4 border-t border-gray-700 flex items-center"
         >
           <input
             onChange={(e) => setMessage(e.target.value)}
             value={message}
             type="text"
             placeholder="Type a message..."
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500  bg-[#111827] text-white"
+            className="w-full p-2 border border-gray-500 rounded-lg bg-[#0f131c] focus:outline-none focus:ring-1 focus:ring-[#32c6fc] text-white"
           />
-          <button className="ml-2 p-2 text-2xl bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
+          
+          <button className="ml-2 p-2 text-2xl bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
             <IoIosSend />
           </button>
         </form>
