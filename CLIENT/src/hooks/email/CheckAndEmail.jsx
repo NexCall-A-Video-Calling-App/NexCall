@@ -14,7 +14,7 @@ function CheckAndEmail() {
   const filterMeetingsOneHourLeft = () => {
     const now = new Date();
     return scheduleData?.filter((schedule) => {
-      const meetingTime = new Date(`${schedule.Date} ${schedule.Time}`);
+      const meetingTime = new Date(`${schedule.MeetDate} ${schedule.MeetTime}`);
       const diffInMs = meetingTime - now;
       const diffInHours = diffInMs / (1000 * 60 * 60);
       return diffInHours >= 0.99 && diffInHours <= 1.01;
@@ -26,7 +26,7 @@ function CheckAndEmail() {
   useEffect(() => {
     if (meetingsOneHourLeft.length > 0) {
       meetingsOneHourLeft.forEach((meeting) => {
-        const meetingId = `${meeting.Date}-${meeting.Time}-${meeting.Topic}`; // Unique ID based on date-time-topic
+        const meetingId = `${meeting.MeetDate}-${meeting.MeetTime}-${meeting.Topic}`; // Unique ID based on date-time-topic
         if (!sentMeetingsRef.current.includes(meetingId)) {
           sendEmail(meeting) // Send email with meeting data
           
@@ -34,25 +34,8 @@ function CheckAndEmail() {
       });
     }
   }, [meetingsOneHourLeft]);  // Only re-run effect if meetingsOneHourLeft changes
-
-  // return (
-  //   <div>
-  //     <h2>Meetings in 1 hour</h2>
-  //     <ul>
-  //       {meetingsOneHourLeft.length > 0 ? (
-  //         meetingsOneHourLeft.map((schedule, index) => (
-  //           <li key={index}>
-  //             <strong>{schedule.Topic}</strong> - {schedule.Date} at {schedule.Time}
-  //           </li>
-  //         ))
-  //       ) : (
-  //         <p>No meetings in 1 hour</p>
-  //       )}
-  //     </ul>
-  //   </div>
-  // );
-
-
+ 
+ 
   useEffect(() => {
     const interval = setInterval(() => {
       refetch(); 

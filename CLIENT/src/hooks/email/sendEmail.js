@@ -7,12 +7,12 @@ const sendEmail = (meeting) => {
         body: JSON.stringify({
             email: meeting.email,
             subject: "Meeting Reminder",
-            message: `Reminder for meeting ${meeting.Topic} at ${meeting.Time} on ${meeting.Date}.`,
+            message: `Reminder for meeting ${meeting.Topic} at ${meeting.MeetTime} on ${meeting.MeetDate}.`,
         }),
     })
         .then((res) => console.log(res))
         .then((result) => console.log(result))
         .catch((error) => console.error('Error:', error));
 };
- 
+
 export default sendEmail;

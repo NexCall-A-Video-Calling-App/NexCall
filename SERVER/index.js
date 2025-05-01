@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const { Server } = require('socket.io');
 const { connectMongo } = require('./db');
 const { initSocket } = require('./socket');
+const nodemailer = require("nodemailer")
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 5000;
@@ -37,6 +38,10 @@ async function run() {
     // Import collections after connection
     const { usersCollection, messagesCollection, scheduleCollection, paymentCollection } = require('./db');
 
+
+    // Root route
+    app.get('/', (req, res) => res.send("NEXCALL SERVER RUNNING"));
+
     // Routes
     app.use('/auth', require('./routes/authRoutes'));
     app.use('/', require('./routes/userRoutes')(usersCollection));
@@ -44,10 +49,31 @@ async function run() {
     app.use('/', require('./routes/scheduleRoutes')(scheduleCollection));
     app.use('/', require('./routes/paymentRoutes')(paymentCollection));
     app.use('/api', require('./routes/tokenRoutes'));
-    
-    // Root route
-    app.get('/', (req, res) => res.send("NEXCALL SERVER RUNNING"));
 
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'nexcall55@gmail.com',  // Your Gmail or business email
+        pass: 'emyxfmrxgycbctyx'
+      },
+    });
+
+    app.post('/send-email', async (req, res) => {
+      const { email, subject, message } = req.body;
+      try {
+        await transporter.sendMail({
+          from: 'nexcall55@gmail.com',
+          to: email,
+          subject,
+          text: message,
+        });
+        res.status(200).send('Email sent successfully!');
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Failed to send email.');
+      }
+    });
+ 
     server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   } catch (error) {
     console.error("Failed to start server:", error);
