@@ -78,7 +78,7 @@ const PricingPlans = () => {
 
     return (
         <div className="">
-            <div id='our-plans' className="py-10">
+            <div id='our-plans' className="">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
                         Our{" "}
@@ -95,7 +95,7 @@ const PricingPlans = () => {
                     {pricingPlans.map((plan) => (
                         <div
                             key={plan.name}
-                            className={`shadow-md bg-[#12161f] p-6 flex flex-col justify-between text-gray-200`}
+                            className={`shadow-md bg-[#12161f] p-6 flex flex-col justify-between text-gray-200 border border-gray-800 rounded`}
                         >
                             <div>
                                 <div className="w-full flex justify-center">
