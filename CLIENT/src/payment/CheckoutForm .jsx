@@ -2,14 +2,17 @@ import React, { useState, useEffect } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
 import axios from "axios";
 import useAuth from "../hooks/useAuth";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 
-function CheckoutForm({ price, name }) {
+function CheckoutForm() {
   const { user, userLogOut } = useAuth();
-
-  console.log(price, " price", name, "name");
-  const axiosSecure = useAxiosSecure(); 
+  const location = useLocation();
+  // console.log(location?.state?.plan);
+  const price = location?.state?.price;
+  const plan = location?.state?.plan;
+  // console.log(price, " price", name, "name");
+  const axiosSecure = useAxiosSecure();
 
 
   const stripe = useStripe();
@@ -77,14 +80,13 @@ function CheckoutForm({ price, name }) {
       }
       setid(paymentIntent.id);
 
-      await axios
-        .post("http://localhost:5000/payment-success", {
-          email: user.email,
-          plan: name,
-          price: price,
-          name: user?.name,
-          id: paymentIntent.id,
-        })
+      await axios.post("http://localhost:5000/payment-success", {
+        email: user.email,
+        plan: plan,
+        price: price,
+        name: user?.name,
+        id: paymentIntent.id,
+      })
         .then((res) => {
           console.log(res.data);
         })
@@ -94,6 +96,9 @@ function CheckoutForm({ price, name }) {
 
       setPaymentSuccess(true);
       console.log("Payment succeeded:", paymentIntent);
+
+      await axiosSecure.patch(`/users/plan/${user?.email}`, { plan });
+
     } catch (err) {
       setError(err.message || "Payment failed");
       console.error("Payment error:", err);
@@ -107,11 +112,11 @@ function CheckoutForm({ price, name }) {
       {paymentSuccess ? (
         <div className="p-4 text-left flex justify-center items-center rounded-lg  ">
           <div className="flex flex-col gap-y-2">
-            <p>Plan <span className="font-semibold">{name}</span> </p>
+            <p>Plan <span className="font-semibold">{plan}</span> </p>
             <p>Price <span className="font-semibold">{price}$</span> </p>
             <p>Email<span className="font-semibold"> {user?.email}</span> </p>
             <p className="mb-4">TransactionID <span className="font-semibold">
-               {id}</span> </p>
+              {id}</span> </p>
 
             <div className="flex justify-center flex-col">
               <h2 className="font-semibold text-green-500">
@@ -129,15 +134,15 @@ function CheckoutForm({ price, name }) {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="space-y-4">
-          
+
           <div className="mb-6 p-2 flex gap-y-2 flex-col">
 
-            <h3 className="border p-2  py-2 rounded-md">Your Package <span className="font-semibold">{ name}</span> </h3>
+            <h3 className="border p-2  py-2 rounded-md">Your Package <span className="font-semibold">{plan}</span> </h3>
 
             <h4 className=" border p-2 py-2  rounded-md">Price <span className="font-semibold">{price}$</span>
 
-           
-               
+
+
             </h4>
             <h4 className="border p-2 py-2 rounded-md">Your Email <span className="font-semibold">{user?.email}</span> </h4>
           </div>
@@ -145,7 +150,7 @@ function CheckoutForm({ price, name }) {
 
 
           <div className="p-3 border border-gray-300 rounded-md">
-          
+
             <CardElement
               options={{
                 style: {
@@ -171,11 +176,10 @@ function CheckoutForm({ price, name }) {
           <button
             type="submit"
             disabled={!stripe || loading}
-            className={`w-full py-3 px-4 rounded-md text-white font-medium ${
-              !stripe || loading
-                ? "bg-indigo-300 cursor-not-allowed"
-                : "bg-indigo-600 hover:bg-indigo-700"
-            } transition-colors`}
+            className={`w-full py-3 px-4 rounded-md text-white font-medium ${!stripe || loading
+              ? "bg-indigo-300 cursor-not-allowed"
+              : "bg-indigo-600 hover:bg-indigo-700"
+              } transition-colors`}
           >
             {loading ? (
               <span className="flex items-center justify-center">

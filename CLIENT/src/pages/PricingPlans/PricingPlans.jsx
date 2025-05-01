@@ -99,7 +99,7 @@ const PricingPlans = () => {
                                     
                                 </Link>
                             </div> */}
-                            <Link to={'/payment'} className='btn bg-gradient-to-r from-[#32c6fc] to-[#8659d3] border-none'>
+                            <Link to={'/payment'} state={{ price: plan.price, plan: plan.name }} className='btn bg-gradient-to-r from-[#32c6fc] to-[#8659d3] border-none'>
                                 <div className='!font-semibold text-white !rounded-none'>
                                     {plan.buttonText}
                                 </div>

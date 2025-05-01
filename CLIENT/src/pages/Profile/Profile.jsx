@@ -95,15 +95,13 @@ const ProfileDetails = () => {
             </div>
           </div>
 
-          <button onClick={handleUpgradePlan}>
-            <Link
-              to="/#our-plans"
-              className="flex items-center gap-2 px-5 py-2.5 bg-[#32c6fc]  rounded-full hover:bg-[#32c6fcd0] transition duration-300 shadow-md"
-            >
-              <MdUpgrade className="text-xl" />
-              Upgrade Plan
-            </Link>
-          </button>
+          <Link
+            to="/#our-plans"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#32c6fc]  rounded-full hover:bg-[#32c6fcd0] transition duration-300 shadow-md"
+          >
+            <MdUpgrade className="text-xl" />
+            Upgrade Plan
+          </Link>
         </div>
 
         {/* Profile Form */}
