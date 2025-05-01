@@ -4,7 +4,7 @@ import io from 'socket.io-client';
 export const SocketContext = createContext();
 
 export const SocketProvider = ({ children }) => {
-    const socket = useMemo(() => io.connect("http://localhost:5000"), []);
+    const socket = useMemo(() => io.connect("https://nexcall-vfak.onrender.com"), []);
 
     const [currentRoom, setCurrentRoom] = useState(null);
     const [UserId, setUserId] = useState(null);  // Client Socket ID 

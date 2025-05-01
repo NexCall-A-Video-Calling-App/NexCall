@@ -66,7 +66,7 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
     console.log(roomId);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/token?roomId=${encodeURIComponent(roomId)}`
+        `https://nexcall-vfak.onrender.com/api/token?roomId=${encodeURIComponent(roomId)}`
       );
       if (!response.ok) throw new Error(`Failed to fetch token: ${response.statusText}`);
       const { token } = await response.json();
