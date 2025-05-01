@@ -28,7 +28,7 @@ function CheckoutForm() {
     const fetchPaymentIntent = async () => {
       try {
         const response = await axiosSecure.post(
-          "https://nexcall-vfak.onrender.com/create-payment-intent",
+          "http://localhost:5000/create-payment-intent",
           {
             amount: price | 1,
             currency: "usd",
@@ -80,7 +80,7 @@ function CheckoutForm() {
       }
       setid(paymentIntent.id);
 
-      await axios.post("https://nexcall-vfak.onrender.com/payment-success", {
+      await axios.post("http://localhost:5000/payment-success", {
         email: user.email,
         plan: plan,
         price: price,

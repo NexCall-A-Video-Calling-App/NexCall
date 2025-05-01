@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-    baseURL: 'https://nexcall-vfak.onrender.com'
+    baseURL: 'http://localhost:5000'
 })
 
 const useAxiosSecure = () => {
