@@ -187,7 +187,7 @@ const Dashboard = () => {
               onChange={(e) => setSearchUser(e.target.value)}
               type="text"
               placeholder="Search users"
-              className="w-full p-2 mb-4 border rounded-lg bg-[#0f131c] text-white focus:outline-none focus:ring-1 focus:ring-purple-500"
+              className="w-full p-2 mb-4 border border-gray-400 rounded-lg bg-[#0f131c] text-white focus:outline-none focus:ring-1 focus:ring-[#32c6fc]"
             />
           </div>
           <h2 className="text-xl font-bold mb-3 text-white">Users</h2>
@@ -199,7 +199,7 @@ const Dashboard = () => {
               .map((userinRoom, idx) => (
                 <div
                   key={idx}
-                  className="p-2 bg-[#12161f]  rounded-md shadow-sm hover:border hover:border-purple-500 transition-colors"
+                  className="p-2 bg-[#12161f]  rounded-md shadow-sm hover:bg-gray-800 border border-gray-800"
                 >
                   <div className="flex gap-2 items-center">
                     <img src={userinRoom.profilePic} alt="" className="w-6 h-6 rounded-full" />
