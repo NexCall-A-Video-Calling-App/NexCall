@@ -239,12 +239,12 @@ const Dashboard = () => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-300 rounded-box z-50 w-52 p-2 shadow-lg mt-2"
+              className="dropdown-content menu bg-gray-800 rounded-box z-50 w-52 p-2 shadow-lg mt-2 border border-gray-800 mb-2"
             >
               <li>
                 <button
                   onClick={handleProfileClick}
-                  className="btn btn-sm w-full mb-2"
+                  className="btn btn-sm w-full bg-gray-950 text-gray-300 border border-gray-800 mb-2"
                 >
                   Profile
                 </button>
@@ -255,7 +255,7 @@ const Dashboard = () => {
                     <Spinner />
                   </div>
                 ) : (
-                  <button onClick={handleLogOut} className="btn btn-sm w-full">
+                  <button onClick={handleLogOut} className="btn btn-sm w-full bg-gray-950 text-gray-300 border border-gray-800">
                     Log out
                   </button>
                 )}
