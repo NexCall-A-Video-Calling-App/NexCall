@@ -5,15 +5,18 @@ import { MdUpgrade } from "react-icons/md";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { IoMdClose } from "react-icons/io";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 const ProfileDetails = () => {
   const { user, profileUpdate } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
+  const axiosSecure = useAxiosSecure();
   const [formData, setFormData] = useState({
     displayName: "",
     email: "",
     photoURL: "",
   });
+
 
   useEffect(() => {
     if (user) {
@@ -30,7 +33,8 @@ const ProfileDetails = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleToggleEdit = async () => {
+  const handleToggleEdit = async (e) => {
+    e.preventDefault();
     if (isEditing) {
       if (!formData.displayName.trim()) {
         toast.error("Name cannot be empty!");
@@ -39,7 +43,19 @@ const ProfileDetails = () => {
 
       try {
         await profileUpdate(formData.displayName, formData.photoURL);
-        toast.success("Profile updated successfully!");
+        // Update user profile
+        const profileInfo = {
+          name: formData.displayName,
+          photo: formData.photoURL || user?.photoURL,
+        }
+
+        const res = await axiosSecure.patch(`/users/${user?.email}`, profileInfo)
+        console.log(res.data);
+        if (res.data.modifiedCount > 0) {
+          // console.log('Profile Updated Successfully');
+          toast.success('Profile Updated Successfully');
+          // window.location.reload();
+        }
       } catch (error) {
         console.error("Error updating profile:", error);
         toast.error("Failed to update profile. Please try again.");
@@ -101,7 +117,7 @@ const ProfileDetails = () => {
         </div>
 
         {/* Profile Form */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Full Name */}
           <div>
             <label htmlFor="displayName" className="block text-sm font-medium text-gray-600 mb-1">
@@ -177,7 +193,7 @@ const ProfileDetails = () => {
               </button>
             )}
           </div>
-        </div>
+        </form>
       </div>
     </div>
   );
