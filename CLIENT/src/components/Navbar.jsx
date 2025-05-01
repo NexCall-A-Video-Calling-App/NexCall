@@ -45,18 +45,26 @@ const Navbar = () => {
           </li>
           :
           <>
-            <li className="text-gray-300">
-              <a href="#about">About Us</a>
-            </li>
-            <li className="text-gray-300">
-              <a href="#features">Features</a>
-            </li>
-            <li className="text-gray-300">
-              <a href="https://nexcall-1425e.web.app/#faq">FAQ</a>
-            </li>
-            <li className="text-gray-300">
-              <a href="https://nexcall-1425e.web.app/#our-plans">Our Plans</a>
-            </li>
+            {
+              location.pathname == '/profile' ?
+                <li className="text-gray-300">
+                  <a href="http://localhost:5173/#our-plans">Our Plans</a>
+                </li> :
+                <>
+                  <li className="text-gray-300">
+                    <a href="#about">About Us</a>
+                  </li>
+                  <li className="text-gray-300">
+                    <a href="#features">Features</a>
+                  </li>
+                  <li className="text-gray-300">
+                    <a href="http://localhost:5173/#faq">FAQ</a>
+                  </li>
+                  <li className="text-gray-300">
+                    <a href="http://localhost:5173/#our-plans">Our Plans</a>
+                  </li>
+                </>
+            }
           </>
       }
 
