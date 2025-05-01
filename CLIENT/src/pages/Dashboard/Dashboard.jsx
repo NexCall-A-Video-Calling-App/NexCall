@@ -217,7 +217,7 @@ const Dashboard = () => {
           {/* Back to Dashboard */}
           <Link
             onClick={handleBackToDashboard}
-            className="w-full border text-white bg-purple-500 flex justify-center items-center gap-2 mt-4 p-2 rounded-lg hover:bg-purple-600 transition-colors"
+            className=" w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap border border-gray-500"
           >
             <MdOutlineArrowBackIosNew /> Back to Dashboard
           </Link>
@@ -227,7 +227,7 @@ const Dashboard = () => {
             <div
               tabIndex={0}
               role="button"
-              className="border w-full flex justify-center items-center gap-2 p-2 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+              className="border border-gray-500 w-full flex justify-center items-center gap-2 p-2 text-gray-200 rounded-lg hover:bg-gray-800 transition-colors"
             >
               <img
                 src={user?.photoURL}
