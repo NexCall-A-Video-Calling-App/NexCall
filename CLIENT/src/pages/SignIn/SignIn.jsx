@@ -5,6 +5,7 @@ import { FaGoogle } from "react-icons/fa";
 import dot from '../../assets/dot.png'
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import SocialLogin from "../../components/SocialLogin";
 
 
 const SignIn = () => {
@@ -29,21 +30,6 @@ const SignIn = () => {
                 toast.error(error.message);
             })
     };
-
-    // Google Sign In
-    const signInWithGoogle = () => {
-        console.log("Google Sign In");
-        loginWithGoogle()
-            .then((result) => {
-                // console.log(result.user);
-                toast.success("User logged in successfully."); 
-                navigate('/meeting')
-            })
-            .catch((error) => {
-                // console.log(error.message);
-                toast.error(error.message);
-            })
-    }
 
 
     return (
@@ -75,8 +61,8 @@ const SignIn = () => {
                                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500"
                             />
                             {errors.password && <p className="text-red-500">{errors.password.message}</p>}
-                              {/* Forgot Password Link */}
-                              <div className="text-right mt-1">
+                            {/* Forgot Password Link */}
+                            <div className="text-right mt-1">
                                 <Link to={`/forgot-password?email=${watch("email")}`} className="text-sm text-blue-600 hover:underline">
                                     Forgot Password?
                                 </Link>
@@ -88,12 +74,8 @@ const SignIn = () => {
 
                         {/* Google Sign In */}
                         <div className="text-center my-2 text-gray-500">OR</div>
-                        <button onClick={signInWithGoogle} className="w-full flex items-center justify-center bg-red-500 text-white py-2 rounded-lg mb-2 hover:bg-red-600">
-                            <span className="mr-2">
-                                <FaGoogle />
-                            </span>
-                            Sign up with Google
-                        </button>
+                        <SocialLogin />
+
                         <p className="text-center text-gray-600 mt-4">
                             New to this website? Please <Link to="/sign-up" className="text-purple-600 font-semibold"><span className="text-purple-600 cursor-pointer font-semibold">Sign up</span></Link>
                         </p>

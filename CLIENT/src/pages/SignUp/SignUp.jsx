@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import useImageUpload from "../../hooks/useImageUpload";
 import toast from "react-hot-toast";
 import useAxiosPublic from "../../hooks/useAxiosPublic"
+import SocialLogin from "../../components/SocialLogin";
 
 
 const SignUp = () => {
@@ -58,20 +59,6 @@ const SignUp = () => {
 
     };
 
-    // Google Sign In
-    const signInWithGoogle = () => {
-        console.log("Google Sign In");
-        loginWithGoogle()
-            .then((result) => {
-                // console.log(result.user);
-                toast.success("User created successfully.");
-                navigate('/meeting')
-            })
-            .catch((error) => {
-                // console.log(error.message);
-                toast.error(error.message);
-            })
-    }
 
     return (
         <div className="flex justify-center items-center bg-gray-50 py-10 px-2">
@@ -153,12 +140,8 @@ const SignUp = () => {
 
                         {/* Google Sign In */}
                         <div className="text-center my-2 text-gray-500">OR</div>
-                        <button onClick={signInWithGoogle} className="w-full flex items-center justify-center bg-red-500 text-white py-2 rounded-lg mb-2 hover:bg-red-600">
-                            <span className="mr-2">
-                                <FaGoogle />
-                            </span>
-                            Sign up with Google
-                        </button>
+                        <SocialLogin />
+
                         <p className="text-center text-gray-600 mt-4">
                             Already have an account? <Link to="/sign-in"><span className="text-purple-600 cursor-pointer font-semibold">Sign in</span></Link>
                         </p>
