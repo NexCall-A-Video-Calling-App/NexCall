@@ -13,5 +13,21 @@ module.exports = (usersCollections) => {
     res.send(results);
   });
 
+  router.patch('/users/:email', async (req, res) => {
+    const email = req.params.email;
+    const { name, photo } = req.body;
+
+    const filter = { email: email };
+    const updateDoc = {
+      $set: {
+        name: name,
+        photo: photo,
+      },
+    };
+
+    const result = await usersCollections.updateOne(filter, updateDoc);
+    res.send(result);
+  })
+
   return router;
 };
