@@ -111,7 +111,7 @@ const PricingPlans = () => {
                                     ))}
                                 </ul>
                             </div>
-                            <button onClick={() => handleUpgradePlan(plan.name, plan.price)} state={{ price: plan.price, plan: plan.name }} className='btn bg-gradient-to-r from-[#32c6fc] to-[#8659d3] border-none'>
+                            <button onClick={() => handleUpgradePlan(plan.name, plan.price)} state={{ price: plan.price, plan: plan.name }} className='bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap'>
                                 <div className='!font-semibold text-white !rounded-none'>
                                     {plan.buttonText}
                                 </div>
