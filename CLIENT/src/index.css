@@ -13,6 +13,10 @@ html {
     scroll-behavior: smooth;
 }
 
+body{
+    background-color: #151515;
+}
+
 .animated-gradient-text { 
     /* Adjust as needed */
     font-weight: bold;
