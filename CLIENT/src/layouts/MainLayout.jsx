@@ -9,7 +9,7 @@ const MainLayout = () => {
     <div>
       {location.pathname !== '/dashboard' && <Navbar />}
 
-      <main className='mt-16 min-h-[calc(100vh-323px)]'>
+      <main className='mt-16 min-h-[calc(100vh-482px)]'>
         <Outlet />
       </main>
       {location.pathname !== '/dashboard' && <Footer />}

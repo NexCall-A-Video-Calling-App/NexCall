@@ -54,7 +54,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="bg-[#151515] shadow-sm w-full fixed top-0 z-50">
+    <div className="bg-[#151515] shadow-sm w-full fixed top-0 z-50 border-b border-gray-800">
       <div className="container mx-auto navbar px-2">
         {/* Mobile menu (left side on small devices) */}
         <div className="navbar-start lg:hidden">
