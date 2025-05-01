@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import useAuth from "../hooks/useAuth";
@@ -10,6 +10,16 @@ const Navbar = () => {
   const { user, userLogOut } = useAuth();
   // console.log(user)
   const location = useLocation()
+
+  useEffect(() => {
+    if (location.hash === "#our-plans") {
+      const section = document.querySelector("#our-plans");
+      if (section) {
+        section.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
+
   const handleLogout = async () => {
     try {
       userLogOut();
@@ -21,7 +31,7 @@ const Navbar = () => {
 
   const links = (
     <>
-      <li className="text-gray-300"> 
+      <li className="text-gray-300">
         {
           location.pathname == '/profile' ?
             <Link to='/'>Home</Link> :
@@ -38,7 +48,7 @@ const Navbar = () => {
         <a href="#faq">FAQ</a>
       </li>
       <li className="text-gray-300">
-        <a href="#pricing-plans">Pricing Plans</a>
+        <a href="#our-plans">Our Plans</a>
       </li>
     </>
   );

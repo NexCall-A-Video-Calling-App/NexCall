@@ -78,19 +78,6 @@ const ProfileDetails = () => {
     setIsEditing(false);
   };
 
-
-  const handleUpgradePlan = () => {
-    toast("Upgrade feature is coming soon!", {
-      icon: "🚀",
-      style: {
-        borderRadius: '8px',
-        background: '#333',
-        color: '#fff',
-      },
-    });
-  };
-
-
   return (
     <div className="bg-[#151515] py-10 px-2">
       <div className="max-w-3xl mx-auto p-8 shadow-md rounded-2xl border border-gray-500">
@@ -110,7 +97,7 @@ const ProfileDetails = () => {
 
           <button onClick={handleUpgradePlan}>
             <Link
-              // to="/pricing"
+              to="/#our-plans"
               className="flex items-center gap-2 px-5 py-2.5 bg-[#32c6fc]  rounded-full hover:bg-[#32c6fcd0] transition duration-300 shadow-md"
             >
               <MdUpgrade className="text-xl" />
