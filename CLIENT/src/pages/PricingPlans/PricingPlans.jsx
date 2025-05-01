@@ -1,6 +1,8 @@
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import usePlan from '../../hooks/usePlan';
+import toast from 'react-hot-toast';
 
 const PricingPlans = () => {
 
@@ -58,9 +60,24 @@ const PricingPlans = () => {
         }
     ];
 
+    const navigate = useNavigate();
+    const [plan] = usePlan();
+
+    const handleUpgradePlan = (selectedPlan, price) => {
+        if (plan === selectedPlan) {
+            toast.error(`You have already subscribed to the ${selectedPlan} plan.`);
+        } else {
+            navigate('/payment', {
+                state: {
+                    price,
+                    plan: selectedPlan
+                }
+            });
+        }
+    }
 
     return (
-        <div className="bg-[#151515]">
+        <div className="">
             <div id='our-plans' className="py-10">
                 <div className="text-center mb-16">
                     <h2 className="text-3xl md:text-4xl font-bold mb-4 text-white">
@@ -78,32 +95,27 @@ const PricingPlans = () => {
                     {pricingPlans.map((plan) => (
                         <div
                             key={plan.name}
-                            className={`shadow-md bg-[#12161f] p-6 flex flex-col justify-between text-white`}
+                            className={`shadow-md bg-[#12161f] p-6 flex flex-col justify-between text-gray-200`}
                         >
                             <div>
                                 <div className="w-full flex justify-center">
                                     <h3 className="text-3xl font-bold mb-2 animated-gradient-text">{plan.name}</h3>
                                 </div>
                                 <p className="text-2xl font-bold text-center mb-4">${plan.price}/month</p>
-                                <ul className="space-y-2 text-sm">
+                                <ul className="space-y-1">
                                     {plan.features.map((feature, idx) => (
-                                        <li key={idx} className="flex items-start text-[17px] pb-2">
+                                        <li key={idx} className="flex items-start text-[17px] pb-2 text-sm md:text-base">
                                             <span className="text-primary mr-2 mt-0.5">✔</span>
                                             <span>{feature}</span>
                                         </li>
                                     ))}
                                 </ul>
                             </div>
-                            {/* <div className='btn bg-gradient-to-r from-[#32c6fc] to-[#8659d3] border-none'>
-                                <Link to={'/payment'} state={{ price: plan.price, name: plan.name }} >
-                                    
-                                </Link>
-                            </div> */}
-                            <Link to={'/payment'} state={{ price: plan.price, plan: plan.name }} className='btn bg-gradient-to-r from-[#32c6fc] to-[#8659d3] border-none'>
+                            <button onClick={() => handleUpgradePlan(plan.name, plan.price)} state={{ price: plan.price, plan: plan.name }} className='btn bg-gradient-to-r from-[#32c6fc] to-[#8659d3] border-none'>
                                 <div className='!font-semibold text-white !rounded-none'>
                                     {plan.buttonText}
                                 </div>
-                            </Link>
+                            </button>
                         </div>
                     ))}
                 </div>
