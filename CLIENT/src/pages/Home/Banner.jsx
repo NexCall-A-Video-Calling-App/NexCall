@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import banner from "../../assets/banner.png";
 import dot from "../../assets/dot.png"
 import bannerVideo from "../../assets/bannerVideo.mp4"
+import { Link } from "react-router-dom";
 const Banner = () => {
   return (
     <div id="banner" className="w-full bg-[#151515]">
@@ -22,12 +23,12 @@ const Banner = () => {
                 reliability.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-3 rounded-full text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+                <Link to='/sign-in' className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-3 rounded-full text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
                   Start for Free
-                </button>
-                <button className="border border-gray-600 px-6 py-3 rounded-full text-white font-medium hover:border-[#32c6fc] transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+                </Link>
+                <Link to='/contactUs' className="border border-gray-600 px-6 py-3 rounded-full text-white font-medium hover:border-[#32c6fc] transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
                   Talk to Sales
-                </button>
+                </Link>
               </div>
             </div>
             <div className="lg:w-1/2 relative">

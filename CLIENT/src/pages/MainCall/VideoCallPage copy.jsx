@@ -19,7 +19,7 @@ const VideoCallPage = ({ initialRoomId, userName, photoURL, onClose = () => { } 
   const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
   const localVideoRef = useRef(null);
   const videoRefs = useRef({});
-  console.log("Photo: ", photoURL);
+  console.log("Photo: ",photoURL);
   // Timer logic
   useEffect(() => {
     if (!isConnected) return;
@@ -50,7 +50,7 @@ const VideoCallPage = ({ initialRoomId, userName, photoURL, onClose = () => { } 
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [isConnected, hmsActions, onClose]);
+  }, [isConnected, hmsActions, onClose]);  
 
   // Format time for display
   const formatTime = (seconds) => {
