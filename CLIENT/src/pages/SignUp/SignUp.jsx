@@ -66,7 +66,7 @@ const SignUp = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:gap-8 max-w-4xl w-full items-center md:flex md:flex-row-reverse">
 
                     {/* Right Section - Promotional Message */}
-                    <div className="text-center md:text-left p-6 order-1 md:order-none mt-12 md:mt-0">
+                    <div className="text-center md:text-left p-6 order-1 md:order-none mt-12 md:mt-0 max-w-sm mx-auto">
                         <div className="flex items-center justify-center md:justify-start">
                             <span className="h-[1px] bg-gradient-to-r from-[#32c6fc] to-[#8659d3] w-[20%]"></span>
                             <span className="text-purple-600 text-5xl font-semibold italic w-[10%] text-center mt-4">“</span>
