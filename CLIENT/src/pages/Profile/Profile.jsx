@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 import { IoMdClose } from "react-icons/io";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import usePlan from "../../hooks/usePlan";
 
 const ProfileDetails = () => {
   const { user, profileUpdate } = useAuth();
@@ -16,6 +17,8 @@ const ProfileDetails = () => {
     email: "",
     photoURL: "",
   });
+  const [plan] = usePlan();
+  // console.log(plan);
 
 
   useEffect(() => {
@@ -101,7 +104,7 @@ const ProfileDetails = () => {
             />
             <div>
               <h2 className="text-2xl font-bold text-gray-300">{formData.displayName || "User Name"}</h2>
-              <p className="text-sm text-gray-800 bg-[#32c6fc] rounded-full text-center border border-gray-950">{user?.plan || "Basic Plan"}</p>
+              <p className="text-sm text-gray-800 bg-[#32c6fc] rounded-full text-center border border-gray-950 px-4">{plan}</p>
             </div>
           </div>
 
