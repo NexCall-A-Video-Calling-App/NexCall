@@ -30,7 +30,7 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
   const peerCount = useHMSStore(selectPeerCount);
   const [error, setError] = useState("");
   const [isAudioMuted, setIsAudioMuted] = useState(true);
-  const [isVideoMuted, setIsVideoMuted] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [raisedHands, setRaisedHands] = useState([]);
   const [isSharingScreen, setIsSharingScreen] = useState(false);
   const localVideoRef = useRef(null);
@@ -66,7 +66,7 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
     console.log(roomId);
     try {
       const response = await fetch(
-        `http://localhost:5000/api/token?roomId=${encodeURIComponent(roomId)}`
+        `https://nexcall-vfak.onrender.com/api/token?roomId=${encodeURIComponent(roomId)}`
       );
       if (!response.ok) throw new Error(`Failed to fetch token: ${response.statusText}`);
       const { token } = await response.json();
@@ -74,7 +74,7 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
       await hmsActions.join({
         userName: userName || `User-${Math.random().toString(36).substring(7)}`,
         authToken: token,
-        settings: { isAudioMuted: true, isVideoMuted: false },
+        settings: { isAudioMuted: true, isVideoMuted: true },
         metaData: JSON.stringify({ handRaised: false }),
       });
       setError("");
