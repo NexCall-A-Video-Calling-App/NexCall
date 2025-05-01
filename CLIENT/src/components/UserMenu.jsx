@@ -32,7 +32,7 @@ const UserMenu = () => {
                             </div>
                             <ul
                                 tabIndex={0}
-                                className="menu menu-md dropdown-content bg-[#12161f] text-gray-300 rounded-box z-1 mt-3 w-44 p-2 shadow border">
+                                className="menu menu-md dropdown-content bg-[#12161f] text-gray-300 rounded-box z-1 mt-3 w-44 p-2 shadow border border-gray-700">
                                 <li>
                                     <Link to={'/profile'}>Profile</Link>
                                 </li>
