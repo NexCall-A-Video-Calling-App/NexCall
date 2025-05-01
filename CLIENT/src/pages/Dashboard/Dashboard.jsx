@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { FaEllipsisV, FaVideo, FaPhoneAlt } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
-import { IoIosSend, IoMdInformationCircleOutline } from "react-icons/io";
+import { IoIosSend, IoMdInformationCircleOutline, IoMdMenu } from "react-icons/io";
 import { RiChatDownloadLine } from "react-icons/ri";
 import { encryptMessage, decryptMessage } from "../../utilities/encryptDecrypt";
 import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
@@ -276,8 +276,8 @@ const Dashboard = () => {
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-[#1f2937] shadow-md">
           <div className="flex items-center">
-            <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
-              <FaEllipsisV />
+            <button className="md:hidden text-2xl md:p-2 text-gray-200 mr-2" onClick={toggleSidebar}>
+              <IoMdMenu />
             </button>
             <img
               src={roomUsers.find((u) => u.socketId !== socket.id)?.profilePic || "https://i.ibb.co.com/5gDBVLDV/images.png"}
@@ -298,18 +298,18 @@ const Dashboard = () => {
           <div className="flex gap-1 md:space-x-2">
             <button
               onClick={handleVideoCall}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-50 text-gray-300 text-sm  md:text-xl hover:">
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-50 text-gray-300 text-xl md:border border-gray-800 rounded hover:">
               <FaVideo />
             </button>
             <button
               onClick={() => document.getElementById('my_modal_3').showModal()}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-sm md:text-xl hover:"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-xl md:border border-gray-800 rounded hover:"
             >
               <IoMdInformationCircleOutline />
             </button>
             <button
               onClick={handleDownloadMessagesAsPDF}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-sm md:text-xl hover:"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-xl md:border border-gray-800 rounded hover:"
             >
               <RiChatDownloadLine />
             </button>
