@@ -50,7 +50,7 @@ const SocialLogin = () => {
 
 
     return (
-        <button onClick={signInWithGoogle} className="w-full flex items-center justify-center bg-red-500 text-white py-2 rounded-lg mb-2 hover:bg-red-600">
+        <button onClick={signInWithGoogle} className="w-full flex items-center justify-center bg-gray-800 text-white py-2 rounded-lg mb-2 hover:bg-transparent border border-gray-900 hover:border-gray-600 transition duration-300">
             <span className="mr-2">
                 <FaGoogle />
             </span>
