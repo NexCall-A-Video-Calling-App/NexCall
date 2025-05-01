@@ -47,7 +47,9 @@ const SignIn = () => {
 
                     {/* Left Section - Sign In Form */}
                     <div className="bg-[#151515] p-4 lg:p-8 rounded-2xl shadow-lg w-full max-w-md mx-auto z-20 order-2 md:order-none border border-gray-800">
-                        <h2 className="text-2xl font-bold text-center mb-2 text-gray-300">Welcome Back</h2>
+                        <div className="text-center">
+                            <h2 className="text-2xl font-bold mb-2 text-gray-300 animated-gradient-text">Welcome Back</h2>
+                        </div>
                         <p className="text-gray-300 text-center mb-4">Sign in to your NexCall account</p>
 
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -99,7 +101,7 @@ const SignIn = () => {
                 <div className="absolute bottom-0 right-0 bg-gradient-to-r from-[#32c6fc] to-[#8659d3] w-52 h-28 rounded-br-lg "></div>
 
                 {/* Dot Image */}
-                <img src={dot} alt="Doted..." className="absolute -bottom-[20px] md:bottom-4 lg:bottom-8 -left-5 md:left-[355px] lg:left-[485px]" />
+                <img src={dot} alt="Doted..." className="absolute -bottom-[20px] md:bottom-4 lg:bottom-8 -left-5 md:left-[330px] lg:left-[400px]" />
             </div>
         </div>
     );

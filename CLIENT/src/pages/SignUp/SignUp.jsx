@@ -84,7 +84,10 @@ const SignUp = () => {
 
                     {/* Left Section - Signup Form */}
                     <div className="bg-[#151515] p-4 lg:p-8 rounded-2xl shadow-lg w-full max-w-md mx-auto z-20 order-2 md:order-none border border-gray-800">
-                        <h2 className="text-2xl font-bold text-center mb-2 text-gray-300">Welcome</h2>
+                        <div className="text-center">
+                            <h2 className="text-2xl font-bold mb-2 text-gray-300 animated-gradient-text">Welcome</h2>
+                        </div>
+                        {/* <h2 className="text-2xl font-bold text-center mb-2 text-gray-300">Welcome</h2> */}
                         <p className="text-gray-300 text-center mb-4">Create an account on NexCall for free</p>
                         <form onSubmit={handleSubmit(onSubmit)}>
                             {/* Name Field */}
@@ -147,7 +150,7 @@ const SignUp = () => {
                 <div className="absolute top-0 right-0 bg-gradient-to-r from-[#32c6fc] to-[#8659d3] w-44 h-20 rounded-tr-lg"></div>
                 <div className="absolute bottom-0 left-0 bg-gradient-to-l from-[#32c6fc] to-[#8659d3] w-52 h-28 rounded-bl-lg "></div>
                 {/* Doted Image */}
-                <img src={dot} alt="Doted..." className="absolute -bottom-[20px] md:bottom-4 lg:bottom-8 -right-5 md:right-[355px] lg:right-[485px]" />
+                <img src={dot} alt="Doted..." className="absolute -bottom-[20px] md:bottom-4 lg:bottom-8 right-1 sm:right-10 md:right-[355px] lg:right-[400px]" />
             </div>
         </div>
     );
