@@ -298,18 +298,18 @@ const Dashboard = () => {
           <div className="flex gap-1 md:space-x-2">
             <button
               onClick={handleVideoCall}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-50 text-gray-300 text-sm  md:text-xl hover:">
               <FaVideo />
             </button>
             <button
               onClick={() => document.getElementById('my_modal_3').showModal()}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-sm md:text-xl hover:"
             >
               <IoMdInformationCircleOutline />
             </button>
             <button
               onClick={handleDownloadMessagesAsPDF}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-sm md:text-xl hover:"
             >
               <RiChatDownloadLine />
             </button>

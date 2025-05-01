@@ -20,11 +20,11 @@ const UserMenu = () => {
     }
 
     return (
-        <div className="dropdown dropdown-end border rounded-full">
+        <div className="dropdown dropdown-end ">
             {
                 user ? (
                     <>
-                        <div className="dropdown dropdown-end">
+                        <div className="dropdown dropdown-end ">
                             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                                 <div className="w-10 rounded-full">
                                     <img src={user?.photoURL} referrerPolicy="no-referrer" className="w-8 h-8 rounded-full" alt="" />
@@ -32,7 +32,7 @@ const UserMenu = () => {
                             </div>
                             <ul
                                 tabIndex={0}
-                                className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-44 p-2 shadow border">
+                                className="menu menu-md dropdown-content bg-[#12161f] text-gray-300 rounded-box z-1 mt-3 w-44 p-2 shadow border">
                                 <li>
                                     <Link to={'/profile'}>Profile</Link>
                                 </li>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import logo from "../assets/logo.png";
 import useAuth from "../hooks/useAuth";
 import { MdOutlineVoiceChat } from "react-icons/md";
@@ -9,7 +9,7 @@ import UserMenu from "./UserMenu";
 const Navbar = () => {
   const { user, userLogOut } = useAuth();
   // console.log(user)
-
+  const location = useLocation()
   const handleLogout = async () => {
     try {
       userLogOut();
@@ -21,8 +21,12 @@ const Navbar = () => {
 
   const links = (
     <>
-      <li className="text-gray-300">
-        <a href="#banner">Home</a>
+      <li className="text-gray-300"> 
+        {
+          location.pathname == '/profile' ?
+            <Link to='/'>Home</Link> :
+            <a href="#banner">Home</a>
+        }
       </li>
       <li className="text-gray-300">
         <a href="#about">About Us</a>
@@ -46,7 +50,7 @@ const Navbar = () => {
         <div className="navbar-start lg:hidden">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="lg:hidden">
-              <svg 
+              <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-5 w-5 text-gray-300"
                 fill="none"
@@ -63,7 +67,7 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-md dropdown-content bg-base-100 rounded-box z-1 mt-3 w-44 p-2 shadow"
+              className="menu menu-md bg-[#12161f] text-gray-300 dropdown-content rounded-box z-1 mt-3 w-44 p-2 shadow"
             >
               {links}
             </ul>

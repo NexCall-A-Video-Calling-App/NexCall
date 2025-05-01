@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (scheduleCollection) => {
-    router.post('/', async (req, res) => {
+    router.post('/schedule-collections/', async (req, res) => {
         try {
             const scheduleResult = req.body;
             const result = await scheduleCollection.insertOne(scheduleResult);
@@ -13,7 +13,7 @@ module.exports = (scheduleCollection) => {
         }
     });
 
-    router.get('/:email', async (req, res) => {
+    router.get('/schedule-collections/:email', async (req, res) => {
         try {
             const email = req.params.email;
             const result = await scheduleCollection.find({ email: email }).sort({ Date: 1, Time: 1 }).toArray();
