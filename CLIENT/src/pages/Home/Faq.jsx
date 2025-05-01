@@ -68,15 +68,15 @@ const FAQ = () => {
             />
           </div>
           {/* Right Side FAQ */}
-          <div className="w-full"> 
+          <div className="w-full">
             <div className="space-y-4">
               {faqs.map((faq, index) => (
-                <div key={index} className="border border-white rounded-lg overflow-hidden">
+                <div key={index} className="border border-gray-500 rounded-lg overflow-hidden">
                   <button
                     onClick={() => toggleFAQ(index)}
                     className="w-full text-left py-4 px-4 sm:px-5 flex justify-between items-center text-base sm:text-lg font-semibold text-white"
                   >
-                    {faq.question} 
+                    {faq.question}
                     <span className={`text-gray-500 transform transition-transform duration-300 ${openIndex === index ? 'rotate-180' : ''}`}>
                       ▼
                     </span>
