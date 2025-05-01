@@ -13,6 +13,7 @@ import {
 import toast, { Toaster } from 'react-hot-toast'
 import { SocketProvider } from './provider/SocketProvider.jsx'
 import { HMSRoomProvider } from '@100mslive/react-sdk'
+import CheckAndEmail from './hooks/email/CheckAndEmail.jsx'
 const notify = () => {
   toast('notify')
 }
@@ -25,10 +26,11 @@ createRoot(document.getElementById('root')).render(
     <AuthProvider>
       <SocketProvider>
         <HMSRoomProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={Routes} />
-          <Toaster />
-        </QueryClientProvider>
+          <QueryClientProvider client={queryClient}>
+            <CheckAndEmail />
+            <RouterProvider router={Routes} />
+            <Toaster />
+          </QueryClientProvider>
         </HMSRoomProvider>
       </SocketProvider>
 

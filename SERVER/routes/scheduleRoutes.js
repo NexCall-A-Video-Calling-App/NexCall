@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 module.exports = (scheduleCollection) => {
-    router.post('/schedule-collections', async (req, res) => {
+    router.post('/schedule-collections/', async (req, res) => {
         try {
             const scheduleResult = req.body;
             const result = await scheduleCollection.insertOne(scheduleResult);

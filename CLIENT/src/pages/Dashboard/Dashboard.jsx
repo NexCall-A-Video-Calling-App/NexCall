@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import toast from "react-hot-toast";
 import { FaEllipsisV, FaVideo, FaPhoneAlt } from "react-icons/fa";
 import { IoHome } from "react-icons/io5";
-import { IoIosSend, IoMdInformationCircleOutline } from "react-icons/io";
+import { IoIosSend, IoMdInformationCircleOutline, IoMdMenu } from "react-icons/io";
 import { RiChatDownloadLine } from "react-icons/ri";
 import { encryptMessage, decryptMessage } from "../../utilities/encryptDecrypt";
 import { downloadMessagesAsPDF } from "../../utilities/downloadMessagesAsPDF"
@@ -176,19 +176,21 @@ const Dashboard = () => {
     <div className="flex h-screen bg-gray-100 relative -mt-16">
       {/* Sidebar */}
       <div
-        className={`fixed md:static top-0 left-0 h-full w-64 bg-gray-50 p-3 border-r shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
+        className={`fixed md:static top-0 left-0 h-full w-64 bg-[#0f131c] p-3 border-r border-[#1f2937] shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0 flex flex-col`}
       >
         {/* Sidebar Content */}
         <div className="flex-1 overflow-y-auto p-1">
-          <h2 className="text-xl font-bold text-gray-700 mb-3">Users</h2>
-          <input
-            id="searchUser"
-            onChange={(e) => setSearchUser(e.target.value)}
-            type="text"
-            placeholder="Search users"
-            className="w-full p-2 mb-4 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
-          />
+          <div className="border-b border-[#1f2937] mb-2">
+            <input
+              id="searchUser"
+              onChange={(e) => setSearchUser(e.target.value)}
+              type="text"
+              placeholder="Search users"
+              className="w-full p-2 mb-4 border border-gray-400 rounded-lg bg-[#0f131c] text-white focus:outline-none focus:ring-1 focus:ring-[#32c6fc]"
+            />
+          </div>
+          <h2 className="text-xl font-bold mb-3 text-white">Users</h2>
           <div className="space-y-2">
             {roomUsers
               .filter((userFilter) =>
@@ -197,11 +199,14 @@ const Dashboard = () => {
               .map((userinRoom, idx) => (
                 <div
                   key={idx}
-                  className="p-2 bg-white rounded-md shadow-sm hover:bg-purple-100 transition-colors"
+                  className="p-2 bg-[#12161f]  rounded-md shadow-sm hover:bg-gray-800 border border-gray-800"
                 >
-                  <h1 className="text-gray-800 text-sm font-medium">
-                    {idx + 1}. {userinRoom.name}
-                  </h1>
+                  <div className="flex gap-2 items-center">
+                    <img src={userinRoom.profilePic} alt="" className="w-6 h-6 rounded-full" />
+                    <h1 className="text-white text-sm font-medium">
+                      {idx + 1}. {userinRoom.name}
+                    </h1>
+                  </div>
                 </div>
               ))}
           </div>
@@ -212,7 +217,7 @@ const Dashboard = () => {
           {/* Back to Dashboard */}
           <Link
             onClick={handleBackToDashboard}
-            className="w-full border text-white bg-purple-500 flex justify-center items-center gap-2 mt-4 p-2 rounded-lg hover:bg-purple-600 transition-colors"
+            className=" w-full flex justify-center items-center gap-2 bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap border border-gray-500"
           >
             <MdOutlineArrowBackIosNew /> Back to Dashboard
           </Link>
@@ -222,7 +227,7 @@ const Dashboard = () => {
             <div
               tabIndex={0}
               role="button"
-              className="border w-full flex justify-center items-center gap-2 p-2 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+              className="border border-gray-500 w-full flex justify-center items-center gap-2 p-2 text-gray-200 rounded-lg hover:bg-gray-800 transition-colors"
             >
               <img
                 src={user?.photoURL}
@@ -234,12 +239,12 @@ const Dashboard = () => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content menu bg-base-300 rounded-box z-50 w-52 p-2 shadow-lg mt-2"
+              className="dropdown-content menu bg-gray-800 rounded-box z-50 w-52 p-2 shadow-lg mt-2 border border-gray-800 mb-2"
             >
               <li>
                 <button
                   onClick={handleProfileClick}
-                  className="btn btn-sm w-full mb-2"
+                  className="btn btn-sm w-full bg-gray-950 text-gray-300 border border-gray-800 mb-2"
                 >
                   Profile
                 </button>
@@ -250,7 +255,7 @@ const Dashboard = () => {
                     <Spinner />
                   </div>
                 ) : (
-                  <button onClick={handleLogOut} className="btn btn-sm w-full">
+                  <button onClick={handleLogOut} className="btn btn-sm w-full bg-gray-950 text-gray-300 border border-gray-800">
                     Log out
                   </button>
                 )}
@@ -267,14 +272,12 @@ const Dashboard = () => {
 
 
       {/* Chat Window */}
-      {/* Main content */}
-
-      <div className="flex-1 flex flex-col min-h-screen overflow-hidden">
+      <div className="bg-[#0f131c] flex-1 flex flex-col min-h-screen overflow-hidden">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
+        <div className="flex items-center justify-between p-4 border-b border-[#1f2937] shadow-md">
           <div className="flex items-center">
-            <button className="md:hidden text-xl md:p-2" onClick={toggleSidebar}>
-              <FaEllipsisV />
+            <button className="md:hidden text-2xl md:p-2 text-gray-200 mr-2" onClick={toggleSidebar}>
+              <IoMdMenu />
             </button>
             <img
               src={roomUsers.find((u) => u.socketId !== socket.id)?.profilePic || "https://i.ibb.co.com/5gDBVLDV/images.png"}
@@ -282,7 +285,7 @@ const Dashboard = () => {
               className="w-10 h-10 rounded-full"
             />
             <div className="ml-1 md:ml-2">
-              <p className="font-semibold text-sm md:text-base">
+              <p className="font-semibold text-sm md:text-base text-white">
                 {roomUsers.length === 2
                   ? roomUsers.find(u => u.socketId !== UserId)?.name || "Unknown User"
                   : roomUsers.length > 2
@@ -295,18 +298,18 @@ const Dashboard = () => {
           <div className="flex gap-1 md:space-x-2">
             <button
               onClick={handleVideoCall}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-base">
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-50 text-gray-300 text-xl md:border border-gray-800 rounded hover:">
               <FaVideo />
             </button>
             <button
               onClick={() => document.getElementById('my_modal_3').showModal()}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-xl md:border border-gray-800 rounded hover:"
             >
               <IoMdInformationCircleOutline />
             </button>
             <button
               onClick={handleDownloadMessagesAsPDF}
-              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg text-sm md:text-lg"
+              className="flex items-center gap-1 md:gap-2 px-1 md:px-4 py-2 md:py-2 bg-[#12161f] hover:scale-110 transition-transform duration-200 text-gray-300 text-xl md:border border-gray-800 rounded hover:"
             >
               <RiChatDownloadLine />
             </button>
@@ -314,7 +317,7 @@ const Dashboard = () => {
         </div>
 
         {/* Messages Section */}
-        <div className="flex-1 p-4 overflow-y-auto bg-gray-50">
+        <div className="flex-1 p-4 overflow-y-auto ">
           <div className="mb-4 space-y-1">
             {messages.map((msg, index) => {
               const isSender = msg.sender === UserId;
@@ -353,9 +356,9 @@ const Dashboard = () => {
 
                     {/* Message Bubble Section */}
                     <div
-                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-2xl relative ${isSender
-                        ? "bg-purple-500 text-white rounded-br-none"
-                        : "bg-gray-200 text-gray-900 rounded-bl-none"
+                      className={`${isSender ? "mr-2" : "ml-2"} px-3 py-[5px] rounded-xl relative ${isSender
+                        ? "bg-gradient-to-bl from-[#32c6fc] to-[#8659d3] text-white rounded-br-none"
+                        : "bg-gray-800 text-gray-100 rounded-bl-none "
                         }`}
                     >
                       <p className="text-sm md:text-base break-words">{msg.message}</p>
@@ -377,16 +380,17 @@ const Dashboard = () => {
         {/* Message input */}
         <form
           onSubmit={handleSend}
-          className="p-4 border-t bg-white flex items-center"
+          className="p-4 border-t border-gray-700 flex items-center"
         >
           <input
             onChange={(e) => setMessage(e.target.value)}
             value={message}
             type="text"
             placeholder="Type a message..."
-            className="w-full p-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500"
+            className="w-full p-2 border border-gray-500 rounded-lg bg-[#0f131c] focus:outline-none focus:ring-1 focus:ring-[#32c6fc] text-white"
           />
-          <button className="ml-2 p-2 text-2xl bg-purple-500 hover:bg-purple-600 text-white rounded-lg">
+          
+          <button className="ml-2 p-2 text-2xl bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
             <IoIosSend />
           </button>
         </form>
@@ -394,12 +398,12 @@ const Dashboard = () => {
 
       {/* Modal for Invite Code */}
       <dialog id="my_modal_3" className="modal">
-        <div className="modal-box relative p-10">
+        <div className="modal-box relative p-10 !bg-[#1f2937]">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-white">✕</button>
           </form>
 
-          <h3 className="font-bold text-lg flex items-center gap-2 mb-2">
+          <h3 className="font-bold text-lg flex items-center gap-2 mb-2 text-white">
             Invite Code: {currentRoom}
             <button
               onClick={() => {
@@ -413,13 +417,13 @@ const Dashboard = () => {
             </button>
           </h3>
 
-          <div className="text-sm text-gray-500 mt-4 space-y-1">
+          <div className="text-sm mt-4 space-y-1 text-white">
             <p>
-              <span className="font-semibold text-gray-600">Created At:</span>{" "}
+              <span className="font-semibold ">Created At:</span>{" "}
               {new Date(createdAt).toLocaleString()}
             </p>
             <p>
-              <span className="font-semibold text-gray-600">Creator:</span> {creator}
+              <span className="font-semibold ">Creator:</span> {creator}
             </p>
           </div>
         </div>

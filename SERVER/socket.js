@@ -51,6 +51,46 @@ function initSocket(io) {
         socket.emit("RoomCreationError", "Failed to create room");
       }
     });
+    
+    socket.on("scheduleMaker", async (userData) => {
+      try {
+        const roomResponse = await axios.post(
+          "https://api.100ms.live/v2/rooms",
+          {
+            name: `room-${socket.id}-${Date.now()}`,
+            description: "Dynamic room for NexCall",
+            template_id: process.env.HMS_TEMPLATE_ID,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.HMS_MANAGEMENT_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const roomId = roomResponse.data.id;
+
+        const roomCodeResponse = await axios.post(
+          `https://api.100ms.live/v2/room-codes/room/${roomId}`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${process.env.HMS_MANAGEMENT_TOKEN}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        const roomCode = roomCodeResponse.data.data.find(code => code.enabled)?.code; 
+        const { name, timestamp } = userData;
+        socket.emit("scheduled", roomCode, name, timestamp);
+
+      } catch (error) {
+        console.error("Error creating room:", error);
+        socket.emit("RoomCreationError", "Failed to create room");
+      }
+    });
 
     socket.on("JoinRoom", ({ roomId, userData }) => {
       const actualRoomId = roomCodeToIdMap[roomId];
