@@ -51,7 +51,7 @@ const UserMenu = () => {
                         </div>
                     </>
                 ) : (
-                    <Link to="/sign-in" className="btn">
+                    <Link to="/sign-in" className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-2 rounded text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
                         Sign in
                     </Link>
                 )
