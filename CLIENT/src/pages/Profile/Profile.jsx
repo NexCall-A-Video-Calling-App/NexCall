@@ -91,13 +91,13 @@ const ProfileDetails = () => {
             />
             <div>
               <h2 className="text-2xl font-bold text-gray-300">{formData.displayName || "User Name"}</h2>
-              <p className="text-sm text-gray-800 bg-[#32c6fc] rounded-full text-center border border-gray-950 px-4">{plan}</p>
+              <p className="text-sm font-semibold text-gray-800 bg-[#32c6fc] rounded-full text-center border border-gray-950 px-4">{plan}</p>
             </div>
           </div>
 
           <Link
             to="/#our-plans"
-            className="flex items-center gap-2 px-5 py-2.5 bg-[#32c6fc]  rounded-full hover:bg-[#32c6fcd0] transition duration-300 shadow-md"
+            className="flex items-center gap-2 px-5 py-2.5 bg-[#32c6fc]  rounded-full hover:bg-[#32c6fcd0] transition duration-300 shadow-md font-semibold"
           >
             <MdUpgrade className="text-xl" />
             Upgrade Plan
