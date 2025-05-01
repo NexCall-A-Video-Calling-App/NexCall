@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import banner from "../../assets/banner.png";
 import dot from "../../assets/dot.png"
-import bannerVideo from "../../assets/bannerVideo.mp4"
+import bannerVideo from "../../assets/compressed.mp4"
 import { Link } from "react-router-dom";
 const Banner = () => {
   return (
