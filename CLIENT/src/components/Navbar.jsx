@@ -33,23 +33,44 @@ const Navbar = () => {
     <>
       <li className="text-gray-300">
         {
-          location.pathname == '/profile' ?
+          location.pathname == '/profile' ||
+            location.pathname == '/sign-up' ||
+            location.pathname == '/sign-in' ||
+            location.pathname == '/contactUs' ?
             <Link to='/'>Home</Link> :
             <a href="#banner">Home</a>
         }
       </li>
-      <li className="text-gray-300">
-        <a href="#about">About Us</a>
-      </li>
-      <li className="text-gray-300">
-        <a href="#features">Features</a>
-      </li>
-      <li className="text-gray-300">
-        <a href="#faq">FAQ</a>
-      </li>
-      <li className="text-gray-300">
-        <a href="#our-plans">Our Plans</a>
-      </li>
+      {
+        location.pathname == '/sign-up' || location.pathname == '/sign-in' ?
+          <li className="text-gray-300">
+            <Link to='/contactUs'>Contact</Link>
+          </li>
+          :
+          <>
+            {
+              location.pathname == '/profile' || location.pathname == '/contactUs' ?
+                <li className="text-gray-300">
+                  <a href="https://nexcall-1425e.web.app/#our-plans">Our Plans</a>
+                </li> :
+                <>
+                  <li className="text-gray-300">
+                    <a href="#about">About Us</a>
+                  </li>
+                  <li className="text-gray-300">
+                    <a href="#features">Features</a>
+                  </li>
+                  <li className="text-gray-300">
+                    <a href="https://nexcall-1425e.web.app/#faq">FAQ</a>
+                  </li>
+                  <li className="text-gray-300">
+                    <a href="https://nexcall-1425e.web.app/#our-plans">Our Plans</a>
+                  </li>
+                </>
+            }
+          </>
+      }
+
     </>
   );
 

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { Link } from 'react-router-dom';
 
 const GetStarted = () => {
   const [email, setEmail] = useState("");
@@ -17,12 +18,12 @@ const GetStarted = () => {
               building the future of communication.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
-              <button className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-3 rounded-full text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
-                Start Free Trial
-              </button>
-              <button className="border border-gray-600 px-6 py-3 rounded-full text-white font-medium hover:border-[#32c6fc] transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
-                Contact Sales
-              </button>
+              <Link to='/sign-in' className="bg-gradient-to-r from-[#32c6fc] to-[#8659d3] px-6 py-3 rounded-full text-white font-medium hover:shadow-lg hover:shadow-[#32c6fc]/20 transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+                Start for Free
+              </Link>
+              <Link to='/contactUs' className="border border-gray-600 px-6 py-3 rounded-full text-white font-medium hover:border-[#32c6fc] transition-all duration-300 cursor-pointer !rounded-button whitespace-nowrap">
+                Talk to Sales
+              </Link>
             </div>
             <div className="max-w-md mx-auto">
               <div className="flex">

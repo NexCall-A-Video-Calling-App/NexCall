@@ -1,28 +1,10 @@
-// hmsActions
 import { useEffect, useRef, useState } from "react";
-import {
-  useHMSActions,
-  useHMSStore,
-  selectIsConnectedToRoom,
-  selectLocalPeer,
-  selectPeers,
-  selectPeerCount,
-} from "@100mslive/react-sdk";
-import toast from "react-hot-toast";
-import {
-  FaMicrophone,
-  FaMicrophoneSlash,
-  FaVideo,
-  FaVideoSlash,
-  FaSignOutAlt,
-  FaDesktop,
-  FaComments,
-  FaChalkboardTeacher,
-  FaUsers,
-} from "react-icons/fa";
+import { useHMSActions, useHMSStore, selectIsConnectedToRoom, selectLocalPeer, selectPeers, selectPeerCount } from "@100mslive/react-sdk";
+import { FaUsers, FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash, FaDesktop, FaSignOutAlt } from "react-icons/fa";
+import { LuAlarmClockMinus } from "react-icons/lu";
+import { toast } from "react-hot-toast";
 
-const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
-  console.log(initialRoomId);
+const VideoCallPage = ({ initialRoomId, userName, photoURL, onClose = () => { } }) => {
   const hmsActions = useHMSActions();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
   const localPeer = useHMSStore(selectLocalPeer);
@@ -30,11 +12,52 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
   const peerCount = useHMSStore(selectPeerCount);
   const [error, setError] = useState("");
   const [isAudioMuted, setIsAudioMuted] = useState(true);
-  const [isVideoMuted, setIsVideoMuted] = useState(false);
+  const [isVideoMuted, setIsVideoMuted] = useState(true);
   const [raisedHands, setRaisedHands] = useState([]);
   const [isSharingScreen, setIsSharingScreen] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(300); // 5 minutes in seconds
   const localVideoRef = useRef(null);
   const videoRefs = useRef({});
+  console.log("Photo: ", photoURL);
+  // Timer logic
+  useEffect(() => {
+    if (!isConnected) return;
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        const newTime = prev - 1;
+        console.log(`Time left: ${newTime} seconds`); // Debug log
+
+        // Show warning at 3 minutes (180 seconds)
+        if (newTime === 180 && !showWarning) {
+          setShowWarning(true);
+          toast("Meeting will end in 2 minutes!", {
+            duration: 5000,
+            icon: "⚠️",
+          });
+        }
+
+        // Leave meeting at 0 seconds
+        if (newTime <= 0) {
+          console.log("Leaving meeting: time up"); // Debug log
+          hmsActions.leave();
+          window.close();
+          onClose();
+        }
+
+        return newTime;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [isConnected, hmsActions, onClose]);
+
+  // Format time for display
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, "0")}`;
+  };
 
   useEffect(() => {
     if (initialRoomId && !isConnected) {
@@ -63,22 +86,19 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
   }, [hmsActions]);
 
   const joinRoom = async (roomId) => {
-    console.log(roomId);
     try {
       const response = await fetch(
         `https://nexcall-vfak.onrender.com/api/token?roomId=${encodeURIComponent(roomId)}`
       );
       if (!response.ok) throw new Error(`Failed to fetch token: ${response.statusText}`);
       const { token } = await response.json();
-      console.log("token: ", token);
       await hmsActions.join({
         userName: userName || `User-${Math.random().toString(36).substring(7)}`,
         authToken: token,
-        settings: { isAudioMuted: true, isVideoMuted: false },
+        settings: { isAudioMuted: true, isVideoMuted: true },
         metaData: JSON.stringify({ handRaised: false }),
       });
       setError("");
-
     } catch (error) {
       console.error("Error joining room:", error);
       setError("Failed to join room: " + error.message);
@@ -86,7 +106,6 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
     }
   };
 
-  // leave room and close the window
   const leaveRoom = () => {
     hmsActions.leave();
     window.close();
@@ -103,74 +122,28 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
     setIsVideoMuted(!isVideoMuted);
   };
 
-  const raiseHand = async () => {
-    const meta = localPeer.metadata ? JSON.parse(localPeer.metadata) : {};
-    meta.handRaised = true;
-    await hmsActions.updatePeerMetadata(JSON.stringify(meta));
-    toast("Hand Raised ✋");
-  };
-
   const toggleScreenShare = async () => {
     await hmsActions.setScreenShareEnabled(!isSharingScreen);
     setIsSharingScreen(!isSharingScreen);
   };
 
-  const muteAll = async () => {
-    for (const peer of peers) {
-      if (!peer.isLocal && peer.audioTrack) {
-        await hmsActions.setRemoteTrackEnabled(peer.audioTrack, false);
-      }
-    }
-    toast.success("All participants muted");
-  };
-
-  const openChat = () => {
-    const chatWindow = window.open(
-      "/chat",
-      "ChatWindow",
-      "width=400,height=600,resizable=yes"
-    );
-    if (chatWindow) {
-      chatWindow.focus();
-    }
-  };
-
-  const lowerHand = async (peerId) => {
-    const peer = peers.find((p) => p.id === peerId);
-    if (peer) {
-      const meta = peer.metadata ? JSON.parse(peer.metadata) : {};
-      meta.handRaised = false;
-      await hmsActions.updatePeerMetadata(JSON.stringify(meta), peerId);
-      toast.success(`Lowered hand of ${peer.name}`);
-    }
-  };
-
   return (
-    <div className="space-y-4 flex flex-col items-center justify-center min-h-screen p-4 text-white bg-[#151515]">
+    <div className={`space-y-4 flex flex-col items-center justify-center min-h-screen p-4 text-white bg-[#151515]`}>
       {error && <div className="text-red-300 font-semibold">{error}</div>}
       {!isConnected && <p className="text-lg animate-pulse">Connecting...</p>}
       {isConnected && (
-        <div className="w-full max-w-7xl">
-          <div className="flex justify-center items-center gap-2 text-sm mb-4">
-            <FaUsers className="text-xl" />
-            <span>{peerCount} Participants</span>
-          </div>
-
-          {raisedHands.length > 0 && (
-            <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-2 rounded mb-4">
-              Raised Hands:{" "}
-              {raisedHands.map((peer) => (
-                <button
-                  key={peer.id}
-                  className="ml-2 text-sm text-blue-600 underline"
-                  onClick={() => lowerHand(peer.id)}
-                >
-                  {peer.name} ❌
-                </button>
-              ))}
+        <div className="w-full max-w-7xl relative">
+          {/* Countdown Timer */}
+          <div className="flex justify-center items-center gap-3 w-full">
+            <div className="flex justify-center items-center gap-2 text-sm">
+              <FaUsers className="text-xl" />
+              <span>{peerCount} Participants</span>
             </div>
-          )}
-
+            <div className={`${showWarning ? 'bg-red-600' : 'bg-black'} flex justify-center gap-1 items-center bg-opacity-50 text-white text-sm px-3 py-1 rounded m-2`}>
+              <LuAlarmClockMinus />
+              <p>Time Left: {formatTime(timeLeft)}</p>
+            </div>
+          </div>
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {localPeer && (
               <div className="relative bg-white/10 rounded-xl overflow-hidden shadow-md backdrop-blur-sm h-[250px]">
@@ -213,26 +186,17 @@ const VideoCallPage = ({ initialRoomId, userName, onClose = () => { } }) => {
           </div>
 
           <div className="flex justify-center mt-6 gap-3 flex-wrap">
-            <button onClick={toggleAudio} className="bg-gray-800 text-white p-2 text-xl ">
+            <button onClick={toggleAudio} className="bg-gray-800 text-white p-2 text-xl">
               {isAudioMuted ? <FaMicrophoneSlash /> : <FaMicrophone />}
             </button>
-            <button onClick={toggleVideo} className="bg-gray-800 text-white p-2 text-xl ">
+            <button onClick={toggleVideo} className="bg-gray-800 text-white p-2 text-xl">
               {isVideoMuted ? <FaVideoSlash /> : <FaVideo />}
             </button>
-            <button onClick={leaveRoom} className="bg-gray-800 text-white p-2 text-xl ">
-              <FaSignOutAlt />
-            </button>
-            <button onClick={raiseHand} className="bg-gray-800 text-white p-2 text-xl ">
-              ✋
-            </button>
-            <button onClick={toggleScreenShare} className="bg-gray-800 text-white p-2 text-xl ">
+            <button onClick={toggleScreenShare} className="bg-gray-800 text-white p-2 text-xl">
               <FaDesktop />
             </button>
-            <button onClick={openChat} className="bg-gray-800 text-white p-2 text-xl ">
-              <FaComments />
-            </button>
-            <button onClick={muteAll} className="bg-gray-800 text-white p-2 text-xl ">
-              <FaChalkboardTeacher />
+            <button onClick={leaveRoom} className="bg-gray-800 text-white p-2 text-xl">
+              <FaSignOutAlt />
             </button>
           </div>
         </div>

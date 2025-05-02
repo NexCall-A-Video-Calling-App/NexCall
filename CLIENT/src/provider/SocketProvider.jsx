@@ -26,7 +26,7 @@ export const SocketProvider = ({ children }) => {
         socket.on("RoomJoined", (roomId) => {
             setCurrentRoom(roomId);
             console.log("RoomJoined received:", roomId);
-            
+
         });
 
         return () => {
