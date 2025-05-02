@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaLinkedinIn, FaYoutube, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
-import { FaLocationDot,FaPhoneVolume } from "react-icons/fa6"; 
+import { FaLocationDot, FaPhoneVolume } from "react-icons/fa6";
 import { IoIosMail } from "react-icons/io";
 const Contact = () => {
     return (
@@ -96,7 +96,7 @@ const Contact = () => {
                             <div className="space-y-4">
                                 <div className="flex items-start">
                                     <div className="text-white w-12 h-12 rounded-full bg-gradient-to-r from-[#32c6fc] to-[#8659d3] flex items-center justify-center flex-shrink-0">
-                                        <FaLocationDot/>
+                                        <FaLocationDot />
                                     </div>
                                     <div className="ml-4">
                                         <h4 className="text-lg font-medium text-white">Visit Us</h4>
@@ -112,7 +112,7 @@ const Contact = () => {
 
                                 <div className="flex items-start">
                                     <div className="text-white w-12 h-12 rounded-full bg-gradient-to-r from-[#32c6fc] to-[#8659d3] flex items-center justify-center flex-shrink-0">
-                                       <FaPhoneVolume/>
+                                        <FaPhoneVolume />
                                     </div>
                                     <div className="ml-4">
                                         <h4 className="text-lg font-medium text-white">Call Us</h4>
@@ -126,7 +126,7 @@ const Contact = () => {
 
                                 <div className="flex items-start">
                                     <div className="text-white w-12 h-12 rounded-full bg-gradient-to-r from-[#32c6fc] to-[#8659d3] flex items-center justify-center flex-shrink-0">
-                                        <IoIosMail/>
+                                        <IoIosMail />
                                     </div>
                                     <div className="ml-4">
                                         <h4 className="text-lg font-medium text-white">Email Us</h4>
@@ -158,7 +158,9 @@ const Contact = () => {
                                     className="relative w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center text-white overflow-hidden group"
                                 >
                                     <span className="relative z-10">
-                                        <FaGithub />
+                                        <a href="https://github.com/NexCall-A-Video-Calling-App/NexCall">
+                                            <FaGithub />
+                                        </a>
                                     </span>
                                     <span className="absolute inset-0 bg-gradient-to-r from-[#32c6fc] to-[#8659d3] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
                                 </a>

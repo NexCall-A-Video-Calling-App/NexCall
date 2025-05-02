@@ -33,7 +33,10 @@ const Navbar = () => {
     <>
       <li className="text-gray-300">
         {
-          location.pathname == '/profile' || location.pathname == '/sign-up' || location.pathname == '/sign-in' ?
+          location.pathname == '/profile' ||
+            location.pathname == '/sign-up' ||
+            location.pathname == '/sign-in' ||
+            location.pathname == '/contactUs' ?
             <Link to='/'>Home</Link> :
             <a href="#banner">Home</a>
         }
@@ -46,9 +49,9 @@ const Navbar = () => {
           :
           <>
             {
-              location.pathname == '/profile' ?
+              location.pathname == '/profile' || location.pathname == '/contactUs' ?
                 <li className="text-gray-300">
-                  <a href="http://localhost:5173/#our-plans">Our Plans</a>
+                  <a href="https://nexcall-1425e.web.app/#our-plans">Our Plans</a>
                 </li> :
                 <>
                   <li className="text-gray-300">
@@ -58,10 +61,10 @@ const Navbar = () => {
                     <a href="#features">Features</a>
                   </li>
                   <li className="text-gray-300">
-                    <a href="http://localhost:5173/#faq">FAQ</a>
+                    <a href="https://nexcall-1425e.web.app/#faq">FAQ</a>
                   </li>
                   <li className="text-gray-300">
-                    <a href="http://localhost:5173/#our-plans">Our Plans</a>
+                    <a href="https://nexcall-1425e.web.app/#our-plans">Our Plans</a>
                   </li>
                 </>
             }
