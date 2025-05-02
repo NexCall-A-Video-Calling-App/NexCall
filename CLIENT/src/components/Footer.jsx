@@ -2,6 +2,7 @@ import React from "react";
 import { FaTwitter, FaFacebookF, FaLinkedinIn, FaYoutube, FaGithub } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 import logo from "../assets/logo.png"
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
@@ -21,7 +22,9 @@ const Footer = () => {
             </p>
             <div className="text-white flex gap-3 text-xl">
               <FaXTwitter />
-              <FaGithub />
+              <a href="https://github.com/NexCall-A-Video-Calling-App/NexCall">
+                <FaGithub />
+              </a>
               <FaLinkedinIn />
               <FaYoutube />
             </div>
