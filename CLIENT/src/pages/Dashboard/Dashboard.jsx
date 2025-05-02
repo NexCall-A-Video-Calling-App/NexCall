@@ -143,8 +143,9 @@ const Dashboard = () => {
     }
     const encodedRoomId = encodeURIComponent(currentRoom);
     const encodedUserName = encodeURIComponent(user?.displayName || "Anonymous");
+    const encodedUserPhoto = encodeURIComponent(user?.photoURL || "Anonymous");
     const videoCallWindow = window.open(
-      `/meeting/video-call?roomId=${encodedRoomId}&userName=${encodedUserName}`,
+      `/meeting/video-call?roomId=${encodedRoomId}&userName=${encodedUserName}&photoURL=${encodedUserPhoto}`,
       "_blank",
       "width=800,height=600"
     );
@@ -160,11 +161,11 @@ const Dashboard = () => {
 
   if (!currentRoom) {
     return (
-      <div className="flex-1 flex flex-col justify-center items-center min-h-screen bg-gray-100">
-        <p>Please create or join a room first.</p>
+      <div className="flex-1 flex flex-col justify-center items-center min-h-screen bg-[#151515]">
+        <p className="animated-gradient-text">Please create or join a room first.</p>
         <button
           onClick={() => navigate('/meeting')}
-          className="mt-4 p-2 bg-purple-500 hover:bg-purple-600 text-white rounded-lg"
+          className="mt-4 p-2 bg-gradient-to-r from-[#32c6fc] to-[#8659d3] text-white rounded-lg"
         >
           Go to Meeting Page
         </button>
@@ -173,7 +174,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="flex h-screen bg-gray-100 relative -mt-16">
+    <div className="flex h-screen bg-[#151515] relative -mt-16">
       {/* Sidebar */}
       <div
         className={`fixed md:static top-0 left-0 h-full w-64 bg-[#0f131c] p-3 border-r border-[#1f2937] shadow-lg z-20 transition-transform duration-700 transform ${showSidebar ? "translate-x-0" : "-translate-x-full"

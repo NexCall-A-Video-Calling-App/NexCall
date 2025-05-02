@@ -16,6 +16,7 @@ import ChatHistory from "../pages/ChatHistory/ChatHistory";
 import ForgotPassword from "../pages/ForgotPassword/ForgotPassword";
 import VideoCall from "../pages/Video/VideoCall";
 import PaymentPage from "../payment/PaymentPage";
+import Contact from "../pages/ContactUs/Contact";
 
 const Routes = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const Routes = createBrowserRouter([
       {
         path: "/sign-in",
         element: <SignIn />,
+      },
+      {
+        path: "/contactUs",
+        element: <Contact />,
       },
       {
         path: "/forgot-password",

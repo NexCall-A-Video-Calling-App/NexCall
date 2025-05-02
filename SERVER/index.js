@@ -73,7 +73,7 @@ async function run() {
         res.status(500).send('Failed to send email.');
       }
     });
- 
+
     server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   } catch (error) {
     console.error("Failed to start server:", error);
