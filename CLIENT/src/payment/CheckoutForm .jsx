@@ -112,7 +112,7 @@ function CheckoutForm() {
       <div className="max-w-md mx-auto  px-6 py-8 bg-gray-900 text-white rounded-2xl shadow-lg border border-gray-700">
         {paymentSuccess ? (
           <div className="space-y-2 text-center">
-              <h2 className="text-2xl font-semibold animated-gradient-text">Payment Successful</h2>
+            <h2 className="text-2xl font-semibold animated-gradient-text">Payment Successful</h2>
             <p className="  text-gray-300">
               <span className="font-semibold">Plan:</span> {plan}
             </p>
