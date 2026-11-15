@@ -54,7 +54,7 @@ async function run() {
       service: 'gmail',
       auth: {
         user: 'nexcall55@gmail.com',  // Your Gmail or business email
-        pass: 'emyxfmrxgycbctyx'
+        pass: process.env.GMAIL_APP_PASS
       },
     });
 
