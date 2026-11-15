@@ -1,8 +1,11 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
 
-const client = new MongoClient(`mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.mvhtan2.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`, {
-  serverApi: ServerApiVersion.v1
-});
+const client = new MongoClient(
+  `mongodb+srv://${process.env.db_user}:${process.env.db_pass}@cluster0.x6oak.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`,
+  {
+    serverApi: ServerApiVersion.v1
+  }
+);
 
 let usersCollection, messagesCollection, scheduleCollection, paymentCollection;
 
